@@ -1,0 +1,11 @@
+{
+  "ConnectionStrings": {
+    "Default": "Server=.;Database=HotelManager_Demo;Trusted_Connection=True;TrustServerCertificate=True"
+  },
+  "Jwt": {
+    "Issuer": "HotelManager",
+    "Audience": "HotelManagerClient",
+    "Key": "THIS_IS_DEMO_KEY_CHANGE_ME",
+    "ExpireMinutes": "60"
+  }
+}
