@@ -589,8 +589,9 @@
         profileContainer.innerHTML = '<p class="text-error">Không thể tải thông tin người dùng.</p>';
         return;
       }
-      const isMale = profile.gender === 'Nam' || profile.gender === 'Male';
-      const isFemale = profile.gender === 'Nữ' || profile.gender === 'Female';
+        // Thêm kiểm tra số 0, 1, 2 (bạn tự chỉnh số này cho khớp với Enum ở Backend nhé, ở đây mình giả sử 0 là Nam, 1 là Nữ)
+        const isMale = profile.gender === 'Nam' || profile.gender === 'Male' || profile.gender === 1;
+        const isFemale = profile.gender === 'Nữ' || profile.gender === 'Female' || profile.gender === 2;
       const displayFullName = profile.name === "Người dùng mới" ? "" : profile.name;
       profileContainer.innerHTML = `
         <div class="space-y-1">
@@ -608,9 +609,9 @@
           <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Giới tính</label>
           <select name="gender" class="profile-input w-full bg-surface-container-low border-transparent rounded-lg focus:ring-0 text-on-surface font-medium transition-all appearance-none pointer-events-none" disabled>
             <option value="" disabled ${!profile.gender ? 'selected' : ''} class="text-on-surface-variant">Chọn giới tính</option>
-            <option value="Nam" ${isMale ? 'selected' : ''}>Nam</option>
-            <option value="Nữ" ${isFemale ? 'selected' : ''}>Nữ</option>
-            <option value="Khác" ${!isMale && !isFemale && profile.gender ? 'selected' : ''}>Khác</option>
+            <option value="1" ${isMale ? 'selected' : ''}>Nam</option>
+            <option value="2" ${isFemale ? 'selected' : ''}>Nữ</option>
+            <option value="3" ${!isMale && !isFemale && profile.gender ? 'selected' : ''}>Khác</option>
           </select>
         </div>
         <div class="md:col-span-2 space-y-1">
@@ -680,7 +681,9 @@
         const name = event.target.querySelector('input[name="name"]').value.trim();
         const phone = event.target.querySelector('input[name="phone"]').value.trim();
         const birthDay = event.target.querySelector('input[name="birthDay"]').value;
-        const gender = event.target.querySelector('select[name="gender"]').value;
+      
+        // Ép kiểu biến gender sang số nguyên
+        const gender = parseInt(event.target.querySelector('select[name="gender"]').value, 10);
         const address = event.target.querySelector('input[name="address"]').value.trim();
         
         const error = [];
