@@ -18,8 +18,14 @@ namespace HotelManager.Presentation.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]RegisterRequest dto)
         {
-            await _authService.Register(dto);
-            return Ok();
+            var result = await _authService.Register(dto);
+            
+            if (result.Success)
+            {
+                return Ok(result); // Mã 200 kèm data thành công
+            }
+            
+            return BadRequest(result); // Mã 400 kèm data báo lỗi (Sai pass, trùng email...)
         }
         [HttpPost("login")]
         public async Task<ActionResult<LoginResponse>> Login([FromBody]LoginRequest dto)

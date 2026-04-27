@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind Config -->
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#003345",
+            secondary: "#775a19",
+            background: "#faf9f8",
+            surface: "#faf9f8",
+            "on-surface": "#1a1c1c",
+            "outline": "#71787d"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          fontFamily: {
+            headline: ["Noto Serif"],
+            body: ["Manrope"]
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Style -->
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400;
+      vertical-align: middle;
+    }
+
+    .bg-pattern {
+      background-image: radial-gradient(circle at 2px 2px, #e3e2e1 1px, transparent 0);
+      background-size: 40px 40px;
+    }
+  </style>
+
+</head>
+    <body class="bg-surface font-body text-on-surface min-h-screen flex flex-col">
+    <main class="flex-grow flex items-center justify-center relative px-6 py-12">
+        <!-- Background -->
+        <div class="absolute inset-0 bg-pattern opacity-40 pointer-events-none"></div>
+
+        <div class="w-full max-w-md z-10">
+
+        <!-- Logo -->
+        <div class="text-center mb-12">
+            <h1 class="font-headline text-2xl font-bold tracking-widest text-primary uppercase">
+            Azure Sands Admin
+            </h1>
+            <div class="h-px w-12 bg-secondary mx-auto mt-4 opacity-40"></div>
+        </div>
+
+        <!-- Card -->
+        <div class="bg-white p-10 rounded-xl shadow-lg border">
+
+            <header class="mb-8">
+            <h2 class="text-3xl font-bold mb-2">Admin Access</h2>
+            <p class="text-sm text-gray-500">
+                Vui lòng nhập thông tin xác thực để truy cập hệ thống.
+            </p>
+            </header>
+
+            <form class="space-y-6" id="adminForm">
+
+            <!-- Email -->
+            <div>
+                <label class="text-xs font-semibold uppercase text-gray-500">
+                Tài khoản
+                </label>
+                <input type="text"
+                class="w-full mt-2 px-4 py-3 rounded-lg bg-gray-100"
+                placeholder="Nhập tài khoản admin">
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label class="text-xs font-semibold uppercase text-gray-500">
+                Mật khẩu
+                </label>
+                <input type="password"
+                class="w-full mt-2 px-4 py-3 rounded-lg bg-gray-100"
+                placeholder="Nhập mật khẩu của bạn">
+            </div>
+
+            <div class="auth-messages" id="signinMessages" style="display: none;"></div>
+
+            <!-- Button -->
+            <button class="w-full bg-primary text-white py-3 rounded-lg font-bold" id="submitButton">
+                Đăng nhập
+            </button>
+
+            </form>
+        </div>
+
+        </div>
+    </main>
+
+    </body>
+
+    <script>
+
+        document.addEventListener('submit', async function(event){
+            if(event.target.id === 'adminForm') {
+                event.preventDefault()
+                const email = event.target.querySelector('input[type="text"]').value.trim()
+                const password = event.target.querySelector('input[type="password"]').value.trim()
+                const errors = []
+                if(!email) {
+                    errors.push("Vui lòng nhập tài khoản")
+                }
+                if(!password) {
+                    errors.push("Vui lòng nhập mật khẩu")
+                }
+                if (errors.length > 0) {
+                    showAuthMessage('signinMessages', errors, 'error');
+                    return;
+                }
+                try {
+                    const response = await fetch('/api/auth/login', {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ Username: email,Password: password })
+                    });
+                    const data = await response.json();
+                    if (!response.ok || data.success === false) {
+                        throw new Error(data.error || data.message || 'Đăng nhập thất bại');
+                    }
+                    showAuthMessage('signinMessages', 'Đăng nhập thành công', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/admin_dashboard.html';
+                    }, 500);
+                } catch (error) {
+                    showAuthMessage('signinMessages', error.message, 'error');
+                }
+            }
+        })
+        function showAuthMessage(containerId, messages, type = 'error') {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.style.display = 'block';
+            
+            if (Array.isArray(messages)) {
+            container.innerHTML = messages.map(msg => `<div class="auth-message ${type}">${msg}</div>`).join('');
+            } else {
+            container.innerHTML = `<div class="auth-message ${type}">${messages}</div>`;
+            }
+        }
+    </script>
+</html>
