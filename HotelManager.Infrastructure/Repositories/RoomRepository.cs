@@ -11,6 +11,12 @@ namespace HotelManager.Infrastructure.Repositories
     public class RoomRepository : GenericRepository<Room>, IRoomRepository
     {
         public RoomRepository(AppDbContext context) : base(context) { }
+        
+        public async Task<IEnumerable<Room>> GetListRooms()
+        {
+            return await _dbSet.Include(r => r.RoomImages).OrderBy(r => r.Name).ToListAsync();
+        }
+
         public async Task<IEnumerable<Room>> GetRoomsByCategory(CategoryRoom category)
         {
             return await _dbSet.Where(r => r.Category == category).Include(r => r.RoomImages).ToListAsync();
@@ -22,7 +28,7 @@ namespace HotelManager.Infrastructure.Repositories
         }
         public async Task<Room> GetRoomById(int id)
         {
-            var exists = await _dbSet.FirstOrDefaultAsync(r => r.Id == id);
+            var exists = await _dbSet.Include(r => r.RoomImages).FirstOrDefaultAsync(r => r.Id == id);
             if (exists == null) throw new NotExistsException("Room not exist");
             return exists;
         }

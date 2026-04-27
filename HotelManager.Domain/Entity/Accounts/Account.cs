@@ -22,7 +22,6 @@ namespace HotelManager.Domain.Entity.Accounts
             Username = username;
             ChangeRole(RoleAccount.Customer);
             IsActive = true;
-            User = new User(this.Id);
         }
         public void ChangePasswordHash(string newPasswordHash)
         {

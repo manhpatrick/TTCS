@@ -41,9 +41,14 @@ namespace HotelManager.Application.Converters
             {
                 Id = room.Id,
                 Name = room.Name,
+                Description = room.Description,
                 Capacity = room.Capacity,
+                Category = room.Category,
+                RoomStatus = room.RoomStatus,
                 PricePerNight = room.PricePerNight,
+                ThumbnailUrl = room.ThumbnailUrl,
                 AverageStar = room.AverageStar,
+                TotalRatingCount = room.TotalRatingCount,
                 TotalReviews = room.TotalRatingCount
             };
         }

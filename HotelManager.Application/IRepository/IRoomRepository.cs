@@ -6,6 +6,7 @@ namespace HotelManager.Application.IRepository
 {
     public interface IRoomRepository : IGenericRepository<Room>
     {
+        Task<IEnumerable<Room>> GetListRooms();
         Task<IEnumerable<Room>> GetRoomsByCategory(CategoryRoom category);
         Task<IEnumerable<Room>> GetRoomsByStatus(RoomStatus status);
         Task<Room> GetRoomById(int id);

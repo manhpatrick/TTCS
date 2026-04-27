@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Xác thực người dùng</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="/css/auth-messages.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e9e8e7",
+                        "background": "#faf9f8",
+                        "surface-tint": "#2a657e",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "secondary-fixed-dim": "#e9c176",
+                        "on-tertiary-fixed": "#211a14",
+                        "on-secondary-fixed": "#261900",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f4f3f2",
+                        "on-tertiary-fixed-variant": "#4e453d",
+                        "on-primary-fixed-variant": "#044d65",
+                        "tertiary": "#352d26",
+                        "surface-variant": "#e3e2e1",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#eee0d5",
+                        "inverse-primary": "#96ceeb",
+                        "on-background": "#1a1c1c",
+                        "on-surface-variant": "#40484c",
+                        "tertiary-container": "#4c433b",
+                        "on-error-container": "#93000a",
+                        "inverse-surface": "#2f3130",
+                        "tertiary-fixed-dim": "#d2c4b9",
+                        "secondary": "#775a19",
+                        "primary-fixed-dim": "#96ceeb",
+                        "on-surface": "#1a1c1c",
+                        "on-secondary-fixed-variant": "#5d4201",
+                        "on-secondary": "#ffffff",
+                        "surface-container": "#eeeeed",
+                        "surface": "#faf9f8",
+                        "on-primary-fixed": "#001f2b",
+                        "surface-dim": "#dadad9",
+                        "secondary-fixed": "#ffdea5",
+                        "primary-container": "#004b63",
+                        "on-primary-container": "#83bad6",
+                        "surface-container-highest": "#e3e2e1",
+                        "primary": "#003345",
+                        "on-secondary-container": "#785a1a",
+                        "outline": "#71787d",
+                        "inverse-on-surface": "#f1f0f0",
+                        "secondary-container": "#fed488",
+                        "error-container": "#ffdad6",
+                        "surface-bright": "#faf9f8",
+                        "on-tertiary-container": "#bdb0a5",
+                        "primary-fixed": "#bfe8ff",
+                        "outline-variant": "#c0c7cd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Manrope', sans-serif; }
+        h1, h2, h3, .serif { font-family: 'Noto Serif', serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+        .glass-effect { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .glass-nav {
+            background: rgba(250, 249, 248, 0.8);
+            backdrop-filter: blur(24px);
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+    <nav class="fixed top-0 w-full z-50 glass-nav transition-colors duration-300">
+        <div class="flex justify-between items-center px-12 py-6 mx-auto">
+            <div class="flex items-center gap-12">
+                <a class="text-2xl font-headline italic text-primary tracking-tight" href="/">The Editorial Concierge</a>
+                <div class="hidden md:flex items-center gap-8 font-headline text-lg tracking-tight">
+                    <a class="text-primary/70 hover:text-secondary transition-all duration-300" href="/">Trang chủ</a>
+                    <a class="text-primary/70 hover:text-secondary transition-all duration-300" href="/room.html">Phòng</a>
+                    <a class="text-primary/70 hover:text-secondary transition-all duration-300" href="/service.html">Dịch vụ</a>
+                    <a class="text-primary/70 hover:text-secondary transition-all duration-300" href="/booking.html">Đặt ngay</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow pt-24 flex items-stretch justify-center relative overflow-hidden">
+        <div class="absolute inset-0 z-0 flex flex-row">
+            <div class="hidden lg:block w-7/12 h-screen sticky top-0 relative">
+                <img alt="Luxury hotel interior" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByW9O43Acvj9mZy6VydRInWQCuy3o0BBfBQHxM9YYyM_ABvjgnvjy7R6Qnbn2fWjx78lW8KG6u9vT8yh1scsm_DYC2WNpCJLiOVTkJHpp8UuSlsvn4OySpgsNwRlgQE07dxjmdMk4FHnaiAO-vnMTONtiP-_JcrnCs6UA0AZypItbEjhDSUDTFwSpBsvgUHRLuPI49D1eN-SDffXPp0hSPfb9jyVEC736NYoeP7RBhJ1m5rfOWU1pDKPvM1nhvuABOCZokwliPtdym" />
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent to-background"></div>
+            </div>
+            <div class="w-full lg:w-5/12 bg-background"></div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-xl px-6 py-12 lg:ml-auto lg:mr-24 flex items-center">
+            <div class="bg-surface-container-lowest/90 glass-effect p-10 lg:p-14 rounded-xl shadow-2xl shadow-stone-200/40 border border-outline-variant/10 w-full">
+                
+                <div class="mb-10 text-center lg:text-left">
+                    <h1 class="text-4xl lg:text-5xl font-serif italic tracking-tight text-primary mb-3">Tham gia hành trình</h1>
+                    <p class="text-stone-500 font-body text-sm tracking-wide uppercase">Kiến tạo những kỷ niệm vô giá</p>
+                </div>
+
+                <div class="flex space-x-8 mb-10 border-b border-surface-container-high">
+                    <a href="#signin" id="signinTab" class="pb-4 text-primary font-bold border-b-2 border-secondary transition-all block cursor-pointer">
+                        Đăng nhập
+                    </a>
+                    <a href="#signup" id="signupTab" class="pb-4 text-stone-400 font-medium hover:text-primary transition-all block cursor-pointer border-b-2 border-transparent">
+                        Đăng ký
+                    </a>
+                </div>
+
+                <form id="signinForm" class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Email</label>
+                        <input class="w-full px-5 py-4 bg-surface-container-low rounded-lg focus:bg-surface-container-highest transition-all outline-none text-primary border-none placeholder-stone-400" placeholder="Email của bạn" type="text" />
+                    </div>
+                    <div>
+                    <div class="mb-2">
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant">Mật khẩu</label>
+                    </div>
+                    <input class="w-full px-5 py-4 bg-surface-container-low rounded-lg focus:bg-surface-container-highest transition-all outline-none text-primary border-none placeholder-stone-400" placeholder="Hãy nhập mật khẩu" type="password" />   
+                        <div class="text-right mt-2">
+                            <a class="text-xs font-medium text-secondary hover:underline underline-offset-4" href="#">Quên mật khẩu?</a>
+                        </div>
+                    </div>
+                     <div class="auth-messages" id="signinMessages" style="display: none;"></div>
+                    <button type="submit" class="w-full py-5 bg-gradient-to-r from-primary to-primary-container text-white font-bold rounded-lg shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity tracking-wider uppercase text-sm">
+                        Đăng nhập vào hệ thống
+                    </button>
+                </form>
+
+                <form id="signupForm" class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Email</label>
+                        <input class="w-full px-5 py-4 bg-surface-container-low rounded-lg focus:bg-surface-container-highest transition-all outline-none text-primary border-none placeholder-stone-400" placeholder="Email của bạn" type="text" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Mật khẩu</label>
+                        <input class="w-full px-5 py-4 bg-surface-container-low rounded-lg focus:bg-surface-container-highest transition-all outline-none text-primary border-none placeholder-stone-400" placeholder="Mật khẩu mới" type="password" />
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Nhập lại mật khẩu</label>
+                        <input class="w-full px-5 py-4 bg-surface-container-low rounded-lg focus:bg-surface-container-highest transition-all outline-none text-primary border-none placeholder-stone-400" placeholder="Xác nhận mật khẩu" type="password" />
+                    </div>
+                    <div class="auth-messages" id="signupMessages" style="display: none;"></div>
+                    <div class="flex items-center space-x-3">
+                        <input class="w-5 h-5 rounded border-stone-300 text-primary focus:ring-primary-container cursor-pointer" type="checkbox" required />
+                        
+                        <label class="text-sm text-on-surface-variant font-medium">
+                            Tôi đồng ý với các 
+                            <a href="/policy" target="_blank" class="text-secondary hover:underline font-bold">điều khoản và chính sách</a> 
+                        </label>
+                    </div>
+                    <button type="submit" class="w-full py-5 bg-gradient-to-r from-primary to-primary-container text-white font-bold rounded-lg shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity tracking-wider uppercase text-sm">
+                        Đăng ký tài khoản mới
+                    </button>
+                </form>
+
+                <div class="mt-12">
+                    <div class="relative flex items-center mb-8">
+                        <div class="flex-grow border-t border-surface-container-high"></div>
+                        <span class="flex-shrink mx-4 text-xs font-bold uppercase tracking-widest text-stone-400">Hoặc tiếp tục với</span>
+                        <div class="flex-grow border-t border-surface-container-high"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button class="flex items-center justify-center space-x-3 py-4 border border-outline-variant/30 rounded-lg hover:bg-stone-50 transition-all group">
+                            <svg class="w-5 h-5 group-hover:scale-110 transition-transform" viewbox="0 0 24 24">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"></path>
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+                            </svg>
+                            <span class="text-sm font-semibold text-primary">Google</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="w-full rounded-t-3xl bg-surface-container-low text-primary font-body shrink-0">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-16 py-20 max-w-screen-2xl mx-auto">
+            <div class="col-span-1 md:col-span-1 space-y-6">
+                <h3 class="text-xl font-headline text-primary">The Editorial Concierge</h3>
+                <p class="text-on-surface-variant text-sm leading-relaxed">Định nghĩa lại sự sang trọng thông qua những trải nghiệm được chọn lọc kỹ lưỡng và dịch vụ tận tâm.</p>
+                <div class="flex gap-4">
+                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">social_leaderboard</span></a>
+                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">photo_camera</span></a>
+                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">play_circle</span></a>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Khám phá</h4>
+                <ul class="space-y-4 text-sm text-on-surface-variant">
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Các hạng phòng</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Trải nghiệm ẩm thực</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Chương trình thành viên</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Thư viện hình ảnh</a></li>
+                </ul>
+            </div>
+            <div class="space-y-6">
+                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Công ty</h4>
+                <ul class="space-y-4 text-sm text-on-surface-variant">
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Terms of Service</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Sustainability</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Press</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="space-y-6">
+                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Liên hệ</h4>
+                <p class="text-sm text-on-surface-variant leading-relaxed">123 Đường Editorial, Quận 1,<br />Thành phố Hồ Chí Minh, Việt Nam<br /><br />T: +84 (0) 28 3824 1234<br />E: concierge@editorial.com</p>
+            </div>
+        </div>
+        <div class="px-16 py-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center text-xs text-on-surface-variant gap-4">
+            <p>© 2024 The Editorial Concierge. All rights reserved.</p>
+            <div class="flex gap-8">
+                <a class="hover:text-primary" href="#">Chính sách bảo mật</a>
+                <a class="hover:text-primary" href="#">Điều khoản sử dụng</a>
+                <a class="hover:text-primary" href="#">Sơ đồ trang web</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const signinTab = document.getElementById('signinTab');
+        const signupTab = document.getElementById('signupTab');
+        const signinForm = document.getElementById('signinForm');
+        const signupForm = document.getElementById('signupForm');
+
+        const activeTabClasses = ['text-primary', 'font-bold', 'border-secondary'];
+        const inactiveTabClasses = ['text-stone-400', 'font-medium', 'border-transparent', 'hover:text-primary'];
+
+        function handleHashChange() {
+            const hash = window.location.hash;
+
+            if (hash === '#signup') {
+                signinForm.classList.add('hidden');
+                signupForm.classList.remove('hidden');
+
+                signupTab.classList.remove(...inactiveTabClasses);
+                signupTab.classList.add(...activeTabClasses);
+
+                signinTab.classList.remove(...activeTabClasses);
+                signinTab.classList.add(...inactiveTabClasses);
+            } else {
+                signupForm.classList.add('hidden');
+                signinForm.classList.remove('hidden');
+
+                // Đổi style Tab Đăng nhập sang Active
+                signinTab.classList.remove(...inactiveTabClasses);
+                signinTab.classList.add(...activeTabClasses);
+
+                // Đổi style Tab Đăng ký sang Inactive
+                signupTab.classList.remove(...activeTabClasses);
+                signupTab.classList.add(...inactiveTabClasses);
+            }
+        }
+
+        window.addEventListener('hashchange', handleHashChange);
+
+        if (!window.location.hash) {
+            window.location.hash = '#signin';
+        }
+        handleHashChange();
+
+        // Add click handlers to tab links
+        signinTab.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.hash = '#signin';
+        });
+
+        signupTab.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.hash = '#signup';
+        });
+        
+        document.addEventListener('submit', async function(event){
+            if (event.target.id === 'signinForm') {
+                event.preventDefault();
+                const email = event.target.querySelector('input[type="text"]').value.trim();
+                const password = event.target.querySelector('input[type="password"]').value.trim();
+                const errors = [];
+                
+                if(!email) {
+                    errors.push('Vui lòng nhập email.');
+                }
+                if(!password) {
+                    errors.push('Vui lòng nhập mật khẩu.');
+                }
+                if(errors.length >0){
+                    showAuthMessage('signinMessages', errors[0], 'error');
+                    return;
+                }
+                try {
+                    const response = await fetch('/api/auth/login', {
+                        method:'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ Username: email, Password: password })
+                    })
+                    const data = await response.json();
+                    if(!response.ok || data.success === false) {
+                        throw new Error(data.error || data.message || 'Đăng nhập thất bại');
+                    }
+                    showAuthMessage('signinMessages', 'Đăng nhập thành công!', 'success');
+                    localStorage.setItem('userToken', data.accessToken);
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 500);
+                } catch (error) {
+                    showAuthMessage('signinMessages', [error.message], 'error');
+                }
+            }
+            
+            if (event.target.id === 'signupForm') {
+                event.preventDefault();
+                const email = event.target.querySelector('input[type="text"]').value.trim();
+                const password = event.target.querySelectorAll('input[type="password"]')[0].value
+                const confirmPassword = event.target.querySelectorAll('input[type="password"]')[1].value
+                const errors = [];
+                if(!email) {
+                    errors.push('Vui lòng nhập email.');
+                }
+                if(!password) {
+                    errors.push('Vui lòng nhập mật khẩu.');
+                }
+                if(password !== confirmPassword) {
+                    errors.push('Mật khẩu không khớp.');
+                }
+                if(errors.length > 0) {
+                    showAuthMessage('signupMessages', errors[0], 'error');
+                    return;
+                }
+                try {
+                    const response = await fetch('/api/auth/register', {
+                        method:'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ Username: email, Password: password })
+                    })
+                    const data = await response.json();
+                    if(!response.ok || data.success === false) {
+                        throw new Error(data.error || data.message || 'Đăng ký thất bại');
+                    }
+                    showAuthMessage('signupMessages', 'Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/user_auth.html#signin';
+                    }, 1500);
+                } catch (error) {
+                    showAuthMessage('signupMessages', [error.message], 'error');
+                }
+            }
+        });
+        
+        function showAuthMessage(containerId, messages, type = 'error') {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            container.style.display = 'block';
+            
+            if (Array.isArray(messages)) {
+            container.innerHTML = messages.map(msg => `<div class="auth-message ${type}">${msg}</div>`).join('');
+            } else {
+            container.innerHTML = `<div class="auth-message ${type}">${messages}</div>`;
+            }
+        }
+                
+    </script>
+</body>
+</html>

@@ -25,6 +25,7 @@ namespace HotelManager.Application.Converters
                 Unit = service.Unit,
                 IsActive = service.IsActive,
                 ImageUrl = service.ImageUrl,
+                Description = service.Description,
             };
         }
         public ServiceCustomerResponse EntityToDto(Service service)
@@ -37,6 +38,7 @@ namespace HotelManager.Application.Converters
                 Price = service.Price,
                 Unit = service.Unit,
                 ImageUrl = service.ImageUrl,
+                Description = service.Description,
             };
         }
     }

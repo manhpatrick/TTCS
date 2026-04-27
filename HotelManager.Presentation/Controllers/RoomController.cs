@@ -23,9 +23,14 @@ namespace HotelManager.Presentation.Controllers
             return Ok(await _roomService.GetListRooms());
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<RoomDetailsResponse>> GetRoomDetails([FromRoute] int id)
+        {
+            return Ok(await _roomService.GetDetailsRoom(id));
+        }
 
         [HttpGet("{roomId}/ratings")]
-        public async Task<ActionResult<IEnumerable<RatingResponse>>> GetRoomRatings([FromRoute]int roomId)
+        public async Task<ActionResult<IEnumerable<RatingResponse>>> GetRoomRatings([FromRoute] int roomId)
         {
             return Ok(await _ratingService.GetRoomRatings(roomId));
         }
