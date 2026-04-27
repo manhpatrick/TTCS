@@ -14,6 +14,7 @@ namespace HotelManager.Domain.Entity.Services
         public string Unit { get; private set; }
         public bool IsActive { get; private set; }
         public string? ImageUrl { get; private set; }
+        public string? Description { get; private set; }
         public Service(string name, decimal price, string unit, CategoryService category)
         {
             Name = name;
@@ -50,6 +51,10 @@ namespace HotelManager.Domain.Entity.Services
         {
             if(string.IsNullOrWhiteSpace(imageUrl)) throw new DomainException("Image is invalid");
             ImageUrl = imageUrl;
+        }
+        public void ChangeDescription(string? description)
+        {
+            Description = description;
         }
     }
 }

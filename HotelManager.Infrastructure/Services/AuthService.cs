@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace HotelManager.Infrastructure.Services
 {
@@ -29,18 +30,47 @@ namespace HotelManager.Infrastructure.Services
             _passwordHasher = passwordHasher;
             _jwtSettings = jwtsettings.Value;
         }
+        public async Task<RegisterResponse> Register(RegisterRequest registerDTO){
+            try{
+                var exist = await _authRepository.GetAccountByUsername(registerDTO.Username);
+                if (exist != null) 
+                {
+                    return new RegisterResponse { Success = false, Message = "Tài khoản đã tồn tại" };
+                }
 
-        public async Task Register(RegisterRequest registerDTO)
-        {
-            var exist = await _authRepository.GetAccountByUsername(registerDTO.Username);
-            if (exist != null) throw new UsernameAlreadyExistException("Username already exist");
-            if (registerDTO.Password.Length < 6) throw new PasswordIsShortException("Password must long or equal to 6 character");
+                var emailRegex = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+                if (!Regex.IsMatch(registerDTO.Username, emailRegex))
+                {
+                    return new RegisterResponse { Success = false, Message = "Email không hợp lệ" };
+                }
 
-            var newAccount = new Account(registerDTO.Username);
-            var passwordHash = _passwordHasher.HashPassword(newAccount, registerDTO.Password);
-            newAccount.ChangePasswordHash(passwordHash);
-            await _authRepository.Add(newAccount);
+                var passwordRegex = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$";
+                if (!Regex.IsMatch(registerDTO.Password, passwordRegex))
+                {
+                    return new RegisterResponse { Success = false, Message = "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số" };
+                }
 
+                // 1. Tạo Account để đăng nhập
+                var newAccount = new Account(registerDTO.Username);
+                var passwordHash = _passwordHasher.HashPassword(newAccount, registerDTO.Password);
+                newAccount.ChangePasswordHash(passwordHash);
+                
+                await _authRepository.Add(newAccount);
+                await _authRepository.SaveAsync(); // Lưu Account xuống DB để lấy Id
+
+                var newProfile = new User(newAccount.Id); // Tạo User với AccountId
+                newProfile.ChangeEmail(registerDTO.Username); // Set email từ username
+                newProfile.ChangeName("Tên người dùng"); // Set tên mặc định
+
+                await _userRepository.Add(newProfile);
+                await _userRepository.SaveAsync(); // Lưu User profile xuống DB
+
+                return new RegisterResponse { Success = true, Message = "Đăng ký thành công! Bạn có thể đăng nhập ngay." };
+            }
+            catch (Exception ex)
+            {
+                return new RegisterResponse { Success = false, Message = $"Lỗi đăng ký: {ex.Message}" };
+            }
         }
         public async Task<LoginResponse> Login(LoginRequest loginDTO)
         {
@@ -64,7 +94,7 @@ namespace HotelManager.Infrastructure.Services
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
                 audience: _jwtSettings.Audience,
-                claims = claims,
+                claims: claims,
                 expires: DateTime.UtcNow.AddMinutes(double.Parse(_jwtSettings.ExpireMinutes)),
                 signingCredentials: cred
             );

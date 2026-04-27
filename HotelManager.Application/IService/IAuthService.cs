@@ -4,7 +4,7 @@ namespace HotelManager.Application.IService
 {
     public interface IAuthService
     {
-        Task Register(RegisterRequest registerDTO);
+        Task<RegisterResponse> Register(RegisterRequest registerDTO);
         Task<LoginResponse> Login(LoginRequest loginDTO);
     }
 }

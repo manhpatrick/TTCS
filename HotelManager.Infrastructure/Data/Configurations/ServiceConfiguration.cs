@@ -16,7 +16,6 @@ namespace HotelManager.Infrastructure.Data.Configurations
             builder.Property(s => s.Price).IsRequired().HasColumnType("decimal(18,2)");
             builder.Property(s => s.Unit).IsRequired().HasMaxLength(256);
             builder.Property(s => s.IsActive).IsRequired();
-
         }
     }
 }
