@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\HotelManager.Presentation.props" />
-</Project>
