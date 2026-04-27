@@ -1,4 +1,5 @@
 ﻿using HotelManager.Application.DTO.Rooms;
+using HotelManager.Application.IService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManager.Presentation.Controllers
@@ -7,6 +8,26 @@ namespace HotelManager.Presentation.Controllers
     [ApiController]
     public class RoomController : ControllerBase
     {
-        //public Task<ActionResult<IEnumerable<RoomResponse>>>
+        private readonly IRoomService _roomService;
+        private readonly IRatingService _ratingService;
+        public RoomController(IRoomService roomService, IRatingService ratingService)
+        {
+            _roomService = roomService;
+            _ratingService = ratingService;
+        }
+
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<RoomUserListResponse>>> GetAllRooms()
+        {
+            return Ok(await _roomService.GetListRooms());
+        }
+
+
+        [HttpGet("{roomId}/ratings")]
+        public async Task<ActionResult<IEnumerable<RatingResponse>>> GetRoomRatings([FromRoute]int roomId)
+        {
+            return Ok(await _ratingService.GetRoomRatings(roomId));
+        }
     }
 }

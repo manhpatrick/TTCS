@@ -21,3 +21,15 @@ D:\github\HotelManager\HotelManager.Domain\obj\Debug\net9.0\HotelManager.Domain.
 D:\github\HotelManager\HotelManager.Domain\obj\Debug\net9.0\refint\HotelManager.Domain.dll
 D:\github\HotelManager\HotelManager.Domain\obj\Debug\net9.0\HotelManager.Domain.pdb
 D:\github\HotelManager\HotelManager.Domain\obj\Debug\net9.0\ref\HotelManager.Domain.dll
+D:\github\ttcs\hotelmanager\HotelManager.Domain\bin\Debug\net9.0\HotelManager.Domain.deps.json
+D:\github\ttcs\hotelmanager\HotelManager.Domain\bin\Debug\net9.0\HotelManager.Domain.dll
+D:\github\ttcs\hotelmanager\HotelManager.Domain\bin\Debug\net9.0\HotelManager.Domain.pdb
+D:\github\ttcs\hotelmanager\HotelManager.Domain\obj\Debug\net9.0\HotelManager.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\github\ttcs\hotelmanager\HotelManager.Domain\obj\Debug\net9.0\HotelManager.Domain.AssemblyInfoInputs.cache
+D:\github\ttcs\hotelmanager\HotelManager.Domain\obj\Debug\net9.0\HotelManager.Domain.AssemblyInfo.cs
+D:\github\ttcs\hotelmanager\HotelManager.Domain\obj\Debug\net9.0\HotelManager.Domain.csproj.CoreCompileInputs.cache
+D:\github\ttcs\hotelmanager\HotelManager.Domain\obj\Debug\net9.0\HotelManager.Domain.sourcelink.json
+D:\github\ttcs\hotelmanager\HotelManager.Domain\obj\Debug\net9.0\HotelManager.Domain.dll
+D:\github\ttcs\hotelmanager\HotelManager.Domain\obj\Debug\net9.0\refint\HotelManager.Domain.dll
+D:\github\ttcs\hotelmanager\HotelManager.Domain\obj\Debug\net9.0\HotelManager.Domain.pdb
+D:\github\ttcs\hotelmanager\HotelManager.Domain\obj\Debug\net9.0\ref\HotelManager.Domain.dll

@@ -4973,11 +4973,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\github\\HotelManager\\HotelManager.Presentation\\HotelManager.Presentation.csproj",
+      "projectUniqueName": "D:\\github\\ttcs\\hotelmanager\\HotelManager.Presentation\\HotelManager.Presentation.csproj",
       "projectName": "HotelManager.Presentation",
-      "projectPath": "D:\\github\\HotelManager\\HotelManager.Presentation\\HotelManager.Presentation.csproj",
+      "projectPath": "D:\\github\\ttcs\\hotelmanager\\HotelManager.Presentation\\HotelManager.Presentation.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\github\\HotelManager\\HotelManager.Presentation\\obj\\",
+      "outputPath": "D:\\github\\ttcs\\hotelmanager\\HotelManager.Presentation\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4998,14 +4998,14 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\github\\HotelManager\\HotelManager.Application\\HotelManager.Application.csproj": {
-              "projectPath": "D:\\github\\HotelManager\\HotelManager.Application\\HotelManager.Application.csproj"
+            "D:\\github\\ttcs\\hotelmanager\\HotelManager.Application\\HotelManager.Application.csproj": {
+              "projectPath": "D:\\github\\ttcs\\hotelmanager\\HotelManager.Application\\HotelManager.Application.csproj"
             },
-            "D:\\github\\HotelManager\\HotelManager.Domain\\HotelManager.Domain.csproj": {
-              "projectPath": "D:\\github\\HotelManager\\HotelManager.Domain\\HotelManager.Domain.csproj"
+            "D:\\github\\ttcs\\hotelmanager\\HotelManager.Domain\\HotelManager.Domain.csproj": {
+              "projectPath": "D:\\github\\ttcs\\hotelmanager\\HotelManager.Domain\\HotelManager.Domain.csproj"
             },
-            "D:\\github\\HotelManager\\HotelManager.Infrastructure\\HotelManager.Infrastructure.csproj": {
-              "projectPath": "D:\\github\\HotelManager\\HotelManager.Infrastructure\\HotelManager.Infrastructure.csproj"
+            "D:\\github\\ttcs\\hotelmanager\\HotelManager.Infrastructure\\HotelManager.Infrastructure.csproj": {
+              "projectPath": "D:\\github\\ttcs\\hotelmanager\\HotelManager.Infrastructure\\HotelManager.Infrastructure.csproj"
             }
           }
         }

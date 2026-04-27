@@ -1,5 +1,4 @@
-﻿
-using HotelManager.Application.Converters;
+﻿using HotelManager.Application.Converters;
 using HotelManager.Application.CustomException.Rooms;
 using HotelManager.Application.DTO.Bookings;
 using HotelManager.Application.IRepository;

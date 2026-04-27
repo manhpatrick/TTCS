@@ -27,6 +27,8 @@ namespace HotelManager.Infrastructure.AddLayer
             services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IRatingRepository, RatingRepository>();
+            services.AddScoped<IRatingService, RatingService>();
             return services;
         }
     }

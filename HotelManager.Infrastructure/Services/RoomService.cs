@@ -26,10 +26,10 @@ namespace HotelManager.Infrastructure.Services
             await _roomRepository.Add(room);
         }
 
-        public async Task<IEnumerable<RoomListResponse>> GetListRooms()
+        public async Task<IEnumerable<RoomUserListResponse>> GetListRooms()
         {
             var lists = await _roomRepository.GetAllOrder(r => r.Name);
-            return lists.Select(room => _roomConverter.EntityToListDto(room));
+            return lists.Select(room => _roomConverter.EntityToUserListDto(room));
         }
         public async Task<RoomDetailsResponse> GetDetailsRoom(int id)
         {
@@ -37,16 +37,16 @@ namespace HotelManager.Infrastructure.Services
             return _roomConverter.EntityToDto(room);
         }
 
-        public async Task<IEnumerable<RoomListResponse>> GetRoomsByCategory(CategoryRoom category)
+        public async Task<IEnumerable<RoomUserListResponse>> GetRoomsByCategory(CategoryRoom category)
         {
             var lists = await _roomRepository.GetRoomsByCategory(category);
-            return lists.Select(room => _roomConverter.EntityToListDto(room));
+            return lists.Select(room => _roomConverter.EntityToUserListDto(room));
         }
 
-        public async Task<IEnumerable<RoomListResponse>> GetRoomsByStatus(RoomStatus status)
+        public async Task<IEnumerable<RoomUserListResponse>> GetRoomsByStatus(RoomStatus status)
         {
             var lists = await _roomRepository.GetRoomsByStatus(status);
-            return lists.Select(room => _roomConverter.EntityToListDto(room));
+            return lists.Select(room => _roomConverter.EntityToUserListDto(room));
         }
 
         public async Task Remove(int id)
@@ -54,6 +54,7 @@ namespace HotelManager.Infrastructure.Services
             var exists = await _roomRepository.GetById(id);
             await _roomRepository.Remove(exists);
         }
+        
 
         public async Task Update(int id, RoomUpdateRequest request)
         {
@@ -83,6 +84,12 @@ namespace HotelManager.Infrastructure.Services
                 });
             }
             return result;
+        }
+
+        public async Task<IEnumerable<RoomAdminListResponse>> GetListRoomsAdmin()
+        {
+            var lists = await _roomRepository.GetAllOrder(r => r.Name);
+            return lists.Select(room => _roomConverter.EntityToAdminListDto(room));
         }
     }
 }

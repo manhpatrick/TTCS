@@ -1085,11 +1085,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\github\\HotelManager\\HotelManager.Application\\HotelManager.Application.csproj",
+      "projectUniqueName": "D:\\github\\ttcs\\hotelmanager\\HotelManager.Application\\HotelManager.Application.csproj",
       "projectName": "HotelManager.Application",
-      "projectPath": "D:\\github\\HotelManager\\HotelManager.Application\\HotelManager.Application.csproj",
+      "projectPath": "D:\\github\\ttcs\\hotelmanager\\HotelManager.Application\\HotelManager.Application.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\github\\HotelManager\\HotelManager.Application\\obj\\",
+      "outputPath": "D:\\github\\ttcs\\hotelmanager\\HotelManager.Application\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -1110,8 +1110,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\github\\HotelManager\\HotelManager.Domain\\HotelManager.Domain.csproj": {
-              "projectPath": "D:\\github\\HotelManager\\HotelManager.Domain\\HotelManager.Domain.csproj"
+            "D:\\github\\ttcs\\hotelmanager\\HotelManager.Domain\\HotelManager.Domain.csproj": {
+              "projectPath": "D:\\github\\ttcs\\hotelmanager\\HotelManager.Domain\\HotelManager.Domain.csproj"
             }
           }
         }
