@@ -35,9 +35,9 @@ namespace HotelManager.Application.Converters
 
             };
         }
-        public RoomListResponse EntityToListDto(Room room)
+        public RoomUserListResponse EntityToUserListDto(Room room)
         {
-            return new RoomListResponse
+            return new RoomUserListResponse
             {
                 Id = room.Id,
                 Name = room.Name,
@@ -45,6 +45,26 @@ namespace HotelManager.Application.Converters
                 PricePerNight = room.PricePerNight,
                 AverageStar = room.AverageStar,
                 TotalReviews = room.TotalRatingCount
+            };
+        }
+        public RoomAdminListResponse EntityToAdminListDto(Room room)
+        {
+            if (room == null) return null;
+
+            return new RoomAdminListResponse
+            {
+                Id = room.Id,
+                Name = room.Name,
+                Capacity = room.Capacity,
+                PricePerNight = room.PricePerNight,
+                ThumbnailUrl = room.ThumbnailUrl,
+                AverageStar = room.AverageStar,
+                TotalReviews = room.TotalRatingCount,
+
+                // Các trường nội bộ dành riêng cho Admin
+                Category = room.Category,
+                RoomStatus = room.RoomStatus,
+                BookingCount = room.BookingCount
             };
         }
     }

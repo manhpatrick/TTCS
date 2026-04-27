@@ -14,9 +14,9 @@ namespace HotelManager.Presentation.Controllers.Admin
             _roomService = roomService;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RoomListResponse>>> GetAllRooms()
+        public async Task<ActionResult<IEnumerable<RoomAdminListResponse>>> GetAllRooms()
         {
-            return Ok(await _roomService.GetListRooms());
+            return Ok(await _roomService.GetListRoomsAdmin());
         }
         [HttpPost]
         public async Task<IActionResult> Add([FromBody]RoomRequest request)

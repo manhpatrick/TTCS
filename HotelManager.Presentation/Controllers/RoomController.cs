@@ -9,14 +9,16 @@ namespace HotelManager.Presentation.Controllers
     public class RoomController : ControllerBase
     {
         private readonly IRoomService _roomService;
-
-        public RoomController(IRoomService roomService)
+        private readonly IRatingService _ratingService;
+        public RoomController(IRoomService roomService, IRatingService ratingService)
         {
             _roomService = roomService;
+            _ratingService = ratingService;
         }
 
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RoomListResponse>>> GetAllRooms()
+        public async Task<ActionResult<IEnumerable<RoomUserListResponse>>> GetAllRooms()
         {
             return Ok(await _roomService.GetListRooms());
         }
@@ -27,5 +29,10 @@ namespace HotelManager.Presentation.Controllers
             return Ok(await _roomService.GetDetailsRoom(id));
         }
 
+        [HttpGet("{roomId}/ratings")]
+        public async Task<ActionResult<IEnumerable<RatingResponse>>> GetRoomRatings([FromRoute] int roomId)
+        {
+            return Ok(await _ratingService.GetRoomRatings(roomId));
+        }
     }
 }

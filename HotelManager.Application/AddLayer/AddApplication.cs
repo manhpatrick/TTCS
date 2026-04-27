@@ -13,6 +13,7 @@ namespace HotelManager.Application.AddLayer
             services.AddScoped<ServiceConverter>();
             services.AddScoped<BookingConverter>();
             services.AddScoped<NotificationConverter>();
+            services.AddScoped<RatingConverter>();
             return services;
         }
     }

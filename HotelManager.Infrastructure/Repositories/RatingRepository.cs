@@ -1,6 +1,17 @@
-﻿namespace HotelManager.Infrastructure.Repositories
+﻿using HotelManager.Application.IRepository;
+using HotelManager.Domain.Entity.Ratings;
+using HotelManager.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace HotelManager.Infrastructure.Repositories
 {
-    class RatingRepository
+    public class RatingRepository :  GenericRepository<Rating>, IRatingRepository
     {
+        public RatingRepository(AppDbContext context) : base(context) { }
+
+        public async Task<IEnumerable<Rating>> GetRatingsByRoomId(int roomId)
+        {
+            return await _dbSet.Where(r => r.Booking.RoomId == roomId).ToListAsync();
+        }
     }
 }

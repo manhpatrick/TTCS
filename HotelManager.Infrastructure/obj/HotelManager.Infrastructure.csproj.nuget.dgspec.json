@@ -1,39 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "D:\\github\\HotelManager\\HotelManager.Infrastructure\\HotelManager.Infrastructure.csproj": {}
+    "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Infrastructure\\HotelManager.Infrastructure.csproj": {}
   },
   "projects": {
-    "D:\\github\\HotelManager\\HotelManager.Application\\HotelManager.Application.csproj": {
+    "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Application\\HotelManager.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\github\\HotelManager\\HotelManager.Application\\HotelManager.Application.csproj",
+        "projectUniqueName": "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Application\\HotelManager.Application.csproj",
         "projectName": "HotelManager.Application",
-        "projectPath": "D:\\github\\HotelManager\\HotelManager.Application\\HotelManager.Application.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\github\\HotelManager\\HotelManager.Application\\obj\\",
+        "projectPath": "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Application\\HotelManager.Application.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Application\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\github\\HotelManager\\HotelManager.Domain\\HotelManager.Domain.csproj": {
-                "projectPath": "D:\\github\\HotelManager\\HotelManager.Domain\\HotelManager.Domain.csproj"
+              "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Domain\\HotelManager.Domain.csproj": {
+                "projectPath": "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Domain\\HotelManager.Domain.csproj"
               }
             }
           }
@@ -48,7 +42,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -79,32 +73,26 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.205/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\github\\HotelManager\\HotelManager.Domain\\HotelManager.Domain.csproj": {
+    "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Domain\\HotelManager.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\github\\HotelManager\\HotelManager.Domain\\HotelManager.Domain.csproj",
+        "projectUniqueName": "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Domain\\HotelManager.Domain.csproj",
         "projectName": "HotelManager.Domain",
-        "projectPath": "D:\\github\\HotelManager\\HotelManager.Domain\\HotelManager.Domain.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\github\\HotelManager\\HotelManager.Domain\\obj\\",
+        "projectPath": "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Domain\\HotelManager.Domain.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Domain\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -123,7 +111,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -144,43 +132,37 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.205/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\github\\HotelManager\\HotelManager.Infrastructure\\HotelManager.Infrastructure.csproj": {
+    "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Infrastructure\\HotelManager.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\github\\HotelManager\\HotelManager.Infrastructure\\HotelManager.Infrastructure.csproj",
+        "projectUniqueName": "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Infrastructure\\HotelManager.Infrastructure.csproj",
         "projectName": "HotelManager.Infrastructure",
-        "projectPath": "D:\\github\\HotelManager\\HotelManager.Infrastructure\\HotelManager.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\github\\HotelManager\\HotelManager.Infrastructure\\obj\\",
+        "projectPath": "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Infrastructure\\HotelManager.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\github\\HotelManager\\HotelManager.Application\\HotelManager.Application.csproj": {
-                "projectPath": "D:\\github\\HotelManager\\HotelManager.Application\\HotelManager.Application.csproj"
+              "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Application\\HotelManager.Application.csproj": {
+                "projectPath": "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Application\\HotelManager.Application.csproj"
               },
-              "D:\\github\\HotelManager\\HotelManager.Domain\\HotelManager.Domain.csproj": {
-                "projectPath": "D:\\github\\HotelManager\\HotelManager.Domain\\HotelManager.Domain.csproj"
+              "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Domain\\HotelManager.Domain.csproj": {
+                "projectPath": "c:\\Users\\Admin\\Desktop\\HotelManager_TTCS\\HotelManager.Domain\\HotelManager.Domain.csproj"
               }
             }
           }
@@ -195,7 +177,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.200"
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net9.0": {
@@ -248,7 +230,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.205/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
