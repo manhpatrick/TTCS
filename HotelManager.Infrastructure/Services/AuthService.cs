@@ -101,7 +101,8 @@ namespace HotelManager.Infrastructure.Services
             return new LoginResponse
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                ExpiredAt = token.ValidTo
+                ExpiredAt = token.ValidTo,
+                FullName = exist.User.Name
             };
         }
 

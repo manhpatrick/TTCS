@@ -328,6 +328,7 @@
                     }
                     showAuthMessage('signinMessages', 'Đăng nhập thành công!', 'success');
                     localStorage.setItem('userToken', data.accessToken);
+                    localStorage.setItem('demo_auth_user', data.fullName || data.username);
                     setTimeout(() => {
                         window.location.href = '/';
                     }, 500);

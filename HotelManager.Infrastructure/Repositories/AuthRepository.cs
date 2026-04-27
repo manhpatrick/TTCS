@@ -12,7 +12,7 @@ namespace HotelManager.Infrastructure.Repositories
 
         public async Task<Account?> GetAccountByUsername(string username)
         {
-            var exist =  await _dbSet.FirstOrDefaultAsync(a => a.Username == username);
+            var exist =  await _dbSet.Include(a => a.User).FirstOrDefaultAsync(a => a.Username == username);
             return exist;
         }
     }

@@ -30,7 +30,7 @@ namespace HotelManager.Presentation.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<LoginResponse>> Login([FromBody]LoginRequest dto)
         {
-            return await _authService.Login(dto);
+            return Ok(await _authService.Login(dto));
         }
     }
 }
