@@ -65,6 +65,20 @@ namespace HotelManager.Infrastructure.Services
             if (request.Category != null) exists.ChangeCategoryRoom(request.Category.Value);
             if (request.RoomStatus != null) exists.ChangeRoomStatus(request.RoomStatus.Value);
             if (request.PricePerNight != null) exists.ChangePricePerNight(request.PricePerNight.Value);
+            if (request.ImageUrls != null)
+            {
+                var incomingUrls = request.ImageUrls.Select(x => x.ImageUrl).ToList();
+
+                var imagesToRemove = exists.RoomImages.Where(dbImg => !incomingUrls.Contains(dbImg.ImageUrl)).ToList();
+                foreach(var imageUrl in imagesToRemove)
+                {
+                    exists.RemoveImage(imageUrl);
+                }
+                foreach(var imageUrl in request.ImageUrls)
+                {
+                    exists.AddImage(imageUrl.ImageUrl, imageUrl.IsThumbnail);
+                }
+            }
             await _roomRepository.SaveAsync();
         }
         

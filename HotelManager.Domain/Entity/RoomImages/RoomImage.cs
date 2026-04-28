@@ -20,7 +20,7 @@ namespace HotelManager.Domain.Entity.RoomImages
         public bool IsThumbnail { get; private set; }
         public int SortOrder { get; private set; }
 
-        internal RoomImage(string imageUrl, Room room, bool isThumbnail, int sortOrder)
+        public RoomImage(string imageUrl, Room room, bool isThumbnail, int sortOrder)
         {
             if (string.IsNullOrWhiteSpace(imageUrl)) throw new DomainException("Link ảnh không được trống");
 
@@ -32,7 +32,7 @@ namespace HotelManager.Domain.Entity.RoomImages
 
         
 
-        internal void SetThumbnail(bool value)
+        public void SetThumbnail(bool value)
         {
             IsThumbnail = value;
         }

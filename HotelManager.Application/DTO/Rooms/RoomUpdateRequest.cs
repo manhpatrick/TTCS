@@ -1,4 +1,5 @@
-﻿using HotelManager.Domain.Entity.Rooms.Enum;
+﻿using HotelManager.Application.DTO.Rooms;
+using HotelManager.Domain.Entity.Rooms.Enum;
 using System.ComponentModel.DataAnnotations;
 
 public class RoomUpdateRequest
@@ -15,4 +16,5 @@ public class RoomUpdateRequest
     public RoomStatus? RoomStatus { get; set; }
 
     public decimal? PricePerNight { get; set; }
+    public List<UpdateRoomImageRequest>? ImageUrls { get; set; } 
 }
