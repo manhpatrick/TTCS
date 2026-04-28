@@ -36,5 +36,7 @@ namespace HotelManager.Presentation.Controllers.Admin
             await _roomService.Remove(id);
             return Ok();
         }
+
+
     }
 }

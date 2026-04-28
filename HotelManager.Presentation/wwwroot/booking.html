@@ -126,7 +126,7 @@
 
       <section>
         <h2 class="text-2xl font-display text-primary mb-6">Yêu cầu Đặc biệt</h2>
-        <textarea class="w-full bg-surface-container-low border-none rounded-xl p-4 text-on-surface focus:ring-0 focus:bg-surface-container-highest transition-colors placeholder:text-on-surface-variant/50" placeholder="Vui lòng cho chúng tôi biết nếu bạn có yêu cầu về chế độ ăn uống, thời gian dự kiến đến, hoặc kỷ niệm dịp đặc biệt nào đó..." rows="4"></textarea>
+        <textarea id="bookingNote" class="w-full bg-surface-container-low border-none rounded-xl p-4 text-on-surface focus:ring-0 focus:bg-surface-container-highest transition-colors placeholder:text-on-surface-variant/50" placeholder="Vui lòng cho chúng tôi biết nếu bạn có yêu cầu về chế độ ăn uống, thời gian dự kiến đến, hoặc kỷ niệm dịp đặc biệt nào đó..." rows="4"></textarea>
       </section>
     </div>
 
@@ -290,23 +290,21 @@
     });
   }
 
-  function formatVietnameseDate(dateValue) {
-    if (!dateValue) return '';
+    function formatVietnameseDate(dateValue) {
+        if (!dateValue) return '';
 
-    const rawValue = String(dateValue);
-    const isoDateMatch = rawValue.match(/^(\d{4})-(\d{2})-(\d{2})/);
-    if (isoDateMatch) {
-      const [, year, month, day] = isoDateMatch;
-      return `${day}/${month}/${year}`;
+        const parsedDate = new Date(dateValue);
+
+        // Nếu ngày hợp lệ, tự động dịch timezone về máy tính đang mở web (Việt Nam)
+        if (!Number.isNaN(parsedDate.getTime())) {
+            const day = String(parsedDate.getDate()).padStart(2, '0');
+            const month = String(parsedDate.getMonth() + 1).padStart(2, '0');
+            const year = parsedDate.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
+        return String(dateValue);
     }
-
-    const parsedDate = new Date(rawValue);
-    if (Number.isNaN(parsedDate.getTime())) {
-      return rawValue;
-    }
-
-    return parsedDate.toLocaleDateString('vi-VN');
-  }
 
   const SERVICE_CATEGORY_VI = {
     'FOODANDBEVERAGE': 'Ăn uống',
@@ -574,12 +572,18 @@
     const formattedCheckOut = formatVietnameseDate(currentBookingData.checkOut);
     const nights = currentBookingData.numberOfNights;
     const totalPeople = currentBookingData.amountOfPeople || bookingPeopleCount || 1;
-    const formattedPrice = new Intl.NumberFormat('vi-VN').format(currentBookingData.totalPrice);
-    const servicePrice = serviceData.reduce((sum, service) => {
-      const serviceTotal = Number(service.price) * (service.quantity || 0);
-      return sum + serviceTotal;
-    }, 0);
-    const formattedTotalPrice = new Intl.NumberFormat('vi-VN').format(currentBookingData.totalPrice * nights + servicePrice);
+      const basePrice = Number(currentRoomData.pricePerNight || 0);
+
+      const formattedPrice = new Intl.NumberFormat('vi-VN').format(basePrice);
+
+      const servicePrice = serviceData.reduce((sum, service) => {
+          const serviceTotal = Number(service.price) * (service.quantity || 0);
+          return sum + serviceTotal;
+      }, 0);
+
+      // Tính tổng tiền đúng: (Giá gốc x Số đêm) + Tiền dịch vụ
+      const finalTotal = (basePrice * nights) + servicePrice;
+      const formattedTotalPrice = new Intl.NumberFormat('vi-VN').format(finalTotal);
     bookingOverviewModal.innerHTML = `
       <h3 class="text-2xl font-display text-primary mb-6 border-b border-surface-container pb-4">Chi tiết Đặt phòng</h3>
       <div class="mb-8 pb-6 border-b border-outline-variant/20">
@@ -619,7 +623,7 @@
           <div class="text-sm font-medium text-on-surface-variant uppercase tracking-widest font-label">Tổng cộng</div>
           <div class="text-3xl font-display text-primary">${formattedTotalPrice}đ</div>
         </div>
-        <button class="w-full gradient-cta text-on-primary py-4 px-6 rounded-xl font-medium text-lg hover:opacity-90 transition-opacity flex justify-center items-center gap-2">
+        <button id="confirmBookingBtn" onclick="handleConfirmBooking()" class="w-full gradient-cta text-on-primary py-4 px-6 rounded-xl font-medium text-lg hover:opacity-90 transition-opacity flex justify-center items-center gap-2">
           Xác nhận đặt phòng
           <span class="material-symbols-outlined text-secondary-container" style="font-size: 20px;">arrow_forward</span>
         </button>
@@ -672,7 +676,77 @@
     } else {
       document.getElementById('serviceListContainer').innerHTML = "<p>Không có dịch vụ nào được chọn.</p>";
     }
-  }
+    }
+    async function handleConfirmBooking() {
+      const token = getAuthToken();
+       if (!token) {
+        alert("Vui lòng đăng nhập để tiếp tục đặt phòng!");
+        window.location.href = "/user_auth.html#signin";
+        return;
+       }
+
+        // Lấy nội dung ghi chú
+        const noteElement = document.getElementById('bookingNote');
+        const note = noteElement ? noteElement.value : "";
+
+        // Đổi trạng thái nút bấm để tránh click 2 lần
+        const btn = document.getElementById('confirmBookingBtn');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "Đang xử lý...";
+        btn.disabled = true;
+
+        const formatForApi = (dateStr) => {
+            const d = new Date(dateStr);
+            if (Number.isNaN(d.getTime())) return dateStr;
+            return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        };
+
+        // Chuẩn bị payload đúng chuẩn DTO BookingRequest
+        const payload = {
+            roomId: currentBookingData.roomId,
+            note: note,
+            numOfPeople: bookingPeopleCount,
+
+            // SỬA Ở ĐÂY: Dùng formatForApi để gửi đúng ngày 28-29 xuống C#
+            startTime: formatForApi(currentBookingData.checkIn),
+            endTime: formatForApi(currentBookingData.checkOut),
+
+            roomPriceAtBooking: Number(currentRoomData.pricePerNight || 0),
+            listService: serviceData.map(s => ({
+                id: Number(s.id || s.serviceId),
+                quantity: Number(s.quantity || 1)
+            }))
+        };
+
+        try {
+            const response = await fetch('/api/customer/booking', { // <-- Sửa đường dẫn này nếu API của bạn khác
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                alert("Đặt phòng thành công!");
+                sessionStorage.removeItem('roomBookingData');
+                sessionStorage.removeItem('serviceBookingData');
+                // Chuyển về trang profile hoặc dashboard để xem lịch sử
+                window.location.href = "/user_profile.html";
+            } else {
+                const errorData = await response.json();
+                alert("Lỗi đặt phòng: " + (errorData.message || response.statusText));
+            }
+        } catch (error) {
+            console.error("Lỗi kết nối:", error);
+            alert("Không thể kết nối đến máy chủ. Vui lòng thử lại sau.");
+        } finally {
+            // Trả lại trạng thái nút ban đầu nếu có lỗi
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+    }
 
   document.addEventListener('DOMContentLoaded', async () => {
     checkLoginStatus();

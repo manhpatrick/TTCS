@@ -807,15 +807,18 @@ selection:text-on-secondary-container">
             }).join('');
         }
 
-        function initDateAndPrice(price){
+        function initDateAndPrice(price) { // 1. Bỏ từ khóa async ở đây
             const dateSelectorWrapper = document.getElementById('dateSelectorWrapper');
             const displayDate = document.getElementById('displayDate');
             const priceDetailsContainer = document.getElementById('priceDetailsContainer');
-            flatpickr(dateSelectorWrapper, {
-                mode: "range",             
-                minDate: "today",          
-                dateFormat: "d M",         
-                onChange: function(selectedDates, dateStr, instance) {
+
+            // 2. Khởi tạo flatpickr ngay lập tức và gán vào biến fpInstance
+            const fpInstance = flatpickr(dateSelectorWrapper, {
+                mode: "range",
+                minDate: "today",
+                // Tạm thời chưa truyền thuộc tính disable vào đây
+                dateFormat: "d M",
+                onChange: function (selectedDates, dateStr, instance) {
                     if (selectedDates.length === 2) {
                         const checkIn = selectedDates[0];
                         const checkOut = selectedDates[1];
@@ -823,20 +826,22 @@ selection:text-on-secondary-container">
                         selectedCheckOutDate = checkOut.toISOString();
                         const formatDate = (date) => `${date.getDate()} Tháng ${date.getMonth() + 1}, ${date.getFullYear()}`;
                         displayDate.innerText = `${formatDate(checkIn)} - ${formatDate(checkOut)}`;
+
                         const timeDiff = Math.abs(checkOut.getTime() - checkIn.getTime());
-                        const days = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+                        const days = Math.ceil(timeDiff / (1000 * 3600 * 24));
                         calculatedTotal = price * days;
+
                         priceDetailsContainer.classList.remove('hidden');
                         priceDetailsContainer.innerHTML = `
-                            <div class="flex justify-between">
-                                <span class="underline decoration-dotted underline-offset-4">${price.toLocaleString('vi-VN')}đ x ${days} đêm</span>
-                                <span class="font-semibold text-on-surface">${calculatedTotal.toLocaleString('vi-VN')}đ</span>
-                            </div>
-                            <div class="pt-4 mt-2 border-t border-surface-dim/50 flex justify-between items-center text-primary">
-                                <span class="font-bold text-base">Tổng cộng</span>
-                                <span class="font-bold text-xl">${calculatedTotal.toLocaleString('vi-VN')}đ</span>
-                            </div>
-                        `;
+                    <div class="flex justify-between">
+                        <span class="underline decoration-dotted underline-offset-4">${price.toLocaleString('vi-VN')}đ x ${days} đêm</span>
+                        <span class="font-semibold text-on-surface">${calculatedTotal.toLocaleString('vi-VN')}đ</span>
+                    </div>
+                    <div class="pt-4 mt-2 border-t border-surface-dim/50 flex justify-between items-center text-primary">
+                        <span class="font-bold text-base">Tổng cộng</span>
+                        <span class="font-bold text-xl">${calculatedTotal.toLocaleString('vi-VN')}đ</span>
+                    </div>
+                `;
                     } else {
                         selectedCheckInDate = null;
                         selectedCheckOutDate = null;
@@ -846,7 +851,14 @@ selection:text-on-secondary-container">
                     }
                 }
             });
-        }
+
+        // 3. Chạy API ngầm ở background, khi có dữ liệu thì cập nhật vào lịch
+        fetchUnavailableDates(currentRoomId).then(unavailableDates => {
+            if (unavailableDates && unavailableDates.length > 0) {
+                fpInstance.set('disable', unavailableDates);
+            }
+        });
+    }
 
         async function loadRoomDetail(){
             if(!currentRoomId){
@@ -864,7 +876,43 @@ selection:text-on-secondary-container">
             renderRoomInfo(roomData);
             renderBookingModal(roomData);
             renderRoomReviews(roomData);
+    }
+
+    async function fetchUnavailableDates(roomId) {
+        const today = new Date();
+        // Dùng en-CA để ép format về yyyy-mm-dd chuẩn xác
+        const fromStr = today.toLocaleDateString('en-CA');
+
+        const futureDate = new Date(today);
+        futureDate.setMonth(today.getMonth() + 3);
+        const toStr = futureDate.toLocaleDateString('en-CA');
+
+        try {
+            const response = await fetch(`/api/room/${roomId}/available-times?from=${fromStr}&to=${toStr}`);
+            if (!response.ok) {
+                console.error('API lỗi:', response.status);
+                return [];
+            }
+
+            const data = await response.json();
+            console.log("1. Dữ liệu gốc từ API trả về:", data); // <-- XEM LOG NÀY
+
+            // Lọc các ngày KHÔNG khả dụng và chuyển đổi thành đối tượng Date của Javascript
+            const disabledDates = data
+                .filter(item => item.isAvailable === false)
+                .map(item => {
+                    // Đảm bảo flatpickr nhận đúng đối tượng ngày (an toàn hơn chuỗi string)
+                    return new Date(item.date);
+                });
+
+            console.log("2. Các ngày sẽ bị khóa trên lịch:", disabledDates); // <-- XEM LOG NÀY
+
+            return disabledDates;
+        } catch (error) {
+            console.error('Lỗi lấy ngày khóa:', error);
+            return [];
         }
+    }
 
         document.addEventListener('click', function(event){
             if(event.target.id === 'bookBtn'){

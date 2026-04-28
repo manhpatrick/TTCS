@@ -34,5 +34,16 @@ namespace HotelManager.Presentation.Controllers
         {
             return Ok(await _ratingService.GetRoomRatings(roomId));
         }
+
+        // Thêm vào trong HotelManager.Presentation.Controllers.RoomController
+        [HttpGet("{roomId}/available-times")]
+        public async Task<ActionResult<List<AvailableTimeResponse>>> GetAvailableTimes(
+            [FromRoute] int roomId,
+            [FromQuery] DateOnly from,
+            [FromQuery] DateOnly to)
+        {
+            var availableTimes = await _roomService.CalculateAvailableTimes(roomId, from, to);
+            return Ok(availableTimes);
+        }
     }
 }

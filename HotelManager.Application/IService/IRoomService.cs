@@ -13,6 +13,8 @@ namespace HotelManager.Application.IService
         Task Add(RoomRequest request);
         Task Update(int id, RoomUpdateRequest request);
         Task Remove(int id);
-        
+        Task<List<AvailableTimeResponse>> CalculateAvailableTimes(int roomId, DateOnly from, DateOnly to);
+
+
     }
 }
