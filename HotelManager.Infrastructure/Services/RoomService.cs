@@ -2,6 +2,7 @@
 using HotelManager.Application.DTO.Rooms;
 using HotelManager.Application.IRepository;
 using HotelManager.Application.IService;
+using HotelManager.Domain.Entity.Rooms;
 using HotelManager.Domain.Entity.Rooms.Enum;
 
 namespace HotelManager.Infrastructure.Services
@@ -58,25 +59,36 @@ namespace HotelManager.Infrastructure.Services
 
         public async Task Update(int id, RoomUpdateRequest request)
         {
-            var exists = await _roomRepository.GetById(id);
-            if(request.Name != null) exists.ChangeRoomName(request.Name);
-            if (request.Description != null) exists.ChangeDescription(request.Description);
-            if (request.Capacity != null) exists.ChangeCapacity(request.Capacity.Value);
-            if (request.Category != null) exists.ChangeCategoryRoom(request.Category.Value);
-            if (request.RoomStatus != null) exists.ChangeRoomStatus(request.RoomStatus.Value);
-            if (request.PricePerNight != null) exists.ChangePricePerNight(request.PricePerNight.Value);
+            var exist = await _roomRepository.GetById(id);
+            if(request.Name != null) exist.ChangeRoomName(request.Name);
+            if (request.Description != null) exist.ChangeDescription(request.Description);
+            if (request.Capacity != null) exist.ChangeCapacity(request.Capacity.Value);
+            if (request.Category != null) exist.ChangeCategoryRoom(request.Category.Value);
+            if (request.RoomStatus != null) exist.ChangeRoomStatus(request.RoomStatus.Value);
+            if (request.PricePerNight != null) exist.ChangePricePerNight(request.PricePerNight.Value);
             if (request.ImageUrls != null)
             {
                 var incomingUrls = request.ImageUrls.Select(x => x.ImageUrl).ToList();
 
-                var imagesToRemove = exists.RoomImages.Where(dbImg => !incomingUrls.Contains(dbImg.ImageUrl)).ToList();
+                var imagesToRemove = exist.RoomImages.Where(dbImg => !incomingUrls.Contains(dbImg.ImageUrl)).ToList();
                 foreach(var imageUrl in imagesToRemove)
                 {
-                    exists.RemoveImage(imageUrl);
+                    exist.RemoveImage(imageUrl);
                 }
-                foreach(var imageUrl in request.ImageUrls)
+                foreach(var imgRequest in request.ImageUrls)
                 {
-                    exists.AddImage(imageUrl.ImageUrl, imageUrl.IsThumbnail);
+                    var existingImage = exist.RoomImages.FirstOrDefault(x => x.ImageUrl == imgRequest.ImageUrl);
+                    if (existingImage != null)
+                    {
+                        // NẾU LÀ ẢNH CŨ -> GIỮ NGUYÊN
+                        // Chỉ thay đổi trạng thái "Ảnh bìa" nếu người dùng chọn lại trên UI
+                        exist.SetThumbnail(imgRequest.ImageUrl, imgRequest.IsThumbnail);
+                    }
+                    else
+                    {
+                        // NẾU LÀ ẢNH MỚI TINH -> GỌI HÀM THÊM
+                        exist.AddImage(imgRequest.ImageUrl, imgRequest.IsThumbnail);
+                    }
                 }
             }
             await _roomRepository.SaveAsync();
