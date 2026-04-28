@@ -420,20 +420,33 @@
     }
   }
 
-  function updateServiceQuantity(index, delta) {
-    serviceData = JSON.parse(sessionStorage.getItem('serviceBookingData') || '[]');
-    if (serviceData[index]) {
-      let currentQty = serviceData[index].quantity || 1;
-      let newQty = Math.max(1, currentQty + delta);
-      serviceData[index].quantity = newQty;
-      sessionStorage.setItem('serviceBookingData', JSON.stringify(serviceData));
-      const qtySpan = document.querySelector(`span.qty-value[data-index="${index}"]`);
-      if (qtySpan) {
-        qtySpan.innerText = newQty;
-      }
-      renderServiceList();
+    function updateServiceQuantity(index, delta) {
+        // 1. Lấy dữ liệu mới nhất từ Storage
+        serviceData = JSON.parse(sessionStorage.getItem('serviceBookingData') || '[]');
+
+        if (serviceData[index]) {
+            // 2. Cập nhật số lượng
+            let currentQty = serviceData[index].quantity || 1;
+            let newQty = Math.max(1, currentQty + delta);
+            serviceData[index].quantity = newQty;
+
+            // 3. Lưu lại vào Storage
+            sessionStorage.setItem('serviceBookingData', JSON.stringify(serviceData));
+
+            // 4. Cập nhật con số hiển thị ở danh sách chọn (bên trái)
+            const qtySpan = document.querySelector(`span.qty-value[data-index="${index}"]`);
+            if (qtySpan) {
+                qtySpan.innerText = newQty;
+            }
+
+            // 5. Cập nhật lại khung Chi tiết đặt phòng (bên phải)
+            // QUAN TRỌNG: Phải gọi renderBookingModal trước để vẽ khung và tính tổng tiền
+            renderBookingModal();
+
+            // Sau đó gọi renderServiceList ngay lập tức để đổ danh sách vào cái khung vừa vẽ
+            renderServiceList();
+        }
     }
-  }
 
   function renderRoomCard(data) {
     const roomDataContainer = document.getElementById('roomDataContainer');
