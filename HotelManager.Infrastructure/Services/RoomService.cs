@@ -59,7 +59,7 @@ namespace HotelManager.Infrastructure.Services
 
         public async Task Update(int id, RoomUpdateRequest request)
         {
-            var exist = await _roomRepository.GetById(id);
+            var exist = await _roomRepository.GetRoomById(id);
             if(request.Name != null) exist.ChangeRoomName(request.Name);
             if (request.Description != null) exist.ChangeDescription(request.Description);
             if (request.Capacity != null) exist.ChangeCapacity(request.Capacity.Value);

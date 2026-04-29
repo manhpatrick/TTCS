@@ -63,11 +63,14 @@ namespace HotelManager.Domain.Entity.Rooms
         }
         public void AddImage(string imageUrl, bool isThumbnail = false)
         {
-            if (isThumbnail)
+            if (isThumbnail || _roomImages.Any())
             {
-                foreach (var img in _roomImages)
+                foreach (var img in _roomImages) {
                     img.SetThumbnail(false);
+                }
+                ThumbnailUrl = imageUrl;
             }
+
 
             var sortOrder = _roomImages.Count + 1;
 
@@ -77,14 +80,65 @@ namespace HotelManager.Domain.Entity.Rooms
                 isThumbnail || !_roomImages.Any(),
                 sortOrder
             );
-            ThumbnailUrl = imageUrl;
+            
+
+            _roomImages.Add(image);
+        }
+
+        public void AddImage(string imageUrl, bool isThumbnail = false)
+        {
+            // Xác định xem ảnh này có được làm ảnh bìa hay không 
+            // (Bằng true nếu được chỉ định HOẶC nếu nó là bức ảnh đầu tiên của phòng)
+            bool willBeThumbnail = isThumbnail || !_roomImages.Any();
+
+            if (willBeThumbnail)
+            {
+                // Tắt các ảnh bìa cũ
+                foreach (var img in _roomImages)
+                {
+                    img.SetThumbnail(false);
+                }
+
+                // CHỈ cập nhật ThumbnailUrl của Room khi ảnh này là ảnh bìa
+                ThumbnailUrl = imageUrl;
+            }
+
+            var sortOrder = _roomImages.Count + 1;
+
+            var image = new RoomImage(
+                imageUrl,
+                this,
+                willBeThumbnail,
+                sortOrder
+            );
 
             _roomImages.Add(image);
         }
 
         public void RemoveImage(RoomImage image)
         {
+            if (image == null) return;
+
             _roomImages.Remove(image);
+
+            // Nếu ảnh vừa bị xóa là ảnh bìa hiện tại
+            if (image.ImageUrl == ThumbnailUrl)
+            {
+                // Thử tìm bức ảnh đầu tiên còn sót lại trong phòng
+                var nextImage = _roomImages.OrderBy(x => x.SortOrder).FirstOrDefault();
+
+                if (nextImage != null)
+                {
+                    // Tự động đôn ảnh tiếp theo lên làm ảnh bìa
+                    nextImage.SetThumbnail(true);
+                    ThumbnailUrl = nextImage.ImageUrl;
+                }
+                else
+                {
+                    // Nếu phòng không còn bức ảnh nào
+                    ThumbnailUrl = null;
+                }
+            }
         }
 
         public void SetThumbnail(string imageUrl, bool isThumbnail)
@@ -114,7 +168,7 @@ namespace HotelManager.Domain.Entity.Rooms
 
                     // Nếu ảnh bị tắt lại chính là ảnh bìa hiện tại -> cập nhật ThumbnailUrl về null
                     // (Hoặc bạn có thể tự động gán ảnh đầu tiên làm Thumbnail thay thế tùy logic)
-                    if (ThumbnailUrl == imageUrl)
+                    if (ThumbnailUrl == imageUrl)   
                     {
                         ThumbnailUrl = null;
                     }
