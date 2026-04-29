@@ -84,37 +84,6 @@ namespace HotelManager.Domain.Entity.Rooms
 
             _roomImages.Add(image);
         }
-
-        public void AddImage(string imageUrl, bool isThumbnail = false)
-        {
-            // Xác định xem ảnh này có được làm ảnh bìa hay không 
-            // (Bằng true nếu được chỉ định HOẶC nếu nó là bức ảnh đầu tiên của phòng)
-            bool willBeThumbnail = isThumbnail || !_roomImages.Any();
-
-            if (willBeThumbnail)
-            {
-                // Tắt các ảnh bìa cũ
-                foreach (var img in _roomImages)
-                {
-                    img.SetThumbnail(false);
-                }
-
-                // CHỈ cập nhật ThumbnailUrl của Room khi ảnh này là ảnh bìa
-                ThumbnailUrl = imageUrl;
-            }
-
-            var sortOrder = _roomImages.Count + 1;
-
-            var image = new RoomImage(
-                imageUrl,
-                this,
-                willBeThumbnail,
-                sortOrder
-            );
-
-            _roomImages.Add(image);
-        }
-
         public void RemoveImage(RoomImage image)
         {
             if (image == null) return;
