@@ -15,4 +15,8 @@
     <ProjectReference Include="..\HotelManager.Domain\HotelManager.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CustomException\NewFolder\" />
+  </ItemGroup>
+
 </Project>

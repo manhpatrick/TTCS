@@ -1,5 +1,4 @@
-﻿using HotelManager.Application.Converters;
-using HotelManager.Application.IRepository;
+﻿using HotelManager.Application.IRepository;
 using HotelManager.Application.IService;
 using HotelManager.Domain.Entity.Accounts;
 using HotelManager.Infrastructure.Repositories;
@@ -29,6 +28,9 @@ namespace HotelManager.Infrastructure.AddLayer
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IRatingRepository, RatingRepository>();
             services.AddScoped<IRatingService, RatingService>();
+            services.AddScoped<IVnPayService, VnPayService>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IPaymentService, PaymentService>();
             return services;
         }
     }

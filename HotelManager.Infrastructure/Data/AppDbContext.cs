@@ -1,6 +1,7 @@
 ﻿using HotelManager.Domain.Entity.Accounts;
 using HotelManager.Domain.Entity.Bookings;
 using HotelManager.Domain.Entity.Notifications;
+using HotelManager.Domain.Entity.Payments;
 using HotelManager.Domain.Entity.Ratings;
 using HotelManager.Domain.Entity.Rooms;
 using HotelManager.Domain.Entity.Services;
@@ -22,6 +23,7 @@ namespace HotelManager.Infrastructure.Data
         public DbSet<Service> Services { get; set; }
         public DbSet<UserNotification> UserNotifications { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

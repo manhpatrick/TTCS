@@ -131,5 +131,15 @@ namespace HotelManager.Domain.Entity.Bookings
         {
             Rating = new Rating(this, numOfRating, review);
         }
+
+        public void MarkAsPaid()
+        {
+            // Quy tắc: Chỉ Booking đang chờ (Confirmed) mới được chuyển sang Đã thanh toán
+            if (this.BookingStatus == BookingStatus.Cancelled)
+                throw new DomainException("Không thể thanh toán cho đơn phòng đã hủy.");
+
+            this.BookingStatus = BookingStatus.Confirmed; // Hoặc một trạng thái Paid cụ thể bạn tự định nghĩa
+                                                   // Bạn có thể thêm logic gửi thông báo (Notification) tại đây
+        }
     }
 }
