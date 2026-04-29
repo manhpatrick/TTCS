@@ -58,12 +58,12 @@ namespace HotelManager.Domain.Entity.Bookings
         {
             if (EndTime != default && newStartTime > EndTime)
                 throw new DomainException("Ngày bắt đầu phải nhỏ hơn ngày kết thúc");
-            StartTime = newStartTime;
+            StartTime = newStartTime.Date.AddHours(12);
         }
         public void SetEndTime(DateTime newEndTime)
         {
             if (newEndTime < StartTime) throw new DomainException("Ngày kết thúc phải lớn hơn ngày bắt đầu");
-            EndTime = newEndTime;
+            EndTime = newEndTime.Date.AddHours(12);
         }
         public void SetApproved(BookingStatus newBookingStatus)
         {

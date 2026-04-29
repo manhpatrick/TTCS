@@ -101,8 +101,8 @@ namespace HotelManager.Infrastructure.Services
             var result = new List<AvailableTimeResponse>();
             for(var date = from; date <= to; date = date.AddDays(1))
             {
-                bool isAvailable = !bookings.Any(b => date.ToDateTime(TimeOnly.MinValue) >= b.StartTime &&
-                                        date.ToDateTime(TimeOnly.MinValue) < b.EndTime);
+                var checkTime = date.ToDateTime(new TimeOnly(12, 0, 1));
+                bool isAvailable = !bookings.Any(b => checkTime >= b.StartTime && checkTime < b.EndTime);
                 result.Add(new AvailableTimeResponse
                 {
                     Date = date,
