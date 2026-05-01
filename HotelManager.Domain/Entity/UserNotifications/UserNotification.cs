@@ -20,7 +20,7 @@ namespace HotelManager.Domain.Entity.UserNotifications
             AccountId = accountId;
             IsRead = false;
         }
-        public void MarkIsRead()
+        public void MarkAsRead()
         {
             IsRead = true;
             ReadAt = DateTime.UtcNow;

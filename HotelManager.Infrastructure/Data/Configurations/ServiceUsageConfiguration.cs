@@ -17,7 +17,7 @@ namespace HotelManager.Infrastructure.Persistence.Configurations
 
             // Quan hệ với Booking
             builder.HasOne(x => x.Booking)
-                .WithMany(b => b.ServiceUsages) // 👈 Nhớ sửa tên List trong Booking.cs thành ServiceUsages
+                .WithMany(b => b.ServiceUsages) // Nhớ sửa tên List trong Booking.cs thành ServiceUsages
                 .HasForeignKey(x => x.BookingId)
                 .OnDelete(DeleteBehavior.Cascade); // Xóa Booking -> Xóa luôn danh sách dịch vụ đi kèm
 

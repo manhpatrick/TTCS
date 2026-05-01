@@ -45,13 +45,13 @@ namespace HotelManager.Infrastructure.Services
             var notification = await _notificationRepository.GetById(id);
             await _notificationRepository.Remove(notification);
         }
-        public async Task MarkIsRead(int notificationId,int accountId)
+        public async Task MarkIsRead(int id,int accountId)
         {
             var notification = await _notificationRepository
-                                    .GetByNotificationId(notificationId);
+                                    .GetByNotificationId(id);
             var notificationAccount = notification.UserNotifications.FirstOrDefault(un => un.AccountId == accountId);
             if (notificationAccount == null) throw new NotExistsException("Tin nhắn này không gửi người này");
-            notificationAccount.MarkIsRead();
+            notificationAccount.MarkAsRead();
             await _notificationRepository.SaveAsync();
         }
     }

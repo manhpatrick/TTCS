@@ -9,6 +9,6 @@ namespace HotelManager.Application.IService
         Task AddNotification(NotificationRequest request);
         Task UpdateNotification(int id, NotificationUpdateRequest request);
         Task DeleteNotification(int id);
-        Task MarkIsRead(int notificationId, int accountId);
+        Task MarkIsRead(int id, int accountId);
     }
 }

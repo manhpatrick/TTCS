@@ -31,6 +31,8 @@ namespace HotelManager.Infrastructure.AddLayer
             services.AddScoped<IVnPayService, VnPayService>();
             services.AddScoped<IPaymentRepository, PaymentRepository>();
             services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+            services.AddScoped<IFeedbackService, FeedbackService>();
             return services;
         }
     }

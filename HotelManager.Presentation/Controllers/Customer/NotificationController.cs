@@ -21,11 +21,11 @@ namespace HotelManager.Presentation.Controllers.Customer
             var list = await _notificationService.GetNotifications(accountId);
             return Ok(list);
         }
-        [HttpPut("{notificationid}")]
-        public async Task<IActionResult> MarkIsRead([FromRoute]int notificationid)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> MarkIsRead([FromRoute]int id)
         {
             var accountId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            await _notificationService.MarkIsRead(notificationid,accountId);
+            await _notificationService.MarkIsRead(id, accountId);
             return Ok();
         }
     }

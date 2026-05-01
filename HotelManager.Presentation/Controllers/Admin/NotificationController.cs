@@ -13,7 +13,7 @@ namespace HotelManager.Presentation.Controllers.Admin
             _notificationService = notificationService;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<NotificationAdminResponse>>> GetNotificationAdmin()
+        public async Task<ActionResult<IEnumerable<NotificationAdminResponse>>> GetNotificationsAdmin()
         {
             return Ok(await _notificationService.GetNotificationsAdmin());
         }

@@ -8,7 +8,7 @@ namespace HotelManager.Application.Converters
     {
         public Notification DtoToEntity(NotificationRequest request)
         {
-            return new Notification(request.Content, request.listReceiver.Select(b => b.Id).ToList());
+            return new Notification(request.Title, request.Content, request.listReceiver.Select(b => b.Id).ToList());
         }
         public NotificationResponse EntityToDto(Notification notification, int accountId)
         {
@@ -17,6 +17,7 @@ namespace HotelManager.Application.Converters
             return new NotificationResponse
             {
                 Id = notification.Id,
+                Title = notification.Title,
                 Content = notification.Content,
                 CreatedAt = notification.CreatedAt,
                 IsRead = userNotification?.IsRead ?? false,
@@ -28,6 +29,7 @@ namespace HotelManager.Application.Converters
             return new NotificationAdminResponse
             {
                 Id = notification.Id,
+                Title = notification.Title, 
                 Content = notification.Content,
                 CreatedAt = notification.CreatedAt,
                 ListReceiver = notification.UserNotifications.Select(un => new ReceiverRequest

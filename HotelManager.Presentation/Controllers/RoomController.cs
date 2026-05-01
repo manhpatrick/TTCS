@@ -29,20 +29,20 @@ namespace HotelManager.Presentation.Controllers
             return Ok(await _roomService.GetDetailsRoom(id));
         }
 
-        [HttpGet("{roomId}/ratings")]
-        public async Task<ActionResult<IEnumerable<RatingResponse>>> GetRoomRatings([FromRoute] int roomId)
+        [HttpGet("{id}/ratings")]
+        public async Task<ActionResult<IEnumerable<RatingResponse>>> GetRoomRatings([FromRoute] int id)
         {
-            return Ok(await _ratingService.GetRoomRatings(roomId));
+            return Ok(await _ratingService.GetRoomRatings(id));
         }
 
         // Thêm vào trong HotelManager.Presentation.Controllers.RoomController
-        [HttpGet("{roomId}/available-times")]
+        [HttpGet("{id}/available-times")]
         public async Task<ActionResult<List<AvailableTimeResponse>>> GetAvailableTimes(
-            [FromRoute] int roomId,
+            [FromRoute] int id,
             [FromQuery] DateOnly from,
             [FromQuery] DateOnly to)
         {
-            var availableTimes = await _roomService.CalculateAvailableTimes(roomId, from, to);
+            var availableTimes = await _roomService.CalculateAvailableTimes(id, from, to);
             return Ok(availableTimes);
         }
     }

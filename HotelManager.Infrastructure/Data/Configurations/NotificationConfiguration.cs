@@ -11,6 +11,7 @@ namespace HotelManager.Infrastructure.Data.Configurations
             builder.ToTable("Notification");
             builder.HasKey(n => n.Id);
             builder.Property(n => n.Id).ValueGeneratedOnAdd();
+            builder.Property(f => f.Title).IsRequired().HasMaxLength(1000);
             builder.Property(n => n.Content).IsRequired().HasMaxLength(1000);
             builder.Property(n => n.CreatedAt).HasDefaultValueSql("GETDATE()");
         }
