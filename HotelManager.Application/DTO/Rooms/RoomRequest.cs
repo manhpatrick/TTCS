@@ -20,4 +20,5 @@ public class RoomRequest
     public RoomStatus RoomStatus { get; set; }
     [Required]
     public decimal PricePerNight { get; set; }
+    public List<string> imageUrls { get; set; } = new();
 }

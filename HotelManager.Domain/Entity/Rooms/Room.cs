@@ -22,7 +22,7 @@ namespace HotelManager.Domain.Entity.Rooms
 
         private readonly List<RoomImage> _roomImages = new();
         public IReadOnlyCollection<RoomImage> RoomImages => _roomImages.AsReadOnly();
-        public Room(string roomName, string description, int capacity,CategoryRoom category, RoomStatus roomStatus, decimal pricePerNight)
+        public Room(string roomName, string description, int capacity,CategoryRoom category, RoomStatus roomStatus, decimal pricePerNight, List<string> imageUrls)
         {
             ChangeRoomName(roomName);
             ChangeDescription(description);
@@ -30,6 +30,13 @@ namespace HotelManager.Domain.Entity.Rooms
             ChangeCategoryRoom(category);
             ChangeRoomStatus(roomStatus);
             ChangePricePerNight(pricePerNight);
+            if (imageUrls != null && imageUrls.Any())
+            {
+                foreach (var imageUrl in imageUrls)
+                {
+                    AddImage(imageUrl);
+                }
+            }
         }
         public void ChangeCapacity(int newCapacity)
         {

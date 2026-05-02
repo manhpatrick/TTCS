@@ -1,5 +1,4 @@
-﻿
-using HotelManager.Domain.Entity.Services.Enum;
+﻿using HotelManager.Domain.Entity.Services.Enum;
 using System.ComponentModel.DataAnnotations;
 
 namespace HotelManager.Application.DTO.Services

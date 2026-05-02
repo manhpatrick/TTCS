@@ -15,12 +15,13 @@ namespace HotelManager.Domain.Entity.Services
         public bool IsActive { get; private set; }
         public string? ImageUrl { get; private set; }
         public string? Description { get; private set; }
-        public Service(string name, decimal price, string unit, CategoryService category)
+        public Service(string name, decimal price, string unit, CategoryService category, string imageUrl)
         {
-            Name = name;
-            Price = price;
-            Unit = unit;
-            Category = category;
+            ChangeName(name);
+            ChangePrice(price);
+            ChangeUnit(unit);
+            ChangeCategoryService(category);
+            ChangeImage(imageUrl);
             IsActive = true;
         }
         public void ChangeName(string newName)

@@ -47,8 +47,7 @@ namespace HotelManager.Infrastructure.Services
         }
         public async Task MarkIsRead(int id,int accountId)
         {
-            var notification = await _notificationRepository
-                                    .GetByNotificationId(id);
+            var notification = await _notificationRepository.GetByNotificationId(id);
             var notificationAccount = notification.UserNotifications.FirstOrDefault(un => un.AccountId == accountId);
             if (notificationAccount == null) throw new NotExistsException("Tin nhắn này không gửi người này");
             notificationAccount.MarkAsRead();

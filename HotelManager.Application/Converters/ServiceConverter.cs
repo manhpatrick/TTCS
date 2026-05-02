@@ -12,7 +12,7 @@ namespace HotelManager.Application.Converters
     {
         public Service DtoToEntity(ServiceRequest request)
         {
-            return new Service(request.Name, request.Price, request.Unit, request.Category);
+            return new Service(request.Name, request.Price, request.Unit, request.Category, request.ImageUrl);
         }
         public ServiceAdminResponse EntityToDtoAdmin(Service service)
         {

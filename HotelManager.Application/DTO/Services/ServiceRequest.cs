@@ -1,5 +1,4 @@
-﻿
-using HotelManager.Domain.Entity.Services.Enum;
+﻿using HotelManager.Domain.Entity.Services.Enum;
 using System.ComponentModel.DataAnnotations;
 
 namespace HotelManager.Application.DTO.Services
@@ -19,6 +18,6 @@ namespace HotelManager.Application.DTO.Services
         [Required]
         public bool IsActive { get; set; }
         [Required]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

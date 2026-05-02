@@ -23,7 +23,9 @@ namespace HotelManager.Infrastructure.Services
         }
         public async Task AddBooking(int accountId, BookingRequest request)
         {
-            var available = await _bookingRepository.IsRoomAvailable(request.RoomId, request.StartTime, request.EndTime);
+            var checkInTime = request.StartTime.Date.AddHours(12);
+            var checkOutTime = request.EndTime.Date.AddHours(12);
+            var available = await _bookingRepository.IsRoomAvailable(request.RoomId, checkInTime, checkOutTime);
             if (!available) throw new RoomNotAvailableException("Phòng đã được đặt trong khoảng thời gian này");
             var booking = _bookingConverter.DtoToEntity(accountId, request);
             foreach(AddServiceRequest service in request.ListService)
@@ -31,8 +33,12 @@ namespace HotelManager.Infrastructure.Services
                 var sv = await _serviceRepository.GetById(service.Id);
                 booking.AddService(sv.Id,service.Quantity, sv.Price);
             }
-            booking.ChangeRoom(await _roomRepository.GetRoomById(request.RoomId));
+            var room = await _roomRepository.GetRoomById(request.RoomId);
+            booking.ChangeRoom(room);
             await _bookingRepository.Add(booking);
+            
+            room.IncrementBookingCount();
+            await _roomRepository.SaveAsync();
         }
         public async Task<IEnumerable<BookingTimeResponse>> GetBookingsByRoomId(int roomId, DateOnly from, DateOnly to)
         {

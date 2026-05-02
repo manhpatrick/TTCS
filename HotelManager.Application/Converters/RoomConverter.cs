@@ -8,7 +8,7 @@ namespace HotelManager.Application.Converters
     {
         public Room DtoToEntity(RoomRequest request)
         {
-            return new Room(request.Name, request.Description, request.Capacity, request.Category, request.RoomStatus, request.PricePerNight);
+            return new Room(request.Name, request.Description, request.Capacity, request.Category, request.RoomStatus, request.PricePerNight, request.imageUrls);
         }
         public RoomDetailsResponse EntityToDto(Room room)
         {

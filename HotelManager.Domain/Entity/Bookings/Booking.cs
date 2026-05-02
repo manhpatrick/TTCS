@@ -33,13 +33,14 @@ namespace HotelManager.Domain.Entity.Bookings
         {
             AccountId = accountId;
             
-            RoomId = roomId;
+            ChangeRoomId(roomId);
             ChangeNote(note);
             SetStartTime(startTime);
             SetEndTime(endTime);           
             ChangeNumOfPeople(numOfPeople);
             SetRoomPrice(roomPriceAtBooking);
             CreatedAt = DateTime.UtcNow;
+            UpdateTotalPrice();
         }
         public void ChangeNumOfPeople(int newNumOfPeople)
         {
@@ -50,20 +51,28 @@ namespace HotelManager.Domain.Entity.Bookings
         {
             Note = newNote;
         }
+        public void ChangeRoomId(int roomId)
+        {
+            RoomId = roomId;
+        }
         public void ChangeRoom(Room room)
         {
             Room = room;
         }
         public void SetStartTime(DateTime newStartTime)
         {
-            if (EndTime != default && newStartTime > EndTime)
-                throw new DomainException("Ngày bắt đầu phải nhỏ hơn ngày kết thúc");
-            StartTime = newStartTime.Date.AddHours(12);
+            var proposedStartTime = newStartTime.Date.AddHours(12);
+            if (EndTime != default && proposedStartTime >= EndTime)
+                throw new DomainException("Ngày check-in phải trước ngày check-out ít nhất 1 đêm");
+            StartTime = proposedStartTime;
+
         }
         public void SetEndTime(DateTime newEndTime)
         {
-            if (newEndTime < StartTime) throw new DomainException("Ngày kết thúc phải lớn hơn ngày bắt đầu");
-            EndTime = newEndTime.Date.AddHours(12);
+            var proposedEndTime = newEndTime.Date.AddHours(11).AddMinutes(59);
+            if (StartTime != default && proposedEndTime <= StartTime)
+                throw new DomainException("Ngày check-out phải sau ngày check-in ít nhất 1 đêm");
+            EndTime = newEndTime.Date.AddHours(11).AddMinutes(59);
         }
         public void SetApproved(BookingStatus newBookingStatus)
         {
@@ -131,15 +140,15 @@ namespace HotelManager.Domain.Entity.Bookings
         {
             Rating = new Rating(this, numOfRating, review);
         }
-
-        public void MarkAsPaid()
+        public void VerifyCanPaid()
         {
-            // Quy tắc: Chỉ Booking đang chờ (Confirmed) mới được chuyển sang Đã thanh toán
-            if (this.BookingStatus == BookingStatus.Cancelled)
-                throw new DomainException("Không thể thanh toán cho đơn phòng đã hủy.");
-
-            this.BookingStatus = BookingStatus.Confirmed; // Hoặc một trạng thái Paid cụ thể bạn tự định nghĩa
-                                                   // Bạn có thể thêm logic gửi thông báo (Notification) tại đây
+            if (BookingStatus != BookingStatus.Pending)
+                throw new DomainException("Không thể thanh toán");
+        }
+        public void MarkAsPaid()
+        {   
+            BookingStatus = BookingStatus.Confirmed;
+            ApprovedAt = DateTime.UtcNow;    
         }
     }
 }
