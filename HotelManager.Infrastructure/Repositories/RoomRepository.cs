@@ -19,7 +19,7 @@ namespace HotelManager.Infrastructure.Repositories
 
         public async Task<IEnumerable<Room>> GetRoomsByCategory(CategoryRoom category)
         {
-            return await _dbSet.Where(r => r.Category == category).Include(r => r.RoomImages).ToListAsync();
+            return await _dbSet.Where(r => r.Category == category && r.RoomStatus == RoomStatus.Available).Include(r => r.RoomImages).ToListAsync();
         }
 
         public async Task<IEnumerable<Room>> GetRoomsByStatus(RoomStatus status)
@@ -32,6 +32,24 @@ namespace HotelManager.Infrastructure.Repositories
             if (exists == null) throw new NotExistsException("Room not exist");
             return exists;
         }
-        
+        public async Task<IEnumerable<Room>> GetListRoomsAvailable()
+        {
+            return await _dbSet.Where(r => r.RoomStatus == RoomStatus.Available).Include(r => r.RoomImages).OrderBy(r => r.Name).ToListAsync();
+        }
+        public async Task<IEnumerable<Room>> GetAvailableRoomsSortedByPrice(bool isAscending = true)
+        {
+            var query = _dbSet.Where(r => r.RoomStatus == RoomStatus.Available)
+                              .Include(r => r.RoomImages)
+                              .AsQueryable(); 
+            if (isAscending)
+            {
+                query = query.OrderBy(r => r.PricePerNight);
+            }
+            else
+            {
+                query = query.OrderByDescending(r => r.PricePerNight);
+            }
+            return await query.ToListAsync();
+        }
     }
 }

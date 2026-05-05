@@ -1,4 +1,4 @@
-using HotelManager.Application.DTO.Services;
+﻿using HotelManager.Application.DTO.Services;
 using HotelManager.Application.IService;
 using HotelManager.Domain.Entity.Services.Enum;
 using Microsoft.AspNetCore.Mvc;
@@ -22,10 +22,20 @@ namespace HotelManager.Presentation.Controllers
             return Ok(await _serviceService.GetAllServices());
         }
 
-        [HttpGet("category/{category}")]
-        public async Task<ActionResult<IEnumerable<ServiceCustomerResponse>>> GetServiceByCategory([FromRoute] CategoryService category)
+        [HttpGet("filter")]
+        public async Task<ActionResult<IEnumerable<ServiceCustomerResponse>>> GetServiceByCategory([FromQuery] CategoryService category)
         {
-            return Ok(await _serviceService.GetServiceByCategory(category));
+            var result = await _serviceService.GetServiceByCategory(category);
+            return Ok(result);
+        }
+
+        // 2. Sắp xếp dịch vụ theo giá
+        // Gọi API: GET /api/service/sort-price?isAscending=true (hoặc false)
+        [HttpGet("sort-price")]
+        public async Task<ActionResult<IEnumerable<ServiceCustomerResponse>>> GetServiceSortPrice([FromQuery] bool isAscending = true)
+        {
+            var result = await _serviceService.GetServiceSortPrice(isAscending);
+            return Ok(result);
         }
     }
 }

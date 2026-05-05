@@ -10,6 +10,7 @@ namespace HotelManager.Application.IService
         Task<RoomDetailsResponse> GetDetailsRoom(int id);
         Task<IEnumerable<RoomUserListResponse>> GetRoomsByCategory(CategoryRoom category);
         Task<IEnumerable<RoomUserListResponse>> GetRoomsByStatus(RoomStatus status);
+        Task<IEnumerable<RoomUserListResponse>> GetRoomsSortPrice(bool isAscending = true);
         Task Add(RoomRequest request);
         Task Update(int id, RoomUpdateRequest request);
         Task Remove(int id);

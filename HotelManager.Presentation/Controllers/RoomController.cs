@@ -1,5 +1,6 @@
 ﻿using HotelManager.Application.DTO.Rooms;
 using HotelManager.Application.IService;
+using HotelManager.Domain.Entity.Rooms.Enum;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManager.Presentation.Controllers
@@ -35,7 +36,6 @@ namespace HotelManager.Presentation.Controllers
             return Ok(await _ratingService.GetRoomRatings(id));
         }
 
-        // Thêm vào trong HotelManager.Presentation.Controllers.RoomController
         [HttpGet("{id}/available-times")]
         public async Task<ActionResult<List<AvailableTimeResponse>>> GetAvailableTimes(
             [FromRoute] int id,
@@ -44,6 +44,18 @@ namespace HotelManager.Presentation.Controllers
         {
             var availableTimes = await _roomService.CalculateAvailableTimes(id, from, to);
             return Ok(availableTimes);
+        }
+
+        [HttpGet("filter")] // Route lúc này là: api/room/filter
+        public async Task<ActionResult<IEnumerable<RoomUserListResponse>>> GetRoomsByCategory([FromQuery] CategoryRoom category)
+        {
+            return Ok(await _roomService.GetRoomsByCategory(category));
+        }
+
+        [HttpGet("sort-price")]
+        public async Task<ActionResult<IEnumerable<RoomUserListResponse>>> GetRoomsSortPrice([FromQuery] bool isAscending = true)
+        {
+            return Ok(await _roomService.GetRoomsSortPrice(isAscending));
         }
     }
 }

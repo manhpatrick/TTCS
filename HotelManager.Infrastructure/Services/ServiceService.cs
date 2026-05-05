@@ -1,8 +1,12 @@
 ﻿using HotelManager.Application.Converters;
+using HotelManager.Application.DTO.Rooms;
 using HotelManager.Application.DTO.Services;
 using HotelManager.Application.IRepository;
 using HotelManager.Application.IService;
+using HotelManager.Domain.Entity.Rooms.Enum;
+using HotelManager.Domain.Entity.Services;
 using HotelManager.Domain.Entity.Services.Enum;
+using HotelManager.Infrastructure.Repositories;
 
 namespace HotelManager.Infrastructure.Services
 {
@@ -29,13 +33,18 @@ namespace HotelManager.Infrastructure.Services
         }
         public async Task<IEnumerable<ServiceCustomerResponse>> GetAllServices()
         {
-            var lists = await _serviceRepository.GetAll();
+            var lists = await _serviceRepository.GetListsService();
             return lists.Select(service => _serviceConverter.EntityToDto(service));
         }
 
         public async Task<IEnumerable<ServiceCustomerResponse>> GetServiceByCategory(CategoryService category)
         {
             var lists = await _serviceRepository.GetServiceByCategory(category);
+            return lists.Select(service => _serviceConverter.EntityToDto(service));
+        }
+        public async Task<IEnumerable<ServiceCustomerResponse>> GetServiceSortPrice(bool isAscending = true)
+        {
+            var lists = await _serviceRepository.GetServiceSortedByPrice(isAscending);
             return lists.Select(service => _serviceConverter.EntityToDto(service));
         }
 

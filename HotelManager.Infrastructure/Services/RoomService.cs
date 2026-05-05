@@ -29,7 +29,7 @@ namespace HotelManager.Infrastructure.Services
 
         public async Task<IEnumerable<RoomUserListResponse>> GetListRooms()
         {
-            var lists = await _roomRepository.GetAllOrder(r => r.Name);
+            var lists = await _roomRepository.GetListRoomsAvailable();
             return lists.Select(room => _roomConverter.EntityToUserListDto(room));
         }
         public async Task<RoomDetailsResponse> GetDetailsRoom(int id)
@@ -44,6 +44,12 @@ namespace HotelManager.Infrastructure.Services
             return lists.Select(room => _roomConverter.EntityToUserListDto(room));
         }
 
+        //Mặc định là true: thấp đến cao
+        public async Task<IEnumerable<RoomUserListResponse>> GetRoomsSortPrice(bool isAscending = true)
+        {
+            var availableRooms = await _roomRepository.GetAvailableRoomsSortedByPrice(isAscending);
+            return availableRooms.Select(room => _roomConverter.EntityToUserListDto(room));
+        }
         public async Task<IEnumerable<RoomUserListResponse>> GetRoomsByStatus(RoomStatus status)
         {
             var lists = await _roomRepository.GetRoomsByStatus(status);

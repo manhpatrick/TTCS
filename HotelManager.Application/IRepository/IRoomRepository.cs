@@ -10,5 +10,7 @@ namespace HotelManager.Application.IRepository
         Task<IEnumerable<Room>> GetRoomsByCategory(CategoryRoom category);
         Task<IEnumerable<Room>> GetRoomsByStatus(RoomStatus status);
         Task<Room> GetRoomById(int id);
+        Task<IEnumerable<Room>> GetListRoomsAvailable();
+        Task<IEnumerable<Room>> GetAvailableRoomsSortedByPrice(bool isAscending = true);
     }
 }

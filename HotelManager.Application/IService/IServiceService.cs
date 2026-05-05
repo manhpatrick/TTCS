@@ -10,6 +10,7 @@ namespace HotelManager.Application.IService
         Task<IEnumerable<ServiceAdminResponse>> GetAllServicesAdmin();
         Task<IEnumerable<ServiceCustomerResponse>> GetAllServices();
         Task<IEnumerable<ServiceCustomerResponse>> GetServiceByCategory(CategoryService category);
+        Task<IEnumerable<ServiceCustomerResponse>> GetServiceSortPrice(bool isAscending = true);
         Task Add(ServiceRequest request);
         Task Update(int id, ServiceUpdateRequest request);
         Task Remove(int id);
