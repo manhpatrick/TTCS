@@ -1,5 +1,4 @@
-﻿
-namespace HotelManager.Application.DTO.AppConfig
+﻿namespace HotelManager.Application.DTO.AppConfig
 {
     public class JwtSettings
     {

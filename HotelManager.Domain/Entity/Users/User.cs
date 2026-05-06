@@ -1,6 +1,5 @@
 ﻿using HotelManager.Domain.Entity.Accounts;
 using HotelManager.Domain.Entity.Users.Enum;
-using HotelManager.Domain.Exceptions;
 
 namespace HotelManager.Domain.Entity.Users
 {

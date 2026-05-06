@@ -1,5 +1,4 @@
-﻿using HotelManager.Application.CustomException.Auth;
-using HotelManager.Application.IRepository;
+﻿using HotelManager.Application.IRepository;
 using HotelManager.Domain.Entity.Accounts;
 using HotelManager.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;

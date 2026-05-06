@@ -1,6 +1,4 @@
-﻿
-using HotelManager.Application.DTO.Rooms;
-using HotelManager.Application.DTO.Services;
+﻿using HotelManager.Application.DTO.Services;
 using HotelManager.Domain.Entity.Services.Enum;
 
 namespace HotelManager.Application.IService

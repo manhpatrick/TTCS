@@ -1,11 +1,8 @@
-﻿
-using HotelManager.Application.DTO.Bookings;
-using HotelManager.Application.IRepository;
+﻿using HotelManager.Application.IRepository;
 using HotelManager.Domain.Entity.Bookings;
 using HotelManager.Domain.Entity.Bookings.Enum;
 using HotelManager.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace HotelManager.Infrastructure.Repositories
 {

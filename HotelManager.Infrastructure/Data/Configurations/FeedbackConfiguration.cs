@@ -1,5 +1,4 @@
-﻿using HotelManager.Domain.Entity.Accounts;
-using HotelManager.Domain.Entity.Feedbacks;
+﻿using HotelManager.Domain.Entity.Feedbacks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

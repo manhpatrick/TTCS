@@ -1,5 +1,4 @@
 ﻿using HotelManager.Application.DTO.Notifications;
-
 namespace HotelManager.Application.IService
 {
     public interface INotificationService

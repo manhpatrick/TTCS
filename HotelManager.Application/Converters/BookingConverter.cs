@@ -1,6 +1,5 @@
 ﻿using HotelManager.Application.DTO.Bookings;
 using HotelManager.Domain.Entity.Bookings;
-using System.Threading.Tasks;
 
 namespace HotelManager.Application.Converters
 {

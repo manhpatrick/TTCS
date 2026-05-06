@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using HotelManager.Application.DTO.Bookings;
 using HotelManager.Application.DTO.Payments; // Hoặc thư mục chứa PaymentResponseModel
 
 namespace HotelManager.Application.IService

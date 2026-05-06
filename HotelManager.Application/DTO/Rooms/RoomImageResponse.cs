@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HotelManager.Application.DTO.Rooms
+﻿namespace HotelManager.Application.DTO.Rooms
 {
     public class RoomImageResponse
     {

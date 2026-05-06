@@ -1,5 +1,4 @@
-﻿
-namespace HotelManager.Application.DTO.Auth
+﻿namespace HotelManager.Application.DTO.Auth
 {
     public class RegisterRequest
     {

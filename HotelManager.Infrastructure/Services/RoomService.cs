@@ -1,8 +1,8 @@
 ﻿using HotelManager.Application.Converters;
+using HotelManager.Application.DTO;
 using HotelManager.Application.DTO.Rooms;
 using HotelManager.Application.IRepository;
 using HotelManager.Application.IService;
-using HotelManager.Domain.Entity.Rooms;
 using HotelManager.Domain.Entity.Rooms.Enum;
 
 namespace HotelManager.Infrastructure.Services
@@ -27,10 +27,14 @@ namespace HotelManager.Infrastructure.Services
             await _roomRepository.Add(room);
         }
 
-        public async Task<IEnumerable<RoomUserListResponse>> GetListRooms()
+        public async Task<PagedResponse<RoomUserListResponse>> GetListRooms(int pageNumber = 1, int pageSize = 6)
         {
             var lists = await _roomRepository.GetListRoomsAvailable();
-            return lists.Select(room => _roomConverter.EntityToUserListDto(room));
+            var totalRecords = lists.Count();
+            var pagedData = lists.Skip((pageNumber - 1) * pageSize)
+                         .Take(pageSize)
+                         .Select(room => _roomConverter.EntityToUserListDto(room));
+            return new PagedResponse<RoomUserListResponse>(pagedData, pageNumber, pageSize, totalRecords);
         }
         public async Task<RoomDetailsResponse> GetDetailsRoom(int id)
         {
@@ -38,22 +42,36 @@ namespace HotelManager.Infrastructure.Services
             return _roomConverter.EntityToDto(room);
         }
 
-        public async Task<IEnumerable<RoomUserListResponse>> GetRoomsByCategory(CategoryRoom category)
+        public async Task<PagedResponse<RoomUserListResponse>> GetRoomsAdvanced(CategoryRoom? category, bool? isAscending, int pageNumber = 1, int pageSize = 6)
         {
-            var lists = await _roomRepository.GetRoomsByCategory(category);
-            return lists.Select(room => _roomConverter.EntityToUserListDto(room));
-        }
+            // Lấy danh sách phòng có sẵn dưới dạng IQueryable (nếu Repo của bạn trả về IEnumerable thì dùng .AsQueryable())
+            var availableRooms = await _roomRepository.GetListRoomsAvailable();
+            var query = availableRooms.AsQueryable();
 
-        //Mặc định là true: thấp đến cao
-        public async Task<IEnumerable<RoomUserListResponse>> GetRoomsSortPrice(bool isAscending = true)
-        {
-            var availableRooms = await _roomRepository.GetAvailableRoomsSortedByPrice(isAscending);
-            return availableRooms.Select(room => _roomConverter.EntityToUserListDto(room));
-        }
-        public async Task<IEnumerable<RoomUserListResponse>> GetRoomsByStatus(RoomStatus status)
-        {
-            var lists = await _roomRepository.GetRoomsByStatus(status);
-            return lists.Select(room => _roomConverter.EntityToUserListDto(room));
+            // 1. Nếu người dùng có chọn Category -> Thêm điều kiện Lọc
+            if (category.HasValue)
+            {
+                query = query.Where(r => r.Category == category.Value);
+            }
+
+            // 2. Nếu người dùng có chọn Sắp xếp -> Thêm điều kiện Sắp xếp
+            if (isAscending.HasValue)
+            {
+                query = isAscending.Value
+                    ? query.OrderBy(r => r.PricePerNight)
+                    : query.OrderByDescending(r => r.PricePerNight);
+            }
+
+            // 3. Đếm tổng số bản ghi (sau khi đã lọc)
+            var totalRecords = query.Count();
+
+            // 4. Phân trang và map sang DTO
+            var pagedData = query.Skip((pageNumber - 1) * pageSize)
+                                 .Take(pageSize)
+                                 .Select(room => _roomConverter.EntityToUserListDto(room))
+                                 .ToList();
+
+            return new PagedResponse<RoomUserListResponse>(pagedData, pageNumber, pageSize, totalRecords);
         }
 
         public async Task Remove(int id)

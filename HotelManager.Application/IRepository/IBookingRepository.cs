@@ -1,6 +1,4 @@
-﻿
-using HotelManager.Application.DTO.Bookings;
-using HotelManager.Domain.Entity.Bookings;
+﻿using HotelManager.Domain.Entity.Bookings;
 
 namespace HotelManager.Application.IRepository
 {

@@ -1,6 +1,5 @@
 ﻿using HotelManager.Application.DTO.Services;
 using HotelManager.Application.IService;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManager.Presentation.Controllers.Admin

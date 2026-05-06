@@ -1,5 +1,4 @@
-﻿using HotelManager.Application.DTO.Auth;
-using HotelManager.Domain.Entity.Accounts;
+﻿using HotelManager.Domain.Entity.Accounts;
 
 namespace HotelManager.Application.IRepository
 {

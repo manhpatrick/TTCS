@@ -1,5 +1,4 @@
-﻿using HotelManager.Domain.Entity.Rooms.Enum;
-using HotelManager.Domain.Entity.Services.Enum;
+﻿using HotelManager.Domain.Entity.Services.Enum;
 using HotelManager.Domain.Exceptions;
 
 namespace HotelManager.Domain.Entity.Services

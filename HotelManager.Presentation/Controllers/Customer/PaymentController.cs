@@ -1,6 +1,5 @@
 ﻿using HotelManager.Application.IService;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManager.Presentation.Controllers.Customer

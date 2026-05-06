@@ -1,5 +1,4 @@
-﻿
-using HotelManager.Application.DTO.User;
+﻿using HotelManager.Application.DTO.User;
 
 namespace HotelManager.Application.IService
 {

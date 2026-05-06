@@ -1,5 +1,4 @@
-﻿using HotelManager.Domain.Entity.Bookings;
-using HotelManager.Domain.Entity.RoomImages;
+﻿using HotelManager.Domain.Entity.RoomImages;
 using HotelManager.Domain.Entity.Rooms.Enum;
 using HotelManager.Domain.Exceptions;
 

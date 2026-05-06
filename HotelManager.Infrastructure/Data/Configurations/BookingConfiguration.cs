@@ -1,5 +1,4 @@
 ﻿using HotelManager.Domain.Entity.Bookings;
-using HotelManager.Domain.Entity.Ratings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

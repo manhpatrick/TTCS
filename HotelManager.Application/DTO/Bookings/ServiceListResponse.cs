@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HotelManager.Application.DTO.Bookings
+﻿namespace HotelManager.Application.DTO.Bookings
 {
     public class ServiceListResponse
     {

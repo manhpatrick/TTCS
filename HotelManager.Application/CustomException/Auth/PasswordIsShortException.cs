@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace HotelManager.Application.CustomException.Auth
+﻿namespace HotelManager.Application.CustomException.Auth
 {
     public class PasswordIsShortException : AppException
     {

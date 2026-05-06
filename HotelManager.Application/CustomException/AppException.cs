@@ -1,5 +1,4 @@
-﻿
-namespace HotelManager.Application.CustomException
+﻿namespace HotelManager.Application.CustomException
 {
     public abstract class AppException : Exception
     {

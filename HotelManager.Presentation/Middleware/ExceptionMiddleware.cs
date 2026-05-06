@@ -2,7 +2,6 @@
 using HotelManager.Application.CustomException.Auth;
 using HotelManager.Application.CustomException.Rooms;
 using HotelManager.Domain.Exceptions;
-using System.Net;
 using System.Text.Json;
 
 namespace HotelManager.Presentation.Middleware

@@ -1,5 +1,4 @@
-﻿
-using HotelManager.Application.DTO.Rooms;
+﻿using HotelManager.Application.DTO.Rooms;
 using HotelManager.Domain.Entity.Rooms;
 
 namespace HotelManager.Application.Converters

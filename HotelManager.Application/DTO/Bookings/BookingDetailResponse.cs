@@ -1,5 +1,4 @@
-﻿
-using HotelManager.Domain.Entity.Bookings.Enum;
+﻿using HotelManager.Domain.Entity.Bookings.Enum;
 
 namespace HotelManager.Application.DTO.Bookings
 {

@@ -1,6 +1,5 @@
 ﻿using HotelManager.Domain.Entity.Accounts;
 using HotelManager.Domain.Entity.Notifications;
-using System.ComponentModel;
 
 namespace HotelManager.Domain.Entity.UserNotifications
 {

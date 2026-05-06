@@ -1,12 +1,8 @@
 ﻿using HotelManager.Application.Converters;
-using HotelManager.Application.DTO.Rooms;
 using HotelManager.Application.DTO.Services;
 using HotelManager.Application.IRepository;
 using HotelManager.Application.IService;
-using HotelManager.Domain.Entity.Rooms.Enum;
-using HotelManager.Domain.Entity.Services;
 using HotelManager.Domain.Entity.Services.Enum;
-using HotelManager.Infrastructure.Repositories;
 
 namespace HotelManager.Infrastructure.Services
 {

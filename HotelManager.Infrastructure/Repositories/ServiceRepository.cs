@@ -1,6 +1,4 @@
 ﻿using HotelManager.Application.IRepository;
-using HotelManager.Domain.Entity.Rooms.Enum;
-using HotelManager.Domain.Entity.Rooms;
 using HotelManager.Domain.Entity.Services;
 using HotelManager.Domain.Entity.Services.Enum;
 using HotelManager.Infrastructure.Data;

@@ -1,5 +1,4 @@
-﻿
-namespace HotelManager.Domain.Entity.Bookings.Enum
+﻿namespace HotelManager.Domain.Entity.Bookings.Enum
 {
     public enum BookingStatus
     {

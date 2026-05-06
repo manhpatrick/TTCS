@@ -1,5 +1,4 @@
 ﻿using HotelManager.Domain.Entity.Rooms;
-using HotelManager.Domain.Entity.Rooms.Enum;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

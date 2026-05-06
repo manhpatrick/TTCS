@@ -1,5 +1,4 @@
-﻿
-using HotelManager.Domain.Entity.ServiceUsages;
+﻿using HotelManager.Domain.Entity.ServiceUsages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,5 +1,4 @@
 ﻿using HotelManager.Domain.Entity.RoomImages;
-using HotelManager.Domain.Entity.Rooms;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

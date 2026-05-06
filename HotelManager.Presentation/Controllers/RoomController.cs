@@ -1,4 +1,5 @@
-﻿using HotelManager.Application.DTO.Rooms;
+﻿using HotelManager.Application.DTO;
+using HotelManager.Application.DTO.Rooms;
 using HotelManager.Application.IService;
 using HotelManager.Domain.Entity.Rooms.Enum;
 using Microsoft.AspNetCore.Mvc;
@@ -19,9 +20,9 @@ namespace HotelManager.Presentation.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RoomUserListResponse>>> GetAllRooms()
+        public async Task<ActionResult<PagedResponse<RoomUserListResponse>>> GetAllRooms([FromQuery] int pageNumber = 1,[FromQuery] int pageSize = 6)
         {
-            return Ok(await _roomService.GetListRooms());
+            return Ok(await _roomService.GetListRooms(pageNumber, pageSize));
         }
 
         [HttpGet("{id}")]
@@ -46,16 +47,15 @@ namespace HotelManager.Presentation.Controllers
             return Ok(availableTimes);
         }
 
-        [HttpGet("filter")] // Route lúc này là: api/room/filter
-        public async Task<ActionResult<IEnumerable<RoomUserListResponse>>> GetRoomsByCategory([FromQuery] CategoryRoom category)
+        [HttpGet("search")] // Đổi route thành /api/room/search
+        public async Task<ActionResult<PagedResponse<RoomUserListResponse>>> SearchRooms(
+            [FromQuery] CategoryRoom? category = null,
+            [FromQuery] bool? isAscending = null,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 6)
         {
-            return Ok(await _roomService.GetRoomsByCategory(category));
-        }
-
-        [HttpGet("sort-price")]
-        public async Task<ActionResult<IEnumerable<RoomUserListResponse>>> GetRoomsSortPrice([FromQuery] bool isAscending = true)
-        {
-            return Ok(await _roomService.GetRoomsSortPrice(isAscending));
+            var result = await _roomService.GetRoomsAdvanced(category, isAscending, pageNumber, pageSize);
+            return Ok(result);
         }
     }
 }

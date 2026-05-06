@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HotelManager.Domain.Entity.Services.Enum
+﻿namespace HotelManager.Domain.Entity.Services.Enum
 {
     public enum CategoryService
     {

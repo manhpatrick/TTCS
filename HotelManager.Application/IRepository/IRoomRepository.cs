@@ -1,5 +1,4 @@
-﻿using HotelManager.Domain.Entity.Ratings;
-using HotelManager.Domain.Entity.Rooms;
+﻿using HotelManager.Domain.Entity.Rooms;
 using HotelManager.Domain.Entity.Rooms.Enum;
 
 namespace HotelManager.Application.IRepository

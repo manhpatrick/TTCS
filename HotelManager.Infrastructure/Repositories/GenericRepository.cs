@@ -1,6 +1,4 @@
-﻿
-
-using HotelManager.Application.CustomException;
+﻿using HotelManager.Application.CustomException;
 using HotelManager.Application.IRepository;
 using HotelManager.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
