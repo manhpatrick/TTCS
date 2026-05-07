@@ -138,6 +138,7 @@ namespace HotelManager.Domain.Entity.Bookings
         }
         public void AddRating(int numOfRating, string review)
         {
+            if (BookingStatus != BookingStatus.Completed) throw new DomainException("Không thể đánh giá do chưa hoàn thành booking");
             Rating = new Rating(this, numOfRating, review);
         }
         public void VerifyCanPaid()

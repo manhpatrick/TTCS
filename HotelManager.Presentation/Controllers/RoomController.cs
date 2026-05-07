@@ -1,4 +1,5 @@
 ﻿using HotelManager.Application.DTO;
+using HotelManager.Application.DTO.Ratings;
 using HotelManager.Application.DTO.Rooms;
 using HotelManager.Application.IService;
 using HotelManager.Domain.Entity.Rooms.Enum;

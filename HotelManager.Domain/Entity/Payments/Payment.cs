@@ -1,4 +1,5 @@
-﻿using HotelManager.Domain.Entity.Payment.Enum;
+﻿using HotelManager.Domain.Entity.Bookings;
+using HotelManager.Domain.Entity.Payment.Enum;
 
 namespace HotelManager.Domain.Entity.Payments
 {
@@ -6,6 +7,7 @@ namespace HotelManager.Domain.Entity.Payments
     {
         public int Id { get; private set; }
         public int BookingId { get; private set; }
+        public Booking Booking { get; private set; }
         public decimal Amount { get; private set; }
         public DateTime PaymentDate { get; private set; }
         public PaymentStatus Status { get; private set; }

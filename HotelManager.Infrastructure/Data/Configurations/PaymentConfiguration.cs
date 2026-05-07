@@ -1,4 +1,5 @@
-﻿using HotelManager.Domain.Entity.Payments;
+﻿using HotelManager.Domain.Entity.Bookings;
+using HotelManager.Domain.Entity.Payments;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -41,7 +42,7 @@ namespace HotelManager.Infrastructure.Data.Configurations
 
             // 4. Thiết lập quan hệ (Khóa ngoại) với bảng Booking
             // Một Booking có thể có nhiều bản ghi Payment (do khách có thể thử lại nhiều lần)
-            builder.HasOne<HotelManager.Domain.Entity.Bookings.Booking>()
+            builder.HasOne(p => p.Booking)
                 .WithMany()
                 .HasForeignKey(x => x.BookingId)
                 .OnDelete(DeleteBehavior.Cascade); // Xóa Booking thì xóa luôn Payment liên quan

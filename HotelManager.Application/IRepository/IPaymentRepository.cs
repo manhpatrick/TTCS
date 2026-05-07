@@ -4,5 +4,6 @@ namespace HotelManager.Application.IRepository
 {
     public interface IPaymentRepository : IGenericRepository<Payment>
     {
+        Task<IEnumerable<Payment>> GetPaymentsByAccountId(int accountId);
     }
 }

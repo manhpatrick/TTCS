@@ -1,4 +1,4 @@
-﻿namespace HotelManager.Application.DTO.Rooms
+﻿namespace HotelManager.Application.DTO.Ratings
 {
     public class RatingResponse
     {

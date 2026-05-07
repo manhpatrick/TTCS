@@ -7,5 +7,6 @@ namespace HotelManager.Application.IService
     {
         Task<string> CreateVnPayUrlAsync(int bookingId, HttpContext context);
         Task<PaymentResponse> ProcessVnPayCallbackAsync(IQueryCollection collections);
+        Task<IEnumerable<PaymentHistoryResponse>> GetUserPayments(int accountId);
     }
 }

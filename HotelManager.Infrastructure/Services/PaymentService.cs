@@ -5,6 +5,7 @@ using HotelManager.Domain.Entity.Payments;
 using HotelManager.Application.DTO.Payments;
 using HotelManager.Application.CustomException;
 using HotelManager.Application.DTO.Notifications;
+using HotelManager.Application.Converters;
 
 namespace HotelManager.Infrastructure.Services
 {
@@ -14,14 +15,16 @@ namespace HotelManager.Infrastructure.Services
         private readonly IPaymentRepository _paymentRepository;
         private readonly IVnPayService _vnPayService;
         private readonly INotificationService _notificationService;
+        private readonly PaymentConverter _paymentConverter;
 
         public PaymentService(IBookingRepository bookingRepository, IPaymentRepository paymentRepository,
-            IVnPayService vnPayService, INotificationService notificationService)
+            IVnPayService vnPayService, INotificationService notificationService, PaymentConverter paymentConverter)
         {
             _bookingRepository = bookingRepository;
             _paymentRepository = paymentRepository;
             _vnPayService = vnPayService;
             _notificationService = notificationService;
+            _paymentConverter = paymentConverter;
         }
 
         public async Task<string> CreateVnPayUrlAsync(int bookingId, HttpContext context)
@@ -97,6 +100,11 @@ namespace HotelManager.Infrastructure.Services
                 }
             }
             return response;
+        }
+        public async Task<IEnumerable<PaymentHistoryResponse>> GetUserPayments(int accountId)
+        {
+            var lists = await _paymentRepository.GetPaymentsByAccountId(accountId);
+            return lists.Select(p => _paymentConverter.entityToDto(p));
         }
     }
 }
