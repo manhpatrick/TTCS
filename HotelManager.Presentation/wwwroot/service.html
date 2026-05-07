@@ -122,26 +122,15 @@
           <h1 class="relative z-10 text-4xl md:text-5xl font-noto-serif text-[#003345] font-bold mb-4 tracking-tight leading-tight">Dịch vụ tinh hoa</h1>
           <p class="max-w-xl text-stone-500 font-body leading-relaxed text-base">Mỗi dịch vụ là một tác phẩm nghệ thuật được chúng tôi thiết kế riêng, nhằm đánh thức mọi giác quan và nuông chiều những vị khách trân quý nhất.</p>
         </div>
-        <div class="text-xs font-body uppercase tracking-widest text-stone-400 font-semibold bg-white px-4 py-2 rounded-full shadow-sm border border-stone-100">
-          Tuyển tập ${serviceCount} dịch vụ
+        <div id="serviceCountDisplay" class="text-xs font-body uppercase tracking-widest text-stone-400 font-semibold bg-white px-4 py-2 rounded-full shadow-sm border border-stone-100">
+          Đang tải dữ liệu...
         </div>
       </header>
 
       <div class="grid grid-cols-1 xl:grid-cols-2 gap-10" id="serviceContainer">
       </div>
 
-      <div class="mt-24 flex justify-center items-center gap-6">
-        <button class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm">
-          <span class="material-symbols-outlined text-xl">arrow_back</span>
-        </button>
-        <div class="flex gap-3">
-          <a class="w-12 h-12 flex items-center justify-center rounded-full bg-[#003345] text-white font-bold text-base shadow-md" href="#">1</a>
-          <a class="w-12 h-12 flex items-center justify-center rounded-full text-stone-600 hover:bg-white hover:text-[#003345] transition-all font-bold text-base shadow-sm" href="#">2</a>
-          <a class="w-12 h-12 flex items-center justify-center rounded-full text-stone-600 hover:bg-white hover:text-[#003345] transition-all font-bold text-base shadow-sm" href="#">3</a>
-        </div>
-        <button class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm">
-          <span class="material-symbols-outlined text-xl">arrow_forward</span>
-        </button>
+      <div id="paginationContainer" class="mt-24 flex justify-center items-center gap-6">
       </div>
 
     </main>
@@ -470,46 +459,81 @@
     }).join('');
   }
 
-  function changeServiceCategory(category) {
-    activeCategoryKey = category;
-    currentPage = 1;
-    renderServiceCategory();
-    const sortSelect = document.getElementById('priceSortSelect');
-    if (sortSelect) sortSelect.value = 'default';
+    const pageSize = 6; // Số lượng hiển thị 1 trang
+    let currentFetchUrl = '/api/service/search'; // API gộp mới
 
-      // Gọi API tương ứng
-    if (category === null) {
-      renderService('/api/service'); // Chọn "Tất cả"
-    } else {
-       // Gọi API lọc. Lưu ý: ASP.NET tự động map chuỗi 'FOODANDBEVERAGE' sang Enum
-       renderService(`/api/service/filter?category=${category}`);
+    // HÀM TỔNG HỢP LỌC & SẮP XẾP
+    function applyServiceFilters() {
+        currentPage = 1;
+        let url = '/api/service/search?';
+        const params = [];
+
+        if (activeCategoryKey !== null) {
+            params.push(`category=${activeCategoryKey}`);
+        }
+
+        const selectedSort = document.getElementById('priceSortSelect').value;
+        if (selectedSort !== 'default') {
+            const isAsc = selectedSort === 'asc' ? 'true' : 'false';
+            params.push(`isAscending=${isAsc}`);
+        }
+
+        if (params.length > 0) {
+            url += params.join('&');
+        } else {
+            url = '/api/service/search';
+        }
+
+        renderService(url);
     }
-  }
 
-    async function fetchService(url = '/api/service') {
+    function changeServiceCategory(category) {
+        activeCategoryKey = category;
+        renderServiceCategory(); // Cập nhật lại UI cho thẻ radio
+        applyServiceFilters(); // Gọi hàm tổng hợp
+    }
+
+    async function fetchService(url = '/api/service/search') {
         try {
-            const response = await fetch(url); // Gọi API theo url truyền vào
-            if (!response.ok) {
-                throw new Error('Failed to fetch service data');
-            }
+            const separator = url.includes('?') ? '&' : '?';
+            const paginatedUrl = `${url}${separator}pageNumber=${currentPage}&pageSize=${pageSize}`;
+
+            const response = await fetch(paginatedUrl);
+            if (!response.ok) throw new Error('Failed to fetch service data');
+
             const payload = await response.json();
-            return Array.isArray(payload) ? payload : [];
+            if (payload.data) {
+                return payload;
+            } else {
+                // Fallback nếu API chưa chuẩn
+                return { data: Array.isArray(payload) ? payload : [], totalPages: 1, totalRecords: payload.length || 0 };
+            }
         } catch (error) {
             console.error('Error fetching services:', error);
-            return [];
+            return { data: [], totalPages: 0, totalRecords: 0 };
         }
     }
 
-  async function renderService(url = '/api/service') {
-    const services = await fetchService(url); // Truyền url xuống fetchService
-    const serviceContainer = document.getElementById('serviceContainer');
-    if (services.length === 0) {
-      serviceContainer.innerHTML = `<p class="text-center text-stone-500 col-span-full">Không có dịch vụ nào để hiển thị.</p>`;
-      return;
-    }
-    globalServicesList = services;
-    serviceContainer.innerHTML = services.map(service => {
-      return `
+    async function renderService(url = '/api/service/search') {
+        currentFetchUrl = url;
+        const responseData = await fetchService(url);
+        const services = responseData.data;
+        const serviceContainer = document.getElementById('serviceContainer');
+        const countDisplay = document.getElementById('serviceCountDisplay');
+
+        if (countDisplay) {
+            countDisplay.innerText = `Hiển thị ${services.length} trên ${responseData.totalRecords} dịch vụ`;
+        }
+
+        if (services.length === 0) {
+            serviceContainer.innerHTML = `<p class="text-center text-stone-500 col-span-full">Không có dịch vụ nào để hiển thị.</p>`;
+            renderPaginationUI(0);
+            return;
+        }
+
+        globalServicesList = services;
+        serviceContainer.innerHTML = services.map(service => {
+            return `
         <div class="group relative bg-stone-900 rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(0,51,69,0.3)] hover:-translate-y-2 h-[450px] flex flex-col justify-end transform-gpu isolate">
           <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-90 group-hover:opacity-100" src="${service.thumbnailUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCZ0EeYwVrvJDjKJQuTk7XJ8vEKopSXKbWS4oAL6eFW2Ahj4DUaes-JtGaO2vQm4JqujKnrRu9EVHwlAa7X6u2tIhuF6xvVTptFqx8iL5yGP91I35WcOz2ia4Vd2GGEsjAnxjGawE-Ae0mPT6chd3srRNcnppgOrUi-fmkzINZmq6qOZNAPSQUOZkORTqCmp83tt8sMcRRnGmOzUcmQ9iYCx8mWUIVNZeqUnmX0FsJdLKBKKex2bWbdHCrJeAR8wEB0JDeg3o3K17rH'}" alt="${service.name}" />
           <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
@@ -529,48 +553,83 @@
                 <p class="text-xl font-bold text-white tracking-tight">${service.price.toLocaleString('vi-VN')}đ</p>
               </div>
               <button onclick="openServiceModal('${service._id || service.id}')" class="px-6 py-3 bg-white text-[#003345] hover:bg-[#775a19] hover:text-white text-xs font-bold uppercase tracking-widest rounded-xl transition-colors shadow-lg flex items-center gap-2 group/btn cursor-pointer">
-                Xem chi tiết dịch vụ
+                Xem chi tiết
                 <span class="material-symbols-outlined text-base transition-transform duration-300 group-hover/btn:translate-x-1">arrow_forward</span>                
               </button>
             </div>
           </div>
         </div>
       `;
-    }).join('');
-  }
+        }).join('');
 
-  document.addEventListener('DOMContentLoaded', async () => {
-    checkLoginStatus();
-    renderServiceCategory();
-    await renderService();
-    document.getElementById('modalQtyMinus')?.addEventListener('click', () => changeSelectedServiceQuantity(-1));
-    document.getElementById('modalQtyPlus')?.addEventListener('click', () => changeSelectedServiceQuantity(1));
-      document.getElementById('bookBtn')?.addEventListener('click', addSelectedServiceToBooking);
-      const sortSelect = document.getElementById('priceSortSelect');
-      if (sortSelect) {
-          sortSelect.addEventListener('change', (e) => {
-              const value = e.target.value;
-              let targetUrl = '/api/service';
-
-              if (value === 'asc') {
-                  targetUrl = '/api/service/sort-price?isAscending=true';
-              } else if (value === 'desc') {
-                  targetUrl = '/api/service/sort-price?isAscending=false';
-              }
-
-              // ĐỒNG BỘ UI: Khi đang sắp xếp thì trả Phân loại về "Tất cả"
-              activeCategoryKey = null;
-              renderServiceCategory(); // Render lại để bỏ sáng các ô phân loại
-
-              renderService(targetUrl); // Gọi API sắp xếp
-          });
-      }
-    const hash = window.location.hash; 
-    if (hash && hash.startsWith('#detail-')) {
-      const serviceId = hash.replace('#detail-', '');
-      openServiceModalFromHash(serviceId);
+        renderPaginationUI(responseData.totalPages);
     }
-  });
+
+    function renderPaginationUI(totalPages) {
+        const paginationContainer = document.getElementById('paginationContainer');
+        if (!paginationContainer) return;
+
+        if (totalPages <= 1) {
+            paginationContainer.innerHTML = '';
+            return;
+        }
+
+        let html = '';
+        html += `
+          <button onclick="changePage(${currentPage - 1})" 
+                  class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm ${currentPage === 1 ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}">
+              <span class="material-symbols-outlined text-xl">arrow_back</span>
+          </button>
+          <div class="flex gap-3">
+      `;
+
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === currentPage) {
+                html += `<button class="w-12 h-12 flex items-center justify-center rounded-full bg-[#003345] text-white font-bold text-base shadow-md">${i}</button>`;
+            } else {
+                html += `<button onclick="changePage(${i})" class="w-12 h-12 flex items-center justify-center rounded-full text-stone-600 hover:bg-white hover:text-[#003345] transition-all font-bold text-base shadow-sm">${i}</button>`;
+            }
+        }
+
+        html += `
+          </div>
+          <button onclick="changePage(${currentPage + 1})" 
+                  class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}">
+              <span class="material-symbols-outlined text-xl">arrow_forward</span>
+          </button>
+      `;
+        paginationContainer.innerHTML = html;
+    }
+
+    function changePage(newPage) {
+        currentPage = newPage;
+        renderService(currentFetchUrl);
+        document.querySelector('header').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        checkLoginStatus();
+        renderServiceCategory();
+        await renderService(); // Tải mặc định
+
+        document.getElementById('modalQtyMinus')?.addEventListener('click', () => changeSelectedServiceQuantity(-1));
+        document.getElementById('modalQtyPlus')?.addEventListener('click', () => changeSelectedServiceQuantity(1));
+        document.getElementById('bookBtn')?.addEventListener('click', addSelectedServiceToBooking);
+
+        // Ràng buộc Sắp xếp
+        const sortSelect = document.getElementById('priceSortSelect');
+        if (sortSelect) {
+            sortSelect.addEventListener('change', () => {
+                applyServiceFilters(); // Gọi hàm tổng hợp khi thay đổi giá trị
+            });
+        }
+
+        const hash = window.location.hash;
+        if (hash && hash.startsWith('#detail-')) {
+            const serviceId = hash.replace('#detail-', '');
+            openServiceModalFromHash(serviceId);
+        }
+    });
 
   window.addEventListener('hashchange', () => {
     const hash = window.location.hash;

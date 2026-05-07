@@ -1,4 +1,5 @@
 ﻿using HotelManager.Application.Converters;
+using HotelManager.Application.DTO;
 using HotelManager.Application.DTO.Services;
 using HotelManager.Application.IRepository;
 using HotelManager.Application.IService;
@@ -27,21 +28,38 @@ namespace HotelManager.Infrastructure.Services
             var lists = await _serviceRepository.GetAll();
             return lists.Select(service => _serviceConverter.EntityToDtoAdmin(service));
         }
-        public async Task<IEnumerable<ServiceCustomerResponse>> GetAllServices()
+        public async Task<PagedResponse<ServiceCustomerResponse>> GetAllServices(int pageNumber = 1, int pageSize = 6)
         {
             var lists = await _serviceRepository.GetListsService();
-            return lists.Select(service => _serviceConverter.EntityToDto(service));
+            var totalRecords = lists.Count();
+            var pagedData = lists.Skip((pageNumber - 1) * pageSize)
+                                .Take(pageSize)
+                                .Select(service => _serviceConverter.EntityToDto(service))
+                                .ToList();
+            return new PagedResponse<ServiceCustomerResponse>(pagedData, pageNumber, pageSize, totalRecords);
         }
 
-        public async Task<IEnumerable<ServiceCustomerResponse>> GetServiceByCategory(CategoryService category)
+        public async Task<PagedResponse<ServiceCustomerResponse>> GetServicesAdvanced(CategoryService? category, bool? isAscending, int pageNumber = 1, int pageSize = 6)
         {
-            var lists = await _serviceRepository.GetServiceByCategory(category);
-            return lists.Select(service => _serviceConverter.EntityToDto(service));
-        }
-        public async Task<IEnumerable<ServiceCustomerResponse>> GetServiceSortPrice(bool isAscending = true)
-        {
-            var lists = await _serviceRepository.GetServiceSortedByPrice(isAscending);
-            return lists.Select(service => _serviceConverter.EntityToDto(service));
+            var allServices = await _serviceRepository.GetListsService(); // Hoặc lấy dạng IQueryable
+            var query = allServices.AsQueryable();
+
+            if (category.HasValue)
+                query = query.Where(s => s.Category == category.Value);
+
+            if (isAscending.HasValue)
+                query = isAscending.Value
+                    ? query.OrderBy(s => s.Price)
+                    : query.OrderByDescending(s => s.Price);
+
+            var totalRecords = query.Count();
+
+            var pagedData = query.Skip((pageNumber - 1) * pageSize)
+                                 .Take(pageSize)
+                                 .Select(service => _serviceConverter.EntityToDto(service))
+                                 .ToList();
+
+            return new PagedResponse<ServiceCustomerResponse>(pagedData, pageNumber, pageSize, totalRecords);
         }
 
         public async Task Remove(int id)

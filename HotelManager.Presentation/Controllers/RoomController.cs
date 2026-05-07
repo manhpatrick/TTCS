@@ -20,7 +20,8 @@ namespace HotelManager.Presentation.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<PagedResponse<RoomUserListResponse>>> GetAllRooms([FromQuery] int pageNumber = 1,[FromQuery] int pageSize = 6)
+        public async Task<ActionResult<PagedResponse<RoomUserListResponse>>> GetAllRooms([FromQuery] int pageNumber = 1,
+                                                                                        [FromQuery] int pageSize = 6)
         {
             return Ok(await _roomService.GetListRooms(pageNumber, pageSize));
         }

@@ -193,7 +193,7 @@
           href="/room.html" 
           class="bg-transparent border border-outline-variant text-on-primary px-8 py-3.5 rounded font-medium text-base hover:bg-white/10 backdrop-blur-sm transition-colors w-full sm:w-auto shadow-lg"
         >
-          Xem phòng trống
+          Xem phòng
         </a>
       </div>
     </div>
@@ -600,18 +600,23 @@
         });
       }
       
-    async function fetchRoom(){
-      try {
-        const response = await fetch('/api/room')
-        if(!response.ok){
-          throw new Error('Failed to fetch room data');
+    async function fetchRoom() {
+        try {
+            // Tùy vào việc bạn đang dùng API nào ở Backend, có thể là /api/room hoặc /api/room/search
+            const response = await fetch('/api/room')
+            if (!response.ok) {
+                throw new Error('Failed to fetch room data');
+            }
+            const payload = await response.json();
+
+            // Lấy mảng dữ liệu từ payload.data (của PagedResponse), nếu không có thì fallback về mảng cũ
+            const dataArray = payload.data ? payload.data : (Array.isArray(payload) ? payload : []);
+
+            return dataArray.slice(0, 3); // Chỉ lấy 3 phòng tiêu biểu
+        } catch (error) {
+            console.error('Error fetching rooms:', error);
+            return [];
         }
-        const payload = await response.json();
-        return Array.isArray(payload) ? payload.slice(0, 3) : [];
-      } catch (error){
-        console.error('Error fetching rooms:', error);
-        return [];
-      }
     }
 
     async function fetchService(){

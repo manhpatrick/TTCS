@@ -1,4 +1,5 @@
-﻿using HotelManager.Application.DTO.Services;
+﻿using HotelManager.Application.DTO;
+using HotelManager.Application.DTO.Services;
 using HotelManager.Application.IService;
 using HotelManager.Domain.Entity.Services.Enum;
 using Microsoft.AspNetCore.Mvc;
@@ -17,25 +18,20 @@ namespace HotelManager.Presentation.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ServiceCustomerResponse>>> GetAllServices()
+        public async Task<ActionResult<PagedResponse<ServiceCustomerResponse>>> GetAllServices([FromQuery] int pageNumber = 1,
+                                                                                              [FromQuery] int pageSize = 6)
         {
-            return Ok(await _serviceService.GetAllServices());
+            return Ok(await _serviceService.GetAllServices(pageNumber, pageSize));
         }
 
-        [HttpGet("filter")]
-        public async Task<ActionResult<IEnumerable<ServiceCustomerResponse>>> GetServiceByCategory([FromQuery] CategoryService category)
+        [HttpGet("search")]
+        public async Task<ActionResult<PagedResponse<ServiceCustomerResponse>>> SearchServices(
+            [FromQuery] CategoryService? category = null,
+            [FromQuery] bool? isAscending = null,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 6)
         {
-            var result = await _serviceService.GetServiceByCategory(category);
-            return Ok(result);
-        }
-
-        // 2. Sắp xếp dịch vụ theo giá
-        // Gọi API: GET /api/service/sort-price?isAscending=true (hoặc false)
-        [HttpGet("sort-price")]
-        public async Task<ActionResult<IEnumerable<ServiceCustomerResponse>>> GetServiceSortPrice([FromQuery] bool isAscending = true)
-        {
-            var result = await _serviceService.GetServiceSortPrice(isAscending);
-            return Ok(result);
+            return Ok(await _serviceService.GetServicesAdvanced(category, isAscending, pageNumber, pageSize));
         }
     }
 }
