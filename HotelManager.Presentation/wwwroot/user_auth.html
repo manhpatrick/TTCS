@@ -333,14 +333,14 @@
             btn.disabled = true;
 
             try {
-                // Tích hợp API thực tế tại đây:
-                // const response = await fetch('/api/auth/forgot-password/send-otp', {
-                //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json' },
-                //     body: JSON.stringify({ Email: emailInput })
-                // });
-                // const data = await response.json();
-                // if (!response.ok) throw new Error(data.message || 'Không thể gửi mã. Vui lòng thử lại.');
+                 //Tích hợp API thực tế tại đây:
+                 const response = await fetch('/api/auth/forgot-password/send-otp', {
+                     method: 'POST',
+                     headers: { 'Content-Type': 'application/json' },
+                     body: JSON.stringify({ Email: emailInput })
+                 });
+                 const data = await response.json();
+                 if (!response.ok) throw new Error(data.message || 'Không thể gửi mã. Vui lòng thử lại.');
 
                 // Giả lập delay mạng
                 await new Promise(r => setTimeout(r, 1500));
@@ -456,14 +456,14 @@
                 }
 
                 try {
-                    // Tích hợp API xác nhận OTP thực tế tại đây:
-                    // const response = await fetch('/api/auth/forgot-password/verify-otp', {
-                    //     method: 'POST',
-                    //     headers: { 'Content-Type': 'application/json' },
-                    //     body: JSON.stringify({ Email: email, Otp: otp, NewPassword: newPassword })
-                    // });
-                    // const data = await response.json();
-                    // if (!response.ok) throw new Error(data.message || 'Xác nhận thất bại');
+                     //Tích hợp API xác nhận OTP thực tế tại đây:
+                     const response = await fetch('/api/auth/forgot-password/verify-otp', {
+                         method: 'POST',
+                         headers: { 'Content-Type': 'application/json' },
+                         body: JSON.stringify({ Email: email, Otp: otp, NewPassword: newPassword })
+                     });
+                     const data = await response.json();
+                     if (!response.ok) throw new Error(data.message || 'Xác nhận thất bại');
 
                     // Giả lập network delay
                     await new Promise(r => setTimeout(r, 1000));

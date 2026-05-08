@@ -1,4 +1,4 @@
-using HotelManager.Application.DTO.AppConfig;
+﻿using HotelManager.Application.DTO.AppConfig;
 using HotelManager.Infrastructure.Data;
 using HotelManager.Presentation.Middleware;
 using Microsoft.EntityFrameworkCore;
@@ -62,6 +62,8 @@ namespace HotelManager.Presentation
                     };
                 }
             );
+            // Đăng ký MailSettings
+            builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure();

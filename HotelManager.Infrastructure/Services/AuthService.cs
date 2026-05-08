@@ -25,14 +25,16 @@ namespace HotelManager.Infrastructure.Services
         private readonly IPasswordHasher<Account> _passwordHasher;
         private readonly JwtSettings _jwtSettings;
         private readonly IMemoryCache _cache;
+        private readonly MailSettings _mailSettings;
 
         public AuthService(IAuthRepository authRepository, IUserRepository userRepository, IPasswordHasher<Account> passwordHasher,
-            IOptions<JwtSettings> jwtsettings, IMemoryCache cache)
+            IOptions<JwtSettings> jwtsettings, IOptions<MailSettings> mailSettings, IMemoryCache cache)
         {
             _authRepository = authRepository;
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
             _jwtSettings = jwtsettings.Value;
+            _mailSettings = mailSettings.Value;
             _cache = cache;
         }
         public async Task<RegisterResponse> Register(RegisterRequest registerDTO){
@@ -129,16 +131,17 @@ namespace HotelManager.Infrastructure.Services
             // Logic gửi Email bằng SMTP Gmail
             try
             {
-                var smtpClient = new SmtpClient("smtp.gmail.com")
+                var smtpClient = new SmtpClient(_mailSettings.Host)
                 {
-                    Port = 587,
-                    Credentials = new NetworkCredential("phamtuandat50@gmail.com", "pllwtcveakotwgdg"),
+                    Port = _mailSettings.Port,
+                    Credentials = new NetworkCredential(_mailSettings.Email, _mailSettings.Password),
                     EnableSsl = true,
+                    UseDefaultCredentials = false // Nên thêm dòng này để đảm bảo xác thực đúng
                 };
 
                 var mailMessage = new MailMessage
                 {
-                    From = new MailAddress("phamtuandat50@gmail.com", "Azure Sands Hotel"),
+                    From = new MailAddress(_mailSettings.Email, _mailSettings.DisplayName),
                     Subject = "Mã xác nhận khôi phục mật khẩu",
                     Body = $"Mã OTP khôi phục mật khẩu của bạn là: <b>{otp}</b>. Mã này sẽ hết hạn sau 5 phút.",
                     IsBodyHtml = true,
@@ -148,9 +151,9 @@ namespace HotelManager.Infrastructure.Services
                 await smtpClient.SendMailAsync(mailMessage);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception("Lỗi khi gửi email. Vui lòng kiểm tra lại cấu hình SMTP.");
+                throw new Exception($"Lỗi khi gửi email: {ex.Message}");
             }
         }
 
