@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using HotelManager.Application.AddLayer;
+using HotelManager.Infrastructure.Services;
 
 namespace HotelManager.Presentation
 {
@@ -64,6 +65,7 @@ namespace HotelManager.Presentation
 
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure();
+            builder.Services.AddHostedService<BookingStatusUpdateService>();
             builder.Services.AddCors(option =>
             {
                 option.AddPolicy("AllowReactApp",

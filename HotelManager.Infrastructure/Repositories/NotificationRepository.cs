@@ -11,7 +11,7 @@ namespace HotelManager.Infrastructure.Repositories
         public NotificationRepository(AppDbContext context) : base(context) { }
         public async Task<IEnumerable<Notification>> GetNotificationsByAccountId(int accountId)
         {
-            return await _dbSet.Where(n => n.UserNotifications.Any(un => un.AccountId == accountId)).Include(n => n.UserNotifications).ToListAsync();
+            return await _dbSet.Where(n => n.UserNotifications.Any(un => un.AccountId == accountId)).Include(n => n.UserNotifications).OrderByDescending(n => n.CreatedAt).ToListAsync();
         }
         public async Task<Notification> GetByNotificationId(int id)
         {

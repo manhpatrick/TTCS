@@ -14,10 +14,10 @@ namespace HotelManager.Application.Converters
                 EndTime = booking.EndTime
             };
         }
-        public Booking DtoToEntity(int accountId,BookingRequest request)
+        public Booking DtoToEntity(int accountId,BookingRequest request, decimal RoomPriceAtBooking)
         {
             var booking = new Booking(accountId, request.RoomId, request.Note!, request.StartTime, request.EndTime, request.NumOfPeople,
-                request.RoomPriceAtBooking);
+                RoomPriceAtBooking);
             return booking;
         }
         public BookingDetailResponse EntityToDetailDto(Booking booking)

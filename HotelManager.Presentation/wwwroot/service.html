@@ -2,671 +2,639 @@
 <html class="light" lang="vi">
 
 <head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Danh sách dịch vụ</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-  
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          "colors": {
-            "primary": "#003345",
-            "secondary": "#775a19",
-            "secondary-container": "#fed488",
-            "on-secondary-container": "#785a1a",
-            "surface-container-low": "#f4f3f2",
-            "surface-container-lowest": "#ffffff",
-          },
-          "fontFamily": {
-            "headline": ["Noto Serif", "serif"],
-            "body": ["Manrope", "sans-serif"],
-          }
-        },
-      },
-    }
-  </script>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Danh sách dịch vụ</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
 
-  <style>
-    body {
-      font-family: 'Manrope', sans-serif;
-      background-color: #faf9f8;
-    }
-    .font-noto-serif { font-family: 'Noto Serif', serif; }
-    html { scrollbar-gutter: stable; }
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-    }
-    .glass-nav {
-      background: rgba(250, 249, 248, 0.8);
-      backdrop-filter: blur(24px);
-    }
-    .toast-enter {
-      opacity: 0;
-      transform: translateY(8px);
-    }
-    .toast-show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .service-toast {
-      background: linear-gradient(135deg, rgba(119, 90, 25, 0.98), rgba(0, 51, 69, 0.96));
-      border: 1px solid rgba(254, 212, 136, 0.45);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(8px);
-    }
-  </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#001f2b",
+                        "surface-container-highest": "#e3e2e1",
+                        "primary-fixed": "#bfe8ff",
+                        "tertiary-fixed": "#eee0d5",
+                        "surface-variant": "#e3e2e1",
+                        "secondary": "#775a19",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c0c7cd",
+                        "primary-fixed-dim": "#96ceeb",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#261900",
+                        "on-tertiary-container": "#bdb0a5",
+                        "tertiary-fixed-dim": "#d2c4b9",
+                        "surface": "#faf9f8",
+                        "inverse-on-surface": "#f1f0f0",
+                        "surface-container-low": "#f4f3f2",
+                        "tertiary": "#352d26",
+                        "on-primary-container": "#83bad6",
+                        "surface-tint": "#2a657e",
+                        "surface-bright": "#faf9f8",
+                        "on-secondary-fixed-variant": "#5d4201",
+                        "surface-dim": "#dadad9",
+                        "on-secondary-container": "#785a1a",
+                        "background": "#faf9f8",
+                        "inverse-primary": "#96ceeb",
+                        "surface-container": "#eeeeed",
+                        "secondary-container": "#fed488",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#4e453d",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2f3130",
+                        "surface-container-high": "#e9e8e7",
+                        "secondary-fixed": "#ffdea5",
+                        "on-primary-fixed-variant": "#044d65",
+                        "on-background": "#1a1c1c",
+                        "tertiary-container": "#4c433b",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary": "#003345",
+                        "outline": "#9da3a8",
+                        "on-surface-variant": "#40484c",
+                        "secondary-fixed-dim": "#e9c176",
+                        "primary-container": "#004b63",
+                        "on-tertiary-fixed": "#211a14",
+                        "on-surface": "#1a1c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif", "serif"],
+                        "body": ["Manrope", "sans-serif"],
+                    }
+                },
+            },
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #faf9f8;
+        }
+
+        .font-noto-serif {
+            font-family: 'Noto Serif', serif;
+        }
+
+        html {
+            scrollbar-gutter: stable;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .glass-nav {
+            background: rgba(250, 249, 248, 0.8);
+            backdrop-filter: blur(24px);
+        }
+
+        .toast-enter {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        .toast-show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-toast {
+            background: linear-gradient(135deg, rgba(119, 90, 25, 0.98), rgba(0, 51, 69, 0.96));
+            border: 1px solid rgba(254, 212, 136, 0.45);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(8px);
+        }
+    </style>
 </head>
 
 <body class="bg-surface text-stone-800 font-body selection:bg-secondary-container selection:text-on-secondary-container">
-  
-  <nav class="fixed top-0 w-full z-50 glass-nav transition-colors duration-300">
-    <div class="flex justify-between items-center px-12 py-6 mx-auto">
-      <div class="flex items-center gap-12">
-        <a class="text-2xl font-headline italic text-primary tracking-tight" href="/">The Editorial Concierge</a>
-        <div class="hidden md:flex items-center gap-8 font-headline text-lg tracking-tight">
-          <a class="text-primary/70 hover:text-secondary transition-all duration-300 nav-link" href="/">Trang chủ</a>
-          <a class="text-primary/70 hover:text-secondary transition-all duration-300 nav-link" href="/room.html">Phòng</a>
-          <a class="text-secondary border-b-2 border-secondary pb-1 transition-all duration-300 nav-link" href="/service.html">Dịch vụ</a>
-          <a class="text-primary/70 hover:text-secondary transition-all duration-300 nav-link" href="/booking.html">Đặt ngay</a>
-        </div>
-      </div>
-      <div class="flex items-center gap-6" id="authContainer">
-      </div>
-    </div>
-  </nav>
 
-  <div class="flex pt-20 min-h-screen">
-    
-    <aside class="h-[calc(100vh-5rem)] w-72 sticky left-0 top-20 bg-[#faf9f8] border-r border-stone-200/50 flex flex-col p-8 gap-y-8 overflow-y-auto hidden lg:flex">
-      <div>
-        <h2 class="font-noto-serif text-xl text-primary font-bold mb-1">Danh mục</h2>
-        <p class="font-body text-xs tracking-widest uppercase text-stone-400">Lọc Dịch vụ</p>
-      </div>
-      
-      <div class="space-y-6">
-        <div class="space-y-3">
-          <label class="flex items-center gap-2 text-[#003345] font-semibold text-sm tracking-wide">
-            <span class="material-symbols-outlined text-sm" data-icon="category">category</span>
-            Phân loại
-          </label>
-          <div class="space-y-2 mt-2" id="serviceCategoryContainer">
+    <div id="header-placeholder"></div>
+
+    <div class="flex pt-20 min-h-screen">
+
+        <aside class="h-[calc(100vh-5rem)] w-72 sticky left-0 top-20 bg-[#faf9f8] border-r border-stone-200/50 flex flex-col p-8 gap-y-8 overflow-y-auto hidden lg:flex z-40">
+            <div>
+                <h2 class="font-noto-serif text-xl text-primary font-bold mb-1">Danh mục</h2>
+                <p class="font-body text-xs tracking-widest uppercase text-stone-400">Lọc Dịch vụ</p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="space-y-3">
+                    <label class="flex items-center gap-2 text-[#003345] font-semibold text-sm tracking-wide">
+                        <span class="material-symbols-outlined text-sm" data-icon="category">category</span>
+                        Phân loại
+                    </label>
+                    <div class="space-y-2 mt-2" id="serviceCategoryContainer">
+                    </div>
+                </div>
+
+                <div class="space-y-3 pt-6 border-t border-stone-200/60">
+                    <label class="flex items-center gap-2 text-[#003345] font-semibold text-sm tracking-wide">
+                        <span class="material-symbols-outlined text-sm" data-icon="sort">sort</span>
+                        Mức giá
+                    </label>
+                    <div class="mt-2">
+                        <select id="priceSortSelect" class="w-full bg-white border border-stone-200/60 rounded-lg text-sm text-stone-600 focus:ring-1 focus:ring-[#775a19] focus:border-[#775a19] px-3 py-2 cursor-pointer shadow-sm outline-none">
+                            <option value="default">Mặc định</option>
+                            <option value="asc">Giá: Thấp đến Cao</option>
+                            <option value="desc">Giá: Cao đến Thấp</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 p-8 md:p-12 bg-[#f4f3f2]">
+
+            <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-stone-200/60 pb-8">
+                <div class="relative">
+                    <span class="absolute -top-6 -left-6 text-9xl font-serif text-[#003345]/5 select-none pointer-events-none">S</span>
+                    <h1 class="relative z-10 text-4xl md:text-5xl font-noto-serif text-[#003345] font-bold mb-4 tracking-tight leading-tight">Dịch vụ tinh hoa</h1>
+                    <p class="max-w-xl text-stone-500 font-body leading-relaxed text-base">Mỗi dịch vụ là một tác phẩm nghệ thuật được chúng tôi thiết kế riêng, nhằm đánh thức mọi giác quan và nuông chiều những vị khách trân quý nhất.</p>
+                </div>
+                <div id="serviceCountDisplay" class="text-xs font-body uppercase tracking-widest text-stone-400 font-semibold bg-white px-4 py-2 rounded-full shadow-sm border border-stone-100">
+                    Đang tải dữ liệu...
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-10" id="serviceContainer">
+            </div>
+
+            <div id="paginationContainer" class="mt-24 flex justify-center items-center gap-6">
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="w-full bg-[#f4f3f2] text-[#003345] font-body border-t border-stone-200/50">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-16 py-20 max-w-screen-2xl mx-auto">
+            <div class="col-span-1 md:col-span-1 space-y-6">
+                <h3 class="text-xl font-headline font-bold">The Editorial Concierge</h3>
+                <p class="text-stone-500 text-sm leading-relaxed">Định nghĩa lại sự sang trọng thông qua những trải nghiệm được chọn lọc kỹ lưỡng và dịch vụ tận tâm.</p>
+                <div class="flex gap-4">
+                    <a class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-[#003345] hover:bg-[#775a19] hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">social_leaderboard</span></a>
+                    <a class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-[#003345] hover:bg-[#775a19] hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">photo_camera</span></a>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Khám phá</h4>
+                <ul class="space-y-4 text-sm text-stone-500">
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Các hạng phòng</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Trải nghiệm ẩm thực</a></li>
+                </ul>
+            </div>
+            <div class="space-y-6">
+                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Công ty</h4>
+                <ul class="space-y-4 text-sm text-stone-500">
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="space-y-6">
+                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Liên hệ</h4>
+                <p class="text-sm text-stone-500 leading-relaxed">123 Đường Editorial, Quận 1<br />T: +84 28 3824 1234</p>
             </div>
         </div>
+    </footer>
 
-        <div class="space-y-3 pt-6 border-t border-stone-200/60">
-          <label class="flex items-center gap-2 text-[#003345] font-semibold text-sm tracking-wide">
-            <span class="material-symbols-outlined text-sm" data-icon="sort">sort</span>
-            Mức giá
-          </label>
-          <div class="mt-2">
-            <select id="priceSortSelect" class="w-full bg-white border border-stone-200/60 rounded-lg text-sm text-stone-600 focus:ring-1 focus:ring-[#775a19] focus:border-[#775a19] px-3 py-2 cursor-pointer shadow-sm outline-none">
-              <option value="default">Mặc định</option>
-              <option value="asc">Giá: Thấp đến Cao</option>
-              <option value="desc">Giá: Cao đến Thấp</option>
-            </select>
-          </div>
-        </div>
-      </div>
-    </aside>
-
-    <main class="flex-1 p-8 md:p-12 bg-[#f4f3f2]">
-      
-      <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-stone-200/60 pb-8">
-        <div class="relative">
-          <span class="absolute -top-6 -left-6 text-9xl font-serif text-[#003345]/5 select-none pointer-events-none">S</span>
-          <h1 class="relative z-10 text-4xl md:text-5xl font-noto-serif text-[#003345] font-bold mb-4 tracking-tight leading-tight">Dịch vụ tinh hoa</h1>
-          <p class="max-w-xl text-stone-500 font-body leading-relaxed text-base">Mỗi dịch vụ là một tác phẩm nghệ thuật được chúng tôi thiết kế riêng, nhằm đánh thức mọi giác quan và nuông chiều những vị khách trân quý nhất.</p>
-        </div>
-        <div id="serviceCountDisplay" class="text-xs font-body uppercase tracking-widest text-stone-400 font-semibold bg-white px-4 py-2 rounded-full shadow-sm border border-stone-100">
-          Đang tải dữ liệu...
-        </div>
-      </header>
-
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-10" id="serviceContainer">
-      </div>
-
-      <div id="paginationContainer" class="mt-24 flex justify-center items-center gap-6">
-      </div>
-
-    </main>
-  </div>
-
-  <footer class="w-full bg-[#f4f3f2] text-[#003345] font-body border-t border-stone-200/50">
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-16 py-20 max-w-screen-2xl mx-auto">
-      <div class="col-span-1 md:col-span-1 space-y-6">
-        <h3 class="text-xl font-headline font-bold">The Editorial Concierge</h3>
-        <p class="text-stone-500 text-sm leading-relaxed">Định nghĩa lại sự sang trọng thông qua những trải nghiệm được chọn lọc kỹ lưỡng và dịch vụ tận tâm.</p>
-        <div class="flex gap-4">
-          <a class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-[#003345] hover:bg-[#775a19] hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">social_leaderboard</span></a>
-          <a class="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-[#003345] hover:bg-[#775a19] hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">photo_camera</span></a>
-        </div>
-      </div>
-      <div class="space-y-6">
-        <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Khám phá</h4>
-        <ul class="space-y-4 text-sm text-stone-500">
-          <li><a class="hover:text-primary hover:underline transition-all" href="#">Các hạng phòng</a></li>
-          <li><a class="hover:text-primary hover:underline transition-all" href="#">Trải nghiệm ẩm thực</a></li>
-        </ul>
-      </div>
-      <div class="space-y-6">
-        <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Công ty</h4>
-        <ul class="space-y-4 text-sm text-stone-500">
-          <li><a class="hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a></li>
-          <li><a class="hover:text-primary hover:underline transition-all" href="#">Terms of Service</a></li>
-        </ul>
-      </div>
-      <div class="space-y-6">
-        <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Liên hệ</h4>
-        <p class="text-sm text-stone-500 leading-relaxed">123 Đường Editorial, Quận 1<br />T: +84 28 3824 1234</p>
-      </div>
-    </div>
-  </footer>
-  <div id="serviceModal" class="fixed inset-0 z-[100] hidden opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="absolute inset-0 bg-stone-900/60 backdrop-blur-sm" onclick="closeServiceModal()"></div>
-    <div id="serviceModalContent" class="fixed top-1/2 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-4xl bg-[#faf9f8] rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] transition-all duration-300 opacity-0 scale-95 -translate-y-[46%]"> 
-      <div class="w-full md:w-5/12 h-56 md:h-auto relative">
-        <img id="modalImg" src="" alt="Service Image" class="w-full h-full object-cover" />
-        <button onclick="closeServiceModal()" class="md:hidden absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-stone-900/20 backdrop-blur-md rounded-full text-white">
-          <span class="material-symbols-outlined text-[18px]">close</span>
-        </button>
-      </div>
-      <div class="w-full md:w-7/12 p-8 md:p-12 flex flex-col overflow-y-auto">
-        <div class="flex justify-between items-start mb-4">
-          <span id="modalCategory" class="text-[10px] uppercase tracking-widest text-[#775a19] font-bold"></span>
-          <button onclick="closeServiceModal()" class="hidden md:flex text-stone-400 hover:text-[#003345] transition-colors p-1">
-            <span class="material-symbols-outlined">close</span>
-          </button>
-        </div>
-        <h2 id="modalTitle" class="font-noto-serif text-3xl md:text-4xl text-[#003345] font-bold mb-4 leading-tight"></h2>   
-        <div class="flex items-end gap-2 mb-6 pb-6 border-b border-stone-200/60">
-          <span id="modalPrice" class="text-2xl md:text-3xl font-bold text-[#003345]"></span>
-          <span id="modalUnit" class="text-sm text-stone-500 font-medium mb-1.5"></span>
-        </div>
-        <div class="flex-1">
-          <p id="modalDesc" class="font-body text-stone-600 leading-relaxed"></p>
-          <ul class="mt-8 space-y-4 text-sm text-stone-600 border-t border-stone-200/40 pt-6">
-            <li class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-[#775a19] text-[18px]">schedule</span>
-              Sẵn sàng phục vụ theo khung giờ yêu cầu
-            </li>
-            <li class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-[#775a19] text-[18px]">verified_user</span>
-              Thực hiện bởi đội ngũ chuyên gia nội bộ
-            </li>
-          </ul>
-        </div>
-        <div class="mt-8 pt-6 border-t border-stone-200/60 flex flex-col sm:flex-row items-center gap-3">
-          <div class="flex items-center bg-white border border-stone-200/80 rounded-xl p-1 shadow-sm shrink-0 w-full sm:w-auto justify-between sm:justify-start h-12">
-            <button id="modalQtyMinus" type="button" class="w-10 h-10 flex items-center justify-center rounded-lg text-stone-400 hover:text-[#003345] hover:bg-stone-50 transition-all active:scale-95" aria-label="Giảm số lượng dịch vụ">
-              <span class="material-symbols-outlined text-[20px]">remove</span>
-            </button>
-            <span id="modalQtyValue" class="w-10 text-center text-base font-bold text-[#003345] select-none">1</span>
-            <button id="modalQtyPlus" type="button" class="w-10 h-10 flex items-center justify-center rounded-lg text-stone-400 hover:text-[#003345] hover:bg-stone-50 transition-all active:scale-95" aria-label="Tăng số lượng dịch vụ">
-              <span class="material-symbols-outlined text-[20px]">add</span>
-            </button>
-          </div>
-
-          <button id="bookBtn" class="flex-1 w-full h-12 bg-[#003345] text-white px-4 rounded-xl font-bold tracking-wide hover:bg-[#002233] transition-colors shadow-lg shadow-[#003345]/20 flex justify-between items-center gap-2 group active:scale-[0.99] min-w-0">
-            <span class="flex items-center gap-2">
-              <span class="material-symbols-outlined text-[20px] opacity-80">add_circle</span>
-              Thêm dịch vụ
-            </span>
-            <div class="flex items-center gap-3">
-              <span class="w-px h-6 bg-white/20 hidden sm:block"></span>
-              <span id="modalTotalPrice" class="text-lg">0đ</span>
+    <div id="serviceModal" class="fixed inset-0 z-[100] hidden opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="absolute inset-0 bg-stone-900/60 backdrop-blur-sm" onclick="closeServiceModal()"></div>
+        <div id="serviceModalContent" class="fixed top-1/2 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-4xl bg-[#faf9f8] rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] transition-all duration-300 opacity-0 scale-95 -translate-y-[46%]">
+            <div class="w-full md:w-5/12 h-56 md:h-auto relative">
+                <img id="modalImg" src="" alt="Service Image" class="w-full h-full object-cover" />
+                <button onclick="closeServiceModal()" class="md:hidden absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-stone-900/20 backdrop-blur-md rounded-full text-white">
+                    <span class="material-symbols-outlined text-[18px]">close</span>
+                </button>
             </div>
-          </button>
+            <div class="w-full md:w-7/12 p-8 md:p-12 flex flex-col overflow-y-auto">
+                <div class="flex justify-between items-start mb-4">
+                    <span id="modalCategory" class="text-[10px] uppercase tracking-widest text-[#775a19] font-bold"></span>
+                    <button onclick="closeServiceModal()" class="hidden md:flex text-stone-400 hover:text-[#003345] transition-colors p-1">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                <h2 id="modalTitle" class="font-noto-serif text-3xl md:text-4xl text-[#003345] font-bold mb-4 leading-tight"></h2>
+                <div class="flex items-end gap-2 mb-6 pb-6 border-b border-stone-200/60">
+                    <span id="modalPrice" class="text-2xl md:text-3xl font-bold text-[#003345]"></span>
+                    <span id="modalUnit" class="text-sm text-stone-500 font-medium mb-1.5"></span>
+                </div>
+                <div class="flex-1">
+                    <p id="modalDesc" class="font-body text-stone-600 leading-relaxed"></p>
+                    <ul class="mt-8 space-y-4 text-sm text-stone-600 border-t border-stone-200/40 pt-6">
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[#775a19] text-[18px]">schedule</span>
+                            Sẵn sàng phục vụ theo khung giờ yêu cầu
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[#775a19] text-[18px]">verified_user</span>
+                            Thực hiện bởi đội ngũ chuyên gia nội bộ
+                        </li>
+                    </ul>
+                </div>
+                <div class="mt-8 pt-6 border-t border-stone-200/60 flex flex-col sm:flex-row items-center gap-3">
+                    <div class="flex items-center bg-white border border-stone-200/80 rounded-xl p-1 shadow-sm shrink-0 w-full sm:w-auto justify-between sm:justify-start h-12">
+                        <button id="modalQtyMinus" type="button" class="w-10 h-10 flex items-center justify-center rounded-lg text-stone-400 hover:text-[#003345] hover:bg-stone-50 transition-all active:scale-95" aria-label="Giảm số lượng dịch vụ">
+                            <span class="material-symbols-outlined text-[20px]">remove</span>
+                        </button>
+                        <span id="modalQtyValue" class="w-10 text-center text-base font-bold text-[#003345] select-none">1</span>
+                        <button id="modalQtyPlus" type="button" class="w-10 h-10 flex items-center justify-center rounded-lg text-stone-400 hover:text-[#003345] hover:bg-stone-50 transition-all active:scale-95" aria-label="Tăng số lượng dịch vụ">
+                            <span class="material-symbols-outlined text-[20px]">add</span>
+                        </button>
+                    </div>
+
+                    <button id="bookBtn" class="flex-1 w-full h-12 bg-[#003345] text-white px-4 rounded-xl font-bold tracking-wide hover:bg-[#002233] transition-colors shadow-lg shadow-[#003345]/20 flex justify-between items-center gap-2 group active:scale-[0.99] min-w-0">
+                        <span class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[20px] opacity-80">add_circle</span>
+                            Thêm dịch vụ
+                        </span>
+                        <div class="flex items-center gap-3">
+                            <span class="w-px h-6 bg-white/20 hidden sm:block"></span>
+                            <span id="modalTotalPrice" class="text-lg">0đ</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-</body>
-<script>
-  let activeCategoryKey = null;
-  let currentPage = 1;
-  let globalServicesList = [];
-  let currentService = null;
-  let selectedServiceQuantity = 1;
-  
-  const SERVICE_CATEGORY_VI = {
-    'FOODANDBEVERAGE': 'Ăn uống',
-    'LAUNDRY': 'Giặt ủi',
-    'SPAANDWELLNESS': 'Spa & Wellness',
-    'TRANSPORTATION': 'Vận chuyển',
-    'OTHER': 'Tiện ích khác'
-  };
 
-  function normalizeCategoryKey(value) {
-    return String(value ?? '')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-zA-Z]/g, '')
-      .toUpperCase();
-  }
+    <script src="/js/header.js"></script>
 
-  function getServiceCategoryLabel(category) {
-    return SERVICE_CATEGORY_VI[normalizeCategoryKey(category)] || 'Tiện ích khác';
-  }
+    <script>
+        let activeCategoryKey = null;
+        let currentPage = 1;
+        let globalServicesList = [];
+        let currentService = null;
+        let selectedServiceQuantity = 1;
 
-  function getAuthToken() { return localStorage.getItem('userToken'); }
+        const SERVICE_CATEGORY_VI = {
+            'FOODANDBEVERAGE': 'Ăn uống',
+            'LAUNDRY': 'Giặt ủi',
+            'SPAANDWELLNESS': 'Spa & Wellness',
+            'TRANSPORTATION': 'Vận chuyển',
+            'OTHER': 'Tiện ích khác'
+        };
 
-  function getSelectedServiceTotal() {
-    if (!currentService) return 0;
-    return (Number(currentService.price) || 0) * selectedServiceQuantity;
-  }
-
-  function updateModalQuantityUI() {
-    const qtyValue = document.getElementById('modalQtyValue');
-    const totalPrice = document.getElementById('modalTotalPrice');
-    const bookBtn = document.getElementById('bookBtn');
-    if (qtyValue) {
-      qtyValue.innerText = String(selectedServiceQuantity);
-    }
-    if (totalPrice) {
-      totalPrice.innerText = `${getSelectedServiceTotal().toLocaleString('vi-VN')}đ`;
-    }
-    if (bookBtn && currentService) {
-      bookBtn.innerHTML = `
-        <span class="inline-flex items-center gap-2 whitespace-nowrap overflow-hidden text-ellipsis min-w-0">Thêm dịch vụ: ${getSelectedServiceTotal().toLocaleString('vi-VN')}đ</span>
-        <span class="material-symbols-outlined text-[18px] shrink-0 group-hover:translate-x-1 transition-transform">add_circle</span>
-      `;
-    }
-  }
-
-  function setSelectedServiceQuantity(nextQuantity) {
-    selectedServiceQuantity = Math.max(1, nextQuantity);
-    updateModalQuantityUI();
-  }
-
-  function changeSelectedServiceQuantity(delta) {
-    setSelectedServiceQuantity(selectedServiceQuantity + delta);
-  }
-
-  function showSuccessToast(message) {
-    const existingToast = document.getElementById('serviceSuccessToast');
-    if (existingToast) {
-      existingToast.remove();
-    }
-
-    const toast = document.createElement('div');
-    toast.id = 'serviceSuccessToast';
-    toast.className = 'fixed top-24 right-6 z-[120] service-toast text-white px-5 py-4 rounded-2xl transition-all duration-300 flex items-center gap-3 toast-enter min-w-[300px] max-w-[92vw]';      toast.innerHTML = `
-      <span class="material-symbols-outlined text-[22px] text-[#fed488]">check_circle</span>
-      <div class="flex flex-col leading-tight">
-        <span class="text-[11px] uppercase tracking-widest text-[#fed488]/90 font-semibold">Thành công</span>
-        <span class="text-base font-semibold">${message}</span>
-      </div>
-    `;
-
-    document.body.appendChild(toast);
-    requestAnimationFrame(() => {
-      toast.classList.add('toast-show');
-    });
-
-    setTimeout(() => {
-      toast.classList.remove('toast-show');
-      setTimeout(() => toast.remove(), 300);
-    }, 2200);
-  }
-
-    function checkLoginStatus() {
-        const token = getAuthToken();
-        const isLogin = Boolean(token);
-        const authContainer = document.getElementById('authContainer');
-        if (!authContainer) return;
-
-        if (!isLogin) {
-            authContainer.innerHTML = `
-      <a href="/user_auth.html#signin" class="text-primary/70 hover:text-primary font-medium transition-all duration-300">Đăng nhập</a>
-      <a href="/user_auth.html#signup" class="bg-gradient-to-r from-primary to-primary-container text-white px-6 py-2.5 rounded-lg font-medium shadow-lg active:scale-95 transition-all">Đăng ký</a>
-    `;
-            return;
+        function normalizeCategoryKey(value) {
+            return String(value ?? '')
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-zA-Z]/g, '')
+                .toUpperCase();
         }
 
-        authContainer.innerHTML = `
-    <div class="flex items-center gap-6 relative">
-      <div class="flex items-center gap-4">
-        <button id="userMenuBtn" class="flex items-center gap-2 group focus:outline-none">
-          <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/10 group-hover:border-secondary transition-all">
-            <img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD34i7k1w4t-x06-tI0kZ8R7YF_8y_P2k9pYyYyYyYyYyYyYyYyYyYy"/>
-          </div>
-          <div class="flex flex-col items-start hidden sm:flex">
-            <span class="text-sm font-semibold text-primary font-body">${localStorage.getItem('demo_auth_user') || 'Người dùng'}</span>
-            <span class="text-[10px] text-on-surface-variant font-medium tracking-wider uppercase">Thành viên Gold</span>
-          </div>
-          <span class="material-symbols-outlined text-primary/60 group-hover:text-secondary transition-colors">expand_more</span>
-        </button>
-      </div>
-      <div id="userDropdown" class="absolute top-full right-0 mt-3 w-64 bg-surface rounded-xl shadow-[0_32px_64px_rgba(26,28,28,0.06)] border border-outline-variant/20 opacity-0 invisible translate-y-2 transition-all duration-300 z-50 overflow-hidden">
-        <div class="p-2 space-y-1">
-          <a href="/user_profile.html" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
-            <span class="material-symbols-outlined text-[20px]">person</span>
-            Hồ sơ cá nhân
-          </a>
-          <a href="/booking.html" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
-            <span class="material-symbols-outlined text-[20px]">book_online</span>
-            Quản lý đặt phòng
-          </a>
-          <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
-            <span class="material-symbols-outlined text-[20px]">loyalty</span>
-            Đặc quyền Gold
-          </a>
-        </div>
-        <div class="border-t border-outline-variant/10 p-2 bg-surface-container-lowest">
-          <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-error hover:bg-error-container/30 rounded-lg transition-colors text-left font-medium">
-            <span class="material-symbols-outlined text-[20px]">logout</span>
-            Đăng xuất
-          </button>
-        </div>
-      </div>
-    </div>
-  `;
+        function getServiceCategoryLabel(category) {
+            return SERVICE_CATEGORY_VI[normalizeCategoryKey(category)] || 'Tiện ích khác';
+        }
 
-        setTimeout(() => {
-            const userMenuBtn = document.getElementById('userMenuBtn');
-            const userDropdown = document.getElementById('userDropdown');
-            if (userMenuBtn && userDropdown) {
-                userMenuBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    userDropdown.classList.toggle('opacity-0');
-                    userDropdown.classList.toggle('invisible');
-                    userDropdown.classList.toggle('translate-y-2');
+        function getSelectedServiceTotal() {
+            if (!currentService) return 0;
+            return (Number(currentService.price) || 0) * selectedServiceQuantity;
+        }
+
+        function updateModalQuantityUI() {
+            const qtyValue = document.getElementById('modalQtyValue');
+            const totalPrice = document.getElementById('modalTotalPrice');
+            const bookBtn = document.getElementById('bookBtn');
+            if (qtyValue) {
+                qtyValue.innerText = String(selectedServiceQuantity);
+            }
+            if (totalPrice) {
+                totalPrice.innerText = `${getSelectedServiceTotal().toLocaleString('vi-VN')}đ`;
+            }
+            if (bookBtn && currentService) {
+                bookBtn.innerHTML = `
+              <span class="inline-flex items-center gap-2 whitespace-nowrap overflow-hidden text-ellipsis min-w-0">Thêm dịch vụ: ${getSelectedServiceTotal().toLocaleString('vi-VN')}đ</span>
+              <span class="material-symbols-outlined text-[18px] shrink-0 group-hover:translate-x-1 transition-transform">add_circle</span>
+            `;
+            }
+        }
+
+        function setSelectedServiceQuantity(nextQuantity) {
+            selectedServiceQuantity = Math.max(1, nextQuantity);
+            updateModalQuantityUI();
+        }
+
+        function changeSelectedServiceQuantity(delta) {
+            setSelectedServiceQuantity(selectedServiceQuantity + delta);
+        }
+
+        function showSuccessToast(message) {
+            const existingToast = document.getElementById('serviceSuccessToast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            const toast = document.createElement('div');
+            toast.id = 'serviceSuccessToast';
+            toast.className = 'fixed top-24 right-6 z-[120] service-toast text-white px-5 py-4 rounded-2xl transition-all duration-300 flex items-center gap-3 toast-enter min-w-[300px] max-w-[92vw]'; toast.innerHTML = `
+            <span class="material-symbols-outlined text-[22px] text-[#fed488]">check_circle</span>
+            <div class="flex flex-col leading-tight">
+              <span class="text-[11px] uppercase tracking-widest text-[#fed488]/90 font-semibold">Thành công</span>
+              <span class="text-base font-semibold">${message}</span>
+            </div>
+          `;
+
+            document.body.appendChild(toast);
+            requestAnimationFrame(() => {
+                toast.classList.add('toast-show');
+            });
+
+            setTimeout(() => {
+                toast.classList.remove('toast-show');
+                setTimeout(() => toast.remove(), 300);
+            }, 2200);
+        }
+
+        function openServiceModal(serviceId) {
+            const normalizedServiceId = String(serviceId);
+            const service = globalServicesList.find(s => String(s._id ?? s.id) === normalizedServiceId);
+            if (!service) return;
+            currentService = service;
+            selectedServiceQuantity = 1;
+            document.getElementById('modalImg').src = service.thumbnailUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCZ0EeYwVrvJDjKJQuTk7XJ8vEKopSXKbWS4oAL6eFW2Ahj4DUaes-JtGaO2vQm4JqujKnrRu9EVHwlAa7X6u2tIhuF6xvVTptFqx8iL5yGP91I35WcOz2ia4Vd2GGEsjAnxjGawE-Ae0mPT6chd3srRNcnppgOrUi-fmkzINZmq6qOZNAPSQUOZkORTqCmp83tt8sMcRRnGmOzUcmQ9iYCx8mWUIVNZeqUnmX0FsJdLKBKKex2bWbdHCrJeAR8wEB0JDeg3o3K17rH';
+            document.getElementById('modalCategory').innerText = getServiceCategoryLabel(service.category);
+            document.getElementById('modalTitle').innerText = service.name;
+            document.getElementById('modalPrice').innerText = service.price.toLocaleString('vi-VN') + 'đ';
+            document.getElementById('modalUnit').innerText = `/ ${service.unit}`;
+            document.getElementById('modalDesc').innerText = service.description;
+
+            const modal = document.getElementById('serviceModal');
+            const modalContent = document.getElementById('serviceModalContent');
+
+            modal.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modalContent.classList.remove('opacity-0', 'scale-95', '-translate-y-[46%]');
+                modalContent.classList.add('opacity-100', 'scale-100', '-translate-y-1/2');
+            });
+            updateModalQuantityUI();
+            document.body.style.overflow = 'hidden';
+        }
+
+        function openServiceModalFromHash(serviceId) {
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    openServiceModal(serviceId);
                 });
-
-                document.addEventListener('click', () => {
-                    userDropdown.classList.add('opacity-0', 'invisible', 'translate-y-2');
-                });
-            }
-        }, 0);
-    }
-
-  function handleLogout() { 
-    localStorage.removeItem('userToken'); 
-    window.location.href = '/'; 
-  }
-
-  function openServiceModal(serviceId) {
-    const normalizedServiceId = String(serviceId);
-    const service = globalServicesList.find(s => String(s._id ?? s.id) === normalizedServiceId);
-    if (!service) return;
-    currentService = service;
-    selectedServiceQuantity = 1;
-    document.getElementById('modalImg').src = service.thumbnailUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCZ0EeYwVrvJDjKJQuTk7XJ8vEKopSXKbWS4oAL6eFW2Ahj4DUaes-JtGaO2vQm4JqujKnrRu9EVHwlAa7X6u2tIhuF6xvVTptFqx8iL5yGP91I35WcOz2ia4Vd2GGEsjAnxjGawE-Ae0mPT6chd3srRNcnppgOrUi-fmkzINZmq6qOZNAPSQUOZkORTqCmp83tt8sMcRRnGmOzUcmQ9iYCx8mWUIVNZeqUnmX0FsJdLKBKKex2bWbdHCrJeAR8wEB0JDeg3o3K17rH';
-    document.getElementById('modalCategory').innerText = getServiceCategoryLabel(service.category);
-    document.getElementById('modalTitle').innerText = service.name;
-    document.getElementById('modalPrice').innerText = service.price.toLocaleString('vi-VN') + 'đ';
-    document.getElementById('modalUnit').innerText = `/ ${service.unit}`;
-    document.getElementById('modalDesc').innerText = service.description;
-
-    const modal = document.getElementById('serviceModal');
-    const modalContent = document.getElementById('serviceModalContent');
-    
-    modal.classList.remove('hidden');
-    requestAnimationFrame(() => {
-      modal.classList.remove('opacity-0', 'pointer-events-none');
-      modalContent.classList.remove('opacity-0', 'scale-95', '-translate-y-[46%]');
-      modalContent.classList.add('opacity-100', 'scale-100', '-translate-y-1/2');
-    });
-    updateModalQuantityUI();
-    document.body.style.overflow = 'hidden';
-  }
-
-  function openServiceModalFromHash(serviceId) {
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        openServiceModal(serviceId);
-      });
-    });
-  }
-
-  function closeServiceModal(){
-    const serviceModal = document.getElementById('serviceModal');
-    const modalContent = document.getElementById('serviceModalContent');
-    if(serviceModal){
-      serviceModal.classList.add('opacity-0', 'pointer-events-none');
-      if (modalContent) {
-        modalContent.classList.remove('opacity-100', 'scale-100', '-translate-y-1/2');
-        modalContent.classList.add('opacity-0', 'scale-95', '-translate-y-[46%]');
-      }
-      setTimeout(() => {
-        serviceModal.classList.add('hidden');
-      }, 300);
-      document.body.style.overflow = '';
-    }
-  }
-
-  function addSelectedServiceToBooking() {
-    if (!currentService) return;
-    const newItem = {
-      id: currentService._id ?? currentService.id,
-      name: currentService.name,
-      category: currentService.category,
-      unit: currentService.unit,
-      price: Number(currentService.price) || 0,
-      description: currentService.description || '',
-      quantity: selectedServiceQuantity,
-      totalPrice: getSelectedServiceTotal(),
-      thumbnailUrl: currentService.thumbnailUrl || ''
-    };
-    let cart = JSON.parse(sessionStorage.getItem('serviceBookingData') || '[]');
-
-    if (!Array.isArray(cart)) cart = []; //
-    const existingItemIndex = cart.findIndex(item => item.id === newItem.id);
-    if (existingItemIndex > -1) {
-      cart[existingItemIndex].quantity += newItem.quantity;
-      cart[existingItemIndex].totalPrice += newItem.totalPrice;
-    } else {
-      cart.push(newItem);
-    }
-    sessionStorage.setItem('serviceBookingData', JSON.stringify(cart));
-    showSuccessToast(`Đã thêm vào giỏ: ${selectedServiceQuantity}x ${currentService.name}`);
-    closeServiceModal();
-  }
-  
-  function renderServiceCategory() {
-    const container = document.getElementById('serviceCategoryContainer');
-    const allCategories = [null, ...Object.keys(SERVICE_CATEGORY_VI)];
-    
-    container.innerHTML = allCategories.map(key => {
-      const isChecked = activeCategoryKey === key;
-      const labelText = key === null ? 'Tất cả' : SERVICE_CATEGORY_VI[key];
-      const textClass = isChecked ? 'text-[#003345] font-bold' : 'text-stone-500 hover:text-stone-800 font-medium';
-      const inputValue = key === null ? 'null' : `'${key}'`;
-      return `
-        <label class="flex items-center gap-3 transition-all cursor-pointer text-sm ${textClass}">
-          <input type="radio" name="category" 
-            ${isChecked ? 'checked' : ''} 
-            onchange="changeServiceCategory(${inputValue})" 
-            class="text-[#775a19] focus:ring-[#775a19] border-stone-300" />
-          <span>${labelText}</span>
-        </label>
-      `;
-    }).join('');
-  }
-
-    const pageSize = 6; // Số lượng hiển thị 1 trang
-    let currentFetchUrl = '/api/service/search'; // API gộp mới
-
-    // HÀM TỔNG HỢP LỌC & SẮP XẾP
-    function applyServiceFilters() {
-        currentPage = 1;
-        let url = '/api/service/search?';
-        const params = [];
-
-        if (activeCategoryKey !== null) {
-            params.push(`category=${activeCategoryKey}`);
-        }
-
-        const selectedSort = document.getElementById('priceSortSelect').value;
-        if (selectedSort !== 'default') {
-            const isAsc = selectedSort === 'asc' ? 'true' : 'false';
-            params.push(`isAscending=${isAsc}`);
-        }
-
-        if (params.length > 0) {
-            url += params.join('&');
-        } else {
-            url = '/api/service/search';
-        }
-
-        renderService(url);
-    }
-
-    function changeServiceCategory(category) {
-        activeCategoryKey = category;
-        renderServiceCategory(); // Cập nhật lại UI cho thẻ radio
-        applyServiceFilters(); // Gọi hàm tổng hợp
-    }
-
-    async function fetchService(url = '/api/service/search') {
-        try {
-            const separator = url.includes('?') ? '&' : '?';
-            const paginatedUrl = `${url}${separator}pageNumber=${currentPage}&pageSize=${pageSize}`;
-
-            const response = await fetch(paginatedUrl);
-            if (!response.ok) throw new Error('Failed to fetch service data');
-
-            const payload = await response.json();
-            if (payload.data) {
-                return payload;
-            } else {
-                // Fallback nếu API chưa chuẩn
-                return { data: Array.isArray(payload) ? payload : [], totalPages: 1, totalRecords: payload.length || 0 };
-            }
-        } catch (error) {
-            console.error('Error fetching services:', error);
-            return { data: [], totalPages: 0, totalRecords: 0 };
-        }
-    }
-
-    async function renderService(url = '/api/service/search') {
-        currentFetchUrl = url;
-        const responseData = await fetchService(url);
-        const services = responseData.data;
-        const serviceContainer = document.getElementById('serviceContainer');
-        const countDisplay = document.getElementById('serviceCountDisplay');
-
-        if (countDisplay) {
-            countDisplay.innerText = `Hiển thị ${services.length} trên ${responseData.totalRecords} dịch vụ`;
-        }
-
-        if (services.length === 0) {
-            serviceContainer.innerHTML = `<p class="text-center text-stone-500 col-span-full">Không có dịch vụ nào để hiển thị.</p>`;
-            renderPaginationUI(0);
-            return;
-        }
-
-        globalServicesList = services;
-        serviceContainer.innerHTML = services.map(service => {
-            return `
-        <div class="group relative bg-stone-900 rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(0,51,69,0.3)] hover:-translate-y-2 h-[450px] flex flex-col justify-end transform-gpu isolate">
-          <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-90 group-hover:opacity-100" src="${service.thumbnailUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCZ0EeYwVrvJDjKJQuTk7XJ8vEKopSXKbWS4oAL6eFW2Ahj4DUaes-JtGaO2vQm4JqujKnrRu9EVHwlAa7X6u2tIhuF6xvVTptFqx8iL5yGP91I35WcOz2ia4Vd2GGEsjAnxjGawE-Ae0mPT6chd3srRNcnppgOrUi-fmkzINZmq6qOZNAPSQUOZkORTqCmp83tt8sMcRRnGmOzUcmQ9iYCx8mWUIVNZeqUnmX0FsJdLKBKKex2bWbdHCrJeAR8wEB0JDeg3o3K17rH'}" alt="${service.name}" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
-          <div class="absolute top-6 left-6">
-            <span class="px-4 py-1.5 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest rounded-full">
-              ${getServiceCategoryLabel(service.category)}
-            </span>
-          </div>
-          <div class="relative z-10 p-8 pt-0">
-            <div class="mb-3">
-              <h3 class="font-noto-serif text-3xl text-white font-bold tracking-tight drop-shadow-lg">${service.name}</h3>
-            </div>
-            <p class="text-white/70 text-sm mb-6 line-clamp-2 leading-relaxed max-w-md font-light">${service.description}</p>
-            <div class="flex items-center justify-between bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl">
-              <div>
-                <p class="text-[10px] uppercase tracking-widest text-white/50 font-semibold mb-0.5">Giá mỗi ${service.unit}</p>
-                <p class="text-xl font-bold text-white tracking-tight">${service.price.toLocaleString('vi-VN')}đ</p>
-              </div>
-              <button onclick="openServiceModal('${service._id || service.id}')" class="px-6 py-3 bg-white text-[#003345] hover:bg-[#775a19] hover:text-white text-xs font-bold uppercase tracking-widest rounded-xl transition-colors shadow-lg flex items-center gap-2 group/btn cursor-pointer">
-                Xem chi tiết
-                <span class="material-symbols-outlined text-base transition-transform duration-300 group-hover/btn:translate-x-1">arrow_forward</span>                
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-        }).join('');
-
-        renderPaginationUI(responseData.totalPages);
-    }
-
-    function renderPaginationUI(totalPages) {
-        const paginationContainer = document.getElementById('paginationContainer');
-        if (!paginationContainer) return;
-
-        if (totalPages <= 1) {
-            paginationContainer.innerHTML = '';
-            return;
-        }
-
-        let html = '';
-        html += `
-          <button onclick="changePage(${currentPage - 1})" 
-                  class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm ${currentPage === 1 ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}">
-              <span class="material-symbols-outlined text-xl">arrow_back</span>
-          </button>
-          <div class="flex gap-3">
-      `;
-
-        for (let i = 1; i <= totalPages; i++) {
-            if (i === currentPage) {
-                html += `<button class="w-12 h-12 flex items-center justify-center rounded-full bg-[#003345] text-white font-bold text-base shadow-md">${i}</button>`;
-            } else {
-                html += `<button onclick="changePage(${i})" class="w-12 h-12 flex items-center justify-center rounded-full text-stone-600 hover:bg-white hover:text-[#003345] transition-all font-bold text-base shadow-sm">${i}</button>`;
-            }
-        }
-
-        html += `
-          </div>
-          <button onclick="changePage(${currentPage + 1})" 
-                  class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}">
-              <span class="material-symbols-outlined text-xl">arrow_forward</span>
-          </button>
-      `;
-        paginationContainer.innerHTML = html;
-    }
-
-    function changePage(newPage) {
-        currentPage = newPage;
-        renderService(currentFetchUrl);
-        document.querySelector('header').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    document.addEventListener('DOMContentLoaded', async () => {
-        checkLoginStatus();
-        renderServiceCategory();
-        await renderService(); // Tải mặc định
-
-        document.getElementById('modalQtyMinus')?.addEventListener('click', () => changeSelectedServiceQuantity(-1));
-        document.getElementById('modalQtyPlus')?.addEventListener('click', () => changeSelectedServiceQuantity(1));
-        document.getElementById('bookBtn')?.addEventListener('click', addSelectedServiceToBooking);
-
-        // Ràng buộc Sắp xếp
-        const sortSelect = document.getElementById('priceSortSelect');
-        if (sortSelect) {
-            sortSelect.addEventListener('change', () => {
-                applyServiceFilters(); // Gọi hàm tổng hợp khi thay đổi giá trị
             });
         }
 
-        const hash = window.location.hash;
-        if (hash && hash.startsWith('#detail-')) {
-            const serviceId = hash.replace('#detail-', '');
-            openServiceModalFromHash(serviceId);
+        function closeServiceModal() {
+            const serviceModal = document.getElementById('serviceModal');
+            const modalContent = document.getElementById('serviceModalContent');
+            if (serviceModal) {
+                serviceModal.classList.add('opacity-0', 'pointer-events-none');
+                if (modalContent) {
+                    modalContent.classList.remove('opacity-100', 'scale-100', '-translate-y-1/2');
+                    modalContent.classList.add('opacity-0', 'scale-95', '-translate-y-[46%]');
+                }
+                setTimeout(() => {
+                    serviceModal.classList.add('hidden');
+                }, 300);
+                document.body.style.overflow = '';
+            }
         }
-    });
 
-  window.addEventListener('hashchange', () => {
-    const hash = window.location.hash;
-    if (hash && hash.startsWith('#detail-')) {
-      openServiceModalFromHash(hash.replace('#detail-', ''));
-    }
-  });
-</script>
+        function addSelectedServiceToBooking() {
+            if (!currentService) return;
+            const newItem = {
+                id: currentService._id ?? currentService.id,
+                name: currentService.name,
+                category: currentService.category,
+                unit: currentService.unit,
+                price: Number(currentService.price) || 0,
+                description: currentService.description || '',
+                quantity: selectedServiceQuantity,
+                totalPrice: getSelectedServiceTotal(),
+                thumbnailUrl: currentService.thumbnailUrl || ''
+            };
+            let cart = JSON.parse(sessionStorage.getItem('serviceBookingData') || '[]');
 
+            if (!Array.isArray(cart)) cart = []; //
+            const existingItemIndex = cart.findIndex(item => item.id === newItem.id);
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity += newItem.quantity;
+                cart[existingItemIndex].totalPrice += newItem.totalPrice;
+            } else {
+                cart.push(newItem);
+            }
+            sessionStorage.setItem('serviceBookingData', JSON.stringify(cart));
+            showSuccessToast(`Đã thêm vào giỏ: ${selectedServiceQuantity}x ${currentService.name}`);
+            closeServiceModal();
+        }
+
+        function renderServiceCategory() {
+            const container = document.getElementById('serviceCategoryContainer');
+            const allCategories = [null, ...Object.keys(SERVICE_CATEGORY_VI)];
+
+            container.innerHTML = allCategories.map(key => {
+                const isChecked = activeCategoryKey === key;
+                const labelText = key === null ? 'Tất cả' : SERVICE_CATEGORY_VI[key];
+                const textClass = isChecked ? 'text-[#003345] font-bold' : 'text-stone-500 hover:text-stone-800 font-medium';
+                const inputValue = key === null ? 'null' : `'${key}'`;
+                return `
+              <label class="flex items-center gap-3 transition-all cursor-pointer text-sm ${textClass}">
+                <input type="radio" name="category"
+                  ${isChecked ? 'checked' : ''}
+                  onchange="changeServiceCategory(${inputValue})"
+                  class="text-[#775a19] focus:ring-[#775a19] border-stone-300" />
+                <span>${labelText}</span>
+              </label>
+            `;
+            }).join('');
+        }
+
+        const pageSize = 6; // Số lượng hiển thị 1 trang
+        let currentFetchUrl = '/api/service/search'; // API gộp mới
+
+        // HÀM TỔNG HỢP LỌC & SẮP XẾP
+        function applyServiceFilters() {
+            currentPage = 1;
+            let url = '/api/service/search?';
+            const params = [];
+
+            if (activeCategoryKey !== null) {
+                params.push(`category=${activeCategoryKey}`);
+            }
+
+            const selectedSort = document.getElementById('priceSortSelect').value;
+            if (selectedSort !== 'default') {
+                const isAsc = selectedSort === 'asc' ? 'true' : 'false';
+                params.push(`isAscending=${isAsc}`);
+            }
+
+            if (params.length > 0) {
+                url += params.join('&');
+            } else {
+                url = '/api/service/search';
+            }
+
+            renderService(url);
+        }
+
+        function changeServiceCategory(category) {
+            activeCategoryKey = category;
+            renderServiceCategory(); // Cập nhật lại UI cho thẻ radio
+            applyServiceFilters(); // Gọi hàm tổng hợp
+        }
+
+        async function fetchService(url = '/api/service/search') {
+            try {
+                const separator = url.includes('?') ? '&' : '?';
+                const paginatedUrl = `${url}${separator}pageNumber=${currentPage}&pageSize=${pageSize}`;
+
+                const response = await fetch(paginatedUrl);
+                if (!response.ok) throw new Error('Failed to fetch service data');
+
+                const payload = await response.json();
+                if (payload.data) {
+                    return payload;
+                } else {
+                    // Fallback nếu API chưa chuẩn
+                    return { data: Array.isArray(payload) ? payload : [], totalPages: 1, totalRecords: payload.length || 0 };
+                }
+            } catch (error) {
+                console.error('Error fetching services:', error);
+                return { data: [], totalPages: 0, totalRecords: 0 };
+            }
+        }
+
+        async function renderService(url = '/api/service/search') {
+            currentFetchUrl = url;
+            const responseData = await fetchService(url);
+            const services = responseData.data;
+            const serviceContainer = document.getElementById('serviceContainer');
+            const countDisplay = document.getElementById('serviceCountDisplay');
+
+            if (countDisplay) {
+                countDisplay.innerText = `Hiển thị ${services.length} trên ${responseData.totalRecords} dịch vụ`;
+            }
+
+            if (services.length === 0) {
+                serviceContainer.innerHTML = `<p class="text-center text-stone-500 col-span-full">Không có dịch vụ nào để hiển thị.</p>`;
+                renderPaginationUI(0);
+                return;
+            }
+
+            globalServicesList = services;
+            serviceContainer.innerHTML = services.map(service => {
+                return `
+              <div class="group relative bg-stone-900 rounded-3xl overflow-hidden transition-all duration-500 hover:shadow-[0_30px_60px_-15px_rgba(0,51,69,0.3)] hover:-translate-y-2 h-[450px] flex flex-col justify-end transform-gpu isolate">
+                <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-90 group-hover:opacity-100" src="${service.thumbnailUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCZ0EeYwVrvJDjKJQuTk7XJ8vEKopSXKbWS4oAL6eFW2Ahj4DUaes-JtGaO2vQm4JqujKnrRu9EVHwlAa7X6u2tIhuF6xvVTptFqx8iL5yGP91I35WcOz2ia4Vd2GGEsjAnxjGawE-Ae0mPT6chd3srRNcnppgOrUi-fmkzINZmq6qOZNAPSQUOZkORTqCmp83tt8sMcRRnGmOzUcmQ9iYCx8mWUIVNZeqUnmX0FsJdLKBKKex2bWbdHCrJeAR8wEB0JDeg3o3K17rH'}" alt="${service.name}" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+                <div class="absolute top-6 left-6">
+                  <span class="px-4 py-1.5 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold uppercase tracking-widest rounded-full">
+                    ${getServiceCategoryLabel(service.category)}
+                  </span>
+                </div>
+                <div class="relative z-10 p-8 pt-0">
+                  <div class="mb-3">
+                    <h3 class="font-noto-serif text-3xl text-white font-bold tracking-tight drop-shadow-lg">${service.name}</h3>
+                  </div>
+                  <p class="text-white/70 text-sm mb-6 line-clamp-2 leading-relaxed max-w-md font-light">${service.description}</p>
+                  <div class="flex items-center justify-between bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl">
+                    <div>
+                      <p class="text-[10px] uppercase tracking-widest text-white/50 font-semibold mb-0.5">Giá mỗi ${service.unit}</p>
+                      <p class="text-xl font-bold text-white tracking-tight">${service.price.toLocaleString('vi-VN')}đ</p>
+                    </div>
+                    <button onclick="openServiceModal('${service._id || service.id}')" class="px-6 py-3 bg-white text-[#003345] hover:bg-[#775a19] hover:text-white text-xs font-bold uppercase tracking-widest rounded-xl transition-colors shadow-lg flex items-center gap-2 group/btn cursor-pointer">
+                      Xem chi tiết
+                      <span class="material-symbols-outlined text-base transition-transform duration-300 group-hover/btn:translate-x-1">arrow_forward</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            `;
+            }).join('');
+
+            renderPaginationUI(responseData.totalPages);
+        }
+
+        function renderPaginationUI(totalPages) {
+            const paginationContainer = document.getElementById('paginationContainer');
+            if (!paginationContainer) return;
+
+            if (totalPages <= 1) {
+                paginationContainer.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            html += `
+                <button onclick="changePage(${currentPage - 1})"
+                        class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm ${currentPage === 1 ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}">
+                    <span class="material-symbols-outlined text-xl">arrow_back</span>
+                </button>
+                <div class="flex gap-3">
+            `;
+
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    html += `<button class="w-12 h-12 flex items-center justify-center rounded-full bg-[#003345] text-white font-bold text-base shadow-md">${i}</button>`;
+                } else {
+                    html += `<button onclick="changePage(${i})" class="w-12 h-12 flex items-center justify-center rounded-full text-stone-600 hover:bg-white hover:text-[#003345] transition-all font-bold text-base shadow-sm">${i}</button>`;
+                }
+            }
+
+            html += `
+                </div>
+                <button onclick="changePage(${currentPage + 1})"
+                        class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}">
+                    <span class="material-symbols-outlined text-xl">arrow_forward</span>
+                </button>
+            `;
+            paginationContainer.innerHTML = html;
+        }
+
+        function changePage(newPage) {
+            currentPage = newPage;
+            renderService(currentFetchUrl);
+            document.querySelector('header').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            renderServiceCategory();
+            await renderService(); // Tải mặc định
+
+            document.getElementById('modalQtyMinus')?.addEventListener('click', () => changeSelectedServiceQuantity(-1));
+            document.getElementById('modalQtyPlus')?.addEventListener('click', () => changeSelectedServiceQuantity(1));
+            document.getElementById('bookBtn')?.addEventListener('click', addSelectedServiceToBooking);
+
+            // Ràng buộc Sắp xếp
+            const sortSelect = document.getElementById('priceSortSelect');
+            if (sortSelect) {
+                sortSelect.addEventListener('change', () => {
+                    applyServiceFilters(); // Gọi hàm tổng hợp khi thay đổi giá trị
+                });
+            }
+
+            const hash = window.location.hash;
+            if (hash && hash.startsWith('#detail-')) {
+                const serviceId = hash.replace('#detail-', '');
+                openServiceModalFromHash(serviceId);
+            }
+        });
+
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash;
+            if (hash && hash.startsWith('#detail-')) {
+                openServiceModalFromHash(hash.replace('#detail-', ''));
+            }
+        });
+    </script>
+</body>
 </html>

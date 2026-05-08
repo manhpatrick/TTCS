@@ -14,6 +14,7 @@ namespace HotelManager.Application.Converters
                 CreatedAt = payment.PaymentDate,
                 OrderCode = payment.ExternalTransactionId ?? payment.Id.ToString(),
                 Status = (int)payment.Status,
+                OrderInfo = payment.OrderInfo!
             };
         }
     }

@@ -32,8 +32,8 @@ function checkAuthStatus() {
         authContainer.innerHTML = `
             <div class="flex items-center gap-4 relative">
                 <div class="relative">
-                    <button id="notiBellBtn" class="p-2 hover:bg-surface-container rounded-full transition-colors flex items-center justify-center relative">
-                        <span class="material-symbols-outlined text-primary">notifications</span>
+                    <button id="notiBellBtn" class="p-2 hover:bg-white/10 rounded-full transition-colors flex items-center justify-center relative">
+                        <span class="material-symbols-outlined text-white hover:text-gray-200">notifications</span>
                         <span id="notiBadge" class="absolute top-1 right-1 w-4 h-4 bg-error text-[10px] text-white rounded-full flex items-center justify-center" style="display: none;">0</span>
                     </button>
                     <div id="notiDropdown" class="absolute top-full right-0 mt-3 w-[350px] bg-surface rounded-xl editorial-shadow border border-outline-variant/20 opacity-0 invisible translate-y-2 transition-all duration-300 z-50">
@@ -50,12 +50,12 @@ function checkAuthStatus() {
                 </div>
 
                 <div class="relative">
-                    <button id="userMenuBtn" class="flex items-center gap-2 group">
-                        <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/10 group-hover:border-secondary transition-all bg-surface-container">
+                    <button id="userMenuBtn" class="flex items-center gap-2 group hover:opacity-80 transition-opacity">
+                        <div class="w-10 h-10 rounded-full overflow-hidden border border-white/20 transition-all bg-surface-container">
                             <img src="https://ui-avatars.com/api/?name=${user}&background=003345&color=fff" class="w-full h-full object-cover"/>
                         </div>
-                        <span class="text-sm font-semibold text-primary hidden sm:inline">${user}</span>
-                        <span class="material-symbols-outlined text-primary/60">expand_more</span>
+                        <span class="text-sm font-semibold text-white hidden sm:inline">${user}</span>
+                        <span class="material-symbols-outlined text-white/80">expand_more</span>
                     </button>
                     <div id="userDropdown" class="absolute top-full right-0 mt-3 w-56 bg-surface rounded-xl editorial-shadow border border-outline-variant/20 opacity-0 invisible translate-y-2 transition-all duration-300 z-50 overflow-hidden">
                         <div class="p-2">
@@ -79,11 +79,11 @@ function checkAuthStatus() {
         `;
 
         setupDropdowns();
-        injectModalsHTML(); // Chèn các Modal (Noti, Feedback) ẩn vào trang
+        injectModalsHTML();
         fetchNotifications();
     } else {
         authContainer.innerHTML = `
-            <a href="/user_auth.html" class="bg-primary text-white px-6 py-2.5 rounded-full text-sm font-bold transition-all hover:bg-primary-container active:scale-95 shadow-md">
+            <a href="/user_auth.html" class="bg-white text-primary px-6 py-2.5 rounded-full text-sm font-bold transition-all hover:bg-gray-100 active:scale-95 shadow-md">
                 Đăng nhập
             </a>
         `;
@@ -95,11 +95,12 @@ function setActiveNavLink() {
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         const href = link.getAttribute('href');
-        link.classList.remove('text-secondary', 'border-b-2', 'border-secondary', 'pb-1');
-        link.classList.add('text-primary/70', 'hover:text-secondary');
+
+        // Cập nhật lại logic class cho chữ trắng
+        link.className = "text-white/70 hover:text-white transition-all duration-300 nav-link text-sm font-medium";
+
         if ((href === '/' && currentPath === '/') || (href !== '/' && currentPath.includes(href))) {
-            link.classList.remove('text-primary/70', 'hover:text-secondary');
-            link.classList.add('text-secondary', 'border-b-2', 'border-secondary', 'pb-1');
+            link.className = "text-white border-b-2 border-white pb-1 transition-all duration-300 nav-link text-sm font-bold";
         }
     });
 }
@@ -140,7 +141,6 @@ function setupDropdowns() {
 // TỰ ĐỘNG CHÈN MÃ HTML CHO CÁC MODAL (THÔNG BÁO VÀ GÓP Ý)
 // ==========================================
 function injectModalsHTML() {
-    // 1. Chèn Modal Thông Báo Chi Tiết
     if (!document.getElementById('notiDetailModal')) {
         const notiModalHTML = `
             <div id="notiDetailModalBackdrop" class="fixed inset-0 bg-black/60 z-[100] hidden transition-opacity duration-300" onclick="closeNotiModal()"></div>
@@ -165,7 +165,6 @@ function injectModalsHTML() {
         document.body.insertAdjacentHTML('beforeend', notiModalHTML);
     }
 
-    // 2. Chèn Modal Phản Hồi / Góp Ý
     if (!document.getElementById('feedbackModal')) {
         const feedbackModalHTML = `
             <div id="feedbackModalBackdrop" class="fixed inset-0 bg-black/60 z-[100] hidden transition-opacity duration-300" onclick="closeFeedbackModal()"></div>
@@ -204,15 +203,12 @@ function injectModalsHTML() {
 // LOGIC FEEDBACK / PHẢN HỒI GÓP Ý
 // ==========================================
 function openFeedbackModal() {
-    // Đóng User Menu thả xuống
     const userDrop = document.getElementById('userDropdown');
     if (userDrop) userDrop.classList.add('opacity-0', 'invisible', 'translate-y-2');
 
-    // Reset Form & Thông báo
     document.getElementById('feedbackForm')?.reset();
     document.getElementById('feedbackMessages')?.classList.add('hidden');
 
-    // Mở Modal
     document.getElementById('feedbackModalBackdrop').classList.remove('hidden');
     document.getElementById('feedbackModal').classList.remove('hidden');
 }
@@ -248,7 +244,6 @@ async function submitFeedback(event) {
                 'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
-            // Body chuẩn với FeedbackRequest (Title, Content)
             body: JSON.stringify({ Title: title, Content: content })
         });
 
@@ -260,7 +255,6 @@ async function submitFeedback(event) {
         msgBox.innerText = "Cảm ơn bạn đã đóng góp ý kiến!";
         msgBox.classList.remove('hidden');
 
-        // Đóng modal sau 1.5s
         setTimeout(() => {
             closeFeedbackModal();
         }, 1500);

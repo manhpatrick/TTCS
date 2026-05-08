@@ -2,601 +2,492 @@
 <html class="light" lang="vi">
 
 <head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-  <title>Danh sách phòng</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          "colors": {
-            "on-primary-fixed": "#001f2b",
-            "surface-container-highest": "#e3e2e1",
-            "primary-fixed": "#bfe8ff",
-            "tertiary-fixed": "#eee0d5",
-            "surface-variant": "#e3e2e1",
-            "secondary": "#775a19",
-            "error-container": "#ffdad6",
-            "error": "#ba1a1a",
-            "outline-variant": "#c0c7cd",
-            "primary-fixed-dim": "#96ceeb",
-            "on-error-container": "#93000a",
-            "on-secondary-fixed": "#261900",
-            "on-tertiary-container": "#bdb0a5",
-            "tertiary-fixed-dim": "#d2c4b9",
-            "surface": "#faf9f8",
-            "inverse-on-surface": "#f1f0f0",
-            "surface-container-low": "#f4f3f2",
-            "tertiary": "#352d26",
-            "on-primary-container": "#83bad6",
-            "surface-tint": "#2a657e",
-            "surface-bright": "#faf9f8",
-            "on-secondary-fixed-variant": "#5d4201",
-            "surface-dim": "#dadad9",
-            "on-secondary-container": "#785a1a",
-            "background": "#faf9f8",
-            "inverse-primary": "#96ceeb",
-            "surface-container": "#eeeeed",
-            "secondary-container": "#fed488",
-            "surface-container-lowest": "#ffffff",
-            "on-tertiary-fixed-variant": "#4e453d",
-            "on-tertiary": "#ffffff",
-            "on-primary": "#ffffff",
-            "inverse-surface": "#2f3130",
-            "surface-container-high": "#e9e8e7",
-            "secondary-fixed": "#ffdea5",
-            "on-primary-fixed-variant": "#044d65",
-            "on-background": "#1a1c1c",
-            "tertiary-container": "#4c433b",
-            "on-secondary": "#ffffff",
-            "on-error": "#ffffff",
-            "primary": "#003345",
-            "outline": "#9da3a8",
-            "on-surface-variant": "#40484c",
-            "secondary-fixed-dim": "#e9c176",
-            "primary-container": "#004b63",
-            "on-tertiary-fixed": "#211a14",
-            "on-surface": "#1a1c1c"
-          },
-          "borderRadius": {
-            "DEFAULT": "0.25rem",
-            "lg": "0.5rem",
-            "xl": "0.75rem",
-            "full": "9999px"
-          },
-          "fontFamily": {
-            "headline": ["Noto Serif"],
-            "body": ["Manrope"],
-            "label": ["Manrope"]
-          }
-        },
-      },
-    }
-  </script>
-  <style>
-    body {
-      font-family: 'Manrope', sans-serif;
-      background-color: #faf9f8;
-    }
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Danh sách phòng</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#001f2b",
+                        "surface-container-highest": "#e3e2e1",
+                        "primary-fixed": "#bfe8ff",
+                        "tertiary-fixed": "#eee0d5",
+                        "surface-variant": "#e3e2e1",
+                        "secondary": "#775a19",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "outline-variant": "#c0c7cd",
+                        "primary-fixed-dim": "#96ceeb",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed": "#261900",
+                        "on-tertiary-container": "#bdb0a5",
+                        "tertiary-fixed-dim": "#d2c4b9",
+                        "surface": "#faf9f8",
+                        "inverse-on-surface": "#f1f0f0",
+                        "surface-container-low": "#f4f3f2",
+                        "tertiary": "#352d26",
+                        "on-primary-container": "#83bad6",
+                        "surface-tint": "#2a657e",
+                        "surface-bright": "#faf9f8",
+                        "on-secondary-fixed-variant": "#5d4201",
+                        "surface-dim": "#dadad9",
+                        "on-secondary-container": "#785a1a",
+                        "background": "#faf9f8",
+                        "inverse-primary": "#96ceeb",
+                        "surface-container": "#eeeeed",
+                        "secondary-container": "#fed488",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#4e453d",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#2f3130",
+                        "surface-container-high": "#e9e8e7",
+                        "secondary-fixed": "#ffdea5",
+                        "on-primary-fixed-variant": "#044d65",
+                        "on-background": "#1a1c1c",
+                        "tertiary-container": "#4c433b",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "primary": "#003345",
+                        "outline": "#9da3a8",
+                        "on-surface-variant": "#40484c",
+                        "secondary-fixed-dim": "#e9c176",
+                        "primary-container": "#004b63",
+                        "on-tertiary-fixed": "#211a14",
+                        "on-surface": "#1a1c1c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #faf9f8;
+        }
 
-    .font-noto-serif {
-      font-family: 'Noto Serif', serif;
-    }
+        .font-noto-serif {
+            font-family: 'Noto Serif', serif;
+        }
 
-    html { scrollbar-gutter: stable; }
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-    }
-    .glass-nav {
-      background: rgba(250, 249, 248, 0.8);
-      backdrop-filter: blur(24px);
-    }
-    .editorial-shadow {
-      box-shadow: 0 32px 64px rgba(26, 28, 28, 0.06);
-    }
-  </style>
+        html {
+            scrollbar-gutter: stable;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .glass-nav {
+            background: rgba(250, 249, 248, 0.8);
+            backdrop-filter: blur(24px);
+        }
+
+        .editorial-shadow {
+            box-shadow: 0 32px 64px rgba(26, 28, 28, 0.06);
+        }
+    </style>
 </head>
 
-  <body class="bg-surface text-on-surface font-body selection:bg-secondary-container selection:text-on-secondary-container">
-    <!-- Top Navigation Shell -->
-    <nav class="fixed top-0 w-full z-50 glass-nav transition-colors duration-300">
-      <div class="flex justify-between items-center px-12 py-6 mx-auto">
-        <div class="flex items-center gap-12">
-          <a class="text-2xl font-headline italic text-primary dark:text-white tracking-tight" href="/">The Editorial Concierge</a>
-          <div class="hidden md:flex items-center gap-8 font-headline text-lg tracking-tight">
-            <a class="text-primary/70 hover:text-secondary transition-all duration-300 nav-link" href="/">Trang chủ</a>
-            <a class="text-secondary border-b-2 border-secondary pb-1 transition-all duration-300 nav-link" href="/room.html">Phòng</a>
-            <a class="text-primary/70 hover:text-secondary transition-all duration-300 nav-link" href="/service.html">Dịch vụ</a>
-            <a class="text-primary/70 hover:text-secondary transition-all duration-300 nav-link" href="/booking.html">Đặt ngay</a>
-          </div>
-        </div>
-        <div class="flex items-center gap-6" id="authContainer">
-        </div>
-      </div>
-    </nav>
+<body class="bg-surface text-on-surface font-body selection:bg-secondary-container selection:text-on-secondary-container">
+
+    <div id="header-placeholder"></div>
 
     <div class="flex pt-20 min-h-screen">
-      <aside class="h-[calc(100vh-5rem)] w-72 sticky left-0 top-20 bg-[#faf9f8] dark:bg-stone-900 border-r border-stone-200/20 flex flex-col p-8 gap-y-8 overflow-y-auto hidden lg:flex">
-        <div>
-          <h2 class="font-noto-serif text-xl text-primary mb-1">Refine Selection</h2>
-          <p class="font-manrope text-xs tracking-widest uppercase text-stone-400">Curated Filters</p>
-        </div>
-        <div class="space-y-6">
-          <div class="space-y-3">
-            <label class="flex items-center gap-2 text-[#004B63] font-semibold text-sm tracking-wide">
-              <span class="material-symbols-outlined text-sm" data-icon="hotel">hotel</span>
-              Phân loại
-            </label>
-            <div class="space-y-2" id="roomCategoryContainer">
+        <aside class="h-[calc(100vh-5rem)] w-72 sticky left-0 top-20 bg-[#faf9f8] dark:bg-stone-900 border-r border-stone-200/20 flex flex-col p-8 gap-y-8 overflow-y-auto hidden lg:flex z-40">
+            <div>
+                <h2 class="font-noto-serif text-xl text-primary mb-1">Refine Selection</h2>
+                <p class="font-manrope text-xs tracking-widest uppercase text-stone-400">Curated Filters</p>
             </div>
-          </div>
-         
-          <div class="space-y-3">
-              <label class="flex items-center gap-2 text-[#004B63] font-semibold text-sm tracking-wide">
-                  <span class="material-symbols-outlined text-sm" data-icon="sort">sort</span>
-                  Sắp xếp
-              </label>
-              <select id="sortSelect" class="w-full bg-surface-container-low border-none rounded-lg text-sm text-stone-600 focus:ring-1 focus:ring-secondary">
-                  <option value="default">Mặc định</option>
-                  <option value="asc">Giá: Thấp đến Cao</option>
-                  <option value="desc">Giá: Cao đến Thấp</option>
-              </select>
-          </div>
-        </div>
-        <button id="resetAllBtn" class="mt-4 text-xs font-manrope uppercase tracking-widest text-[#775a19] underline underline-offset-8 hover:opacity-70 transition-opacity">
-          Reset All
-        </button>
-      </aside>
+            <div class="space-y-6">
+                <div class="space-y-3">
+                    <label class="flex items-center gap-2 text-[#004B63] font-semibold text-sm tracking-wide">
+                        <span class="material-symbols-outlined text-sm" data-icon="hotel">hotel</span>
+                        Phân loại
+                    </label>
+                    <div class="space-y-2" id="roomCategoryContainer">
+                    </div>
+                </div>
 
-      <main class="flex-1 p-8 md:p-12 bg-surface-container-low">
-        <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div>
-            <h1 class="text-4xl md:text-5xl font-noto-serif text-primary mb-4 leading-tight">Phòng nghỉ cao cấp</h1>
-            <p class="max-w-xl text-on-surface-variant font-body leading-relaxed">Khám phá không gian sống được thiết kế riêng cho những hành trình thượng lưu, nơi sự tĩnh lặng gặp gỡ vẻ đẹp hoàn mỹ.</p>
-          </div>
-          <div class="text-xs font-manrope uppercase tracking-widest text-stone-400">
-            Hiển thị 6 trên 24 phòng
-          </div>
-        </header>
+                <div class="space-y-3">
+                    <label class="flex items-center gap-2 text-[#004B63] font-semibold text-sm tracking-wide">
+                        <span class="material-symbols-outlined text-sm" data-icon="sort">sort</span>
+                        Sắp xếp
+                    </label>
+                    <select id="sortSelect" class="w-full bg-surface-container-low border-none rounded-lg text-sm text-stone-600 focus:ring-1 focus:ring-secondary">
+                        <option value="default">Mặc định</option>
+                        <option value="asc">Giá: Thấp đến Cao</option>
+                        <option value="desc">Giá: Cao đến Thấp</option>
+                    </select>
+                </div>
+            </div>
+            <button id="resetAllBtn" class="mt-4 text-xs font-manrope uppercase tracking-widest text-[#775a19] underline underline-offset-8 hover:opacity-70 transition-opacity">
+                Reset All
+            </button>
+        </aside>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10" id="roomContainer">
-        </div>
+        <main class="flex-1 p-8 md:p-12 bg-surface-container-low">
+            <header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-noto-serif text-primary mb-4 leading-tight">Phòng nghỉ cao cấp</h1>
+                    <p class="max-w-xl text-on-surface-variant font-body leading-relaxed">Khám phá không gian sống được thiết kế riêng cho những hành trình thượng lưu, nơi sự tĩnh lặng gặp gỡ vẻ đẹp hoàn mỹ.</p>
+                </div>
+                <div class="text-xs font-manrope uppercase tracking-widest text-stone-400">
+                    Hiển thị 6 trên 24 phòng
+                </div>
+            </header>
 
-        <div class="mt-24 flex justify-center items-center gap-6">
-          <button class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm">
-            <span class="material-symbols-outlined text-xl">arrow_back</span>
-          </button>
-          <div class="flex gap-3">
-            <a class="w-12 h-12 flex items-center justify-center rounded-full bg-[#003345] text-white font-bold text-base shadow-md" href="#">1</a>
-            <a class="w-12 h-12 flex items-center justify-center rounded-full text-stone-600 hover:bg-white hover:text-[#003345] transition-all font-bold text-base shadow-sm" href="#">2</a>
-            <a class="w-12 h-12 flex items-center justify-center rounded-full text-stone-600 hover:bg-white hover:text-[#003345] transition-all font-bold text-base shadow-sm" href="#">3</a>
-          </div>
-          <button class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm">
-            <span class="material-symbols-outlined text-xl">arrow_forward</span>
-          </button>
-        </div>
-      </main>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10" id="roomContainer">
+            </div>
+
+            <div class="mt-24 flex justify-center items-center gap-6">
+                <button class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm">
+                    <span class="material-symbols-outlined text-xl">arrow_back</span>
+                </button>
+                <div class="flex gap-3">
+                    <a class="w-12 h-12 flex items-center justify-center rounded-full bg-[#003345] text-white font-bold text-base shadow-md" href="#">1</a>
+                    <a class="w-12 h-12 flex items-center justify-center rounded-full text-stone-600 hover:bg-white hover:text-[#003345] transition-all font-bold text-base shadow-sm" href="#">2</a>
+                    <a class="w-12 h-12 flex items-center justify-center rounded-full text-stone-600 hover:bg-white hover:text-[#003345] transition-all font-bold text-base shadow-sm" href="#">3</a>
+                </div>
+                <button class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm">
+                    <span class="material-symbols-outlined text-xl">arrow_forward</span>
+                </button>
+            </div>
+        </main>
     </div>
 
-    <!-- Footer Shell -->
     <footer class="w-full rounded-t-3xl bg-surface-container-low text-primary font-body">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-16 py-20 max-w-screen-2xl mx-auto">
-        <div class="col-span-1 md:col-span-1 space-y-6">
-          <h3 class="text-xl font-headline text-primary">The Editorial Concierge</h3>
-          <p class="text-on-surface-variant text-sm leading-relaxed">Định nghĩa lại sự sang trọng thông qua những trải nghiệm được chọn lọc kỹ lưỡng và dịch vụ tận tâm.</p>
-          <div class="flex gap-4">
-            <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">social_leaderboard</span></a>
-            <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">photo_camera</span></a>
-            <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">play_circle</span></a>
-          </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-16 py-20 max-w-screen-2xl mx-auto">
+            <div class="col-span-1 md:col-span-1 space-y-6">
+                <h3 class="text-xl font-headline text-primary">The Editorial Concierge</h3>
+                <p class="text-on-surface-variant text-sm leading-relaxed">Định nghĩa lại sự sang trọng thông qua những trải nghiệm được chọn lọc kỹ lưỡng và dịch vụ tận tâm.</p>
+                <div class="flex gap-4">
+                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">social_leaderboard</span></a>
+                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">photo_camera</span></a>
+                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">play_circle</span></a>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Khám phá</h4>
+                <ul class="space-y-4 text-sm text-on-surface-variant">
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Các hạng phòng</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Trải nghiệm ẩm thực</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Chương trình thành viên</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Thư viện hình ảnh</a></li>
+                </ul>
+            </div>
+            <div class="space-y-6">
+                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Công ty</h4>
+                <ul class="space-y-4 text-sm text-on-surface-variant">
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Terms of Service</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Sustainability</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Press</a></li>
+                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="space-y-6">
+                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Liên hệ</h4>
+                <p class="text-sm text-on-surface-variant leading-relaxed">123 Đường Editorial, Quận 1,<br />Thành phố Hồ Chí Minh, Việt Nam<br /><br />T: +84 (0) 28 3824 1234<br />E: concierge@editorial.com</p>
+            </div>
         </div>
-        <div class="space-y-6">
-          <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Khám phá</h4>
-          <ul class="space-y-4 text-sm text-on-surface-variant">
-            <li><a class="hover:text-primary hover:underline transition-all" href="#">Các hạng phòng</a></li>
-            <li><a class="hover:text-primary hover:underline transition-all" href="#">Trải nghiệm ẩm thực</a></li>
-            <li><a class="hover:text-primary hover:underline transition-all" href="#">Chương trình thành viên</a></li>
-            <li><a class="hover:text-primary hover:underline transition-all" href="#">Thư viện hình ảnh</a></li>
-          </ul>
+        <div class="px-16 py-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center text-xs text-on-surface-variant gap-4">
+            <p>© 2024 The Editorial Concierge. All rights reserved.</p>
+            <div class="flex gap-8">
+                <a class="hover:text-primary" href="#">Chính sách bảo mật</a>
+                <a class="hover:text-primary" href="#">Điều khoản sử dụng</a>
+                <a class="hover:text-primary" href="#">Sơ đồ trang web</a>
+            </div>
         </div>
-        <div class="space-y-6">
-          <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Công ty</h4>
-          <ul class="space-y-4 text-sm text-on-surface-variant">
-            <li><a class="hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a></li>
-            <li><a class="hover:text-primary hover:underline transition-all" href="#">Terms of Service</a></li>
-            <li><a class="hover:text-primary hover:underline transition-all" href="#">Sustainability</a></li>
-            <li><a class="hover:text-primary hover:underline transition-all" href="#">Press</a></li>
-            <li><a class="hover:text-primary hover:underline transition-all" href="#">Careers</a></li>
-          </ul>
-        </div>
-        <div class="space-y-6">
-          <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Liên hệ</h4>
-          <p class="text-sm text-on-surface-variant leading-relaxed">123 Đường Editorial, Quận 1,<br />Thành phố Hồ Chí Minh, Việt Nam<br /><br />T: +84 (0) 28 3824 1234<br />E: concierge@editorial.com</p>
-        </div>
-      </div>
-      <div class="px-16 py-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center text-xs text-on-surface-variant gap-4">
-        <p>© 2024 The Editorial Concierge. All rights reserved.</p>
-        <div class="flex gap-8">
-          <a class="hover:text-primary" href="#">Chính sách bảo mật</a>
-          <a class="hover:text-primary" href="#">Điều khoản sử dụng</a>
-          <a class="hover:text-primary" href="#">Sơ đồ trang web</a>
-        </div>
-      </div>
     </footer>
-  </body>
-<script>
-  function getAuthToken(){
-    const token = localStorage.getItem('userToken');
-    return token ? token : null;
-  }
 
-  function checkLoginStatus(){
-    const token = getAuthToken();
-    const isLogin = Boolean(token);
-    const authContainer = document.getElementById('authContainer');
-    if(!isLogin){
-      authContainer.innerHTML = `
-        <a href="/user_auth.html#signin"
-          class="text-primary/70 hover:text-primary font-medium transition-all duration-300"
-        >
-          Đăng nhập
-        </a>
-        <a href="/user_auth.html#signup"
-          class="bg-gradient-to-r from-primary to-primary-container text-white px-6 py-2.5 rounded-lg font-medium shadow-lg active:scale-95 transition-all"
-        >
-          Đăng ký
-        </a>
-      `;
-    } else {
-      authContainer.innerHTML = `
-        <div class="flex items-center gap-6 relative">
-          <div class="flex items-center gap-4">
-            <button id="userMenuBtn" class="flex items-center gap-2 group focus:outline-none">
-              <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/10 group-hover:border-secondary transition-all">
-                <img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD34i7k1w4t-x06-tI0kZ8R7YF_8y_P2k9pYyYyYyYyYyYyYyYyYyYy"/>
-              </div>
-              <div class="flex flex-col items-start hidden sm:flex">
-                <span class="text-sm font-semibold text-primary font-body">${localStorage.getItem('demo_auth_user') || 'Người dùng'}</span>
-                <span class="text-[10px] text-on-surface-variant font-medium tracking-wider uppercase">Thành viên Gold</span>
-              </div>
-              <span class="material-symbols-outlined text-primary/60 group-hover:text-secondary transition-colors">expand_more</span>
-            </button>
-          </div>
-          <div id="userDropdown" class="absolute top-full right-0 mt-3 w-64 bg-surface rounded-xl editorial-shadow border border-outline-variant/20 opacity-0 invisible translate-y-2 transition-all duration-300 z-50 overflow-hidden">
-            <div class="p-2 space-y-1">
-              <a href="/user_profile.html" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
-                <span class="material-symbols-outlined text-[20px]">person</span>
-                Hồ sơ cá nhân
-              </a>
-              <a href="/booking.html" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
-                <span class="material-symbols-outlined text-[20px]">book_online</span>
-                Quản lý đặt phòng
-              </a>
-              <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
-                <span class="material-symbols-outlined text-[20px]">loyalty</span>
-                Đặc quyền Gold
-              </a>
-            </div>
-            <div class="border-t border-outline-variant/10 p-2 bg-surface-container-lowest">
-              <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-error hover:bg-error-container/30 rounded-lg transition-colors text-left font-medium" >
-                <span class="material-symbols-outlined text-[20px]">logout</span>
-                Đăng xuất
+    <script src="/js/header.js"></script>
+
+    <script>
+        const ROOM_CATEGORY = {
+            '1': 'Normal',
+            '2': 'Vip',
+            '3': 'Luxury'
+        };
+
+        const ROOM_STATUS = {
+            'AVAILABLE': { label: 'Có sẵn', color: 'bg-emerald-100 text-emerald-800' },
+            'MAINTENANCE': { label: 'Bảo trì', color: 'bg-amber-100 text-amber-900' },
+            'DISABLED': { label: 'Ngừng kinh doanh', color: 'bg-rose-100 text-rose-900' },
+            '1': { label: 'Có sẵn', color: 'bg-emerald-100 text-emerald-800' },
+            '2': { label: 'Bảo trì', color: 'bg-amber-100 text-amber-900' },
+            '3': { label: 'Ngừng kinh doanh', color: 'bg-rose-100 text-rose-900' }
+        };
+
+        function getCategoryLabel(category) {
+            if (!category) return 'UNKNOWN';
+            const key = String(category).toUpperCase();
+            return ROOM_CATEGORY[key] || 'UNKNOWN';
+        }
+
+        function getStatusInfo(status) {
+            if (!status) return { label: 'Không xác định', color: 'bg-gray-100 text-gray-800' };
+            const key = String(status).toUpperCase();
+            return ROOM_STATUS[key] || { label: 'Không xác định', color: 'bg-gray-100 text-gray-800' };
+        }
+
+        let currentPage = 1;
+        const pageSize = 6;
+        let currentFetchUrl = '/api/room'; // Lưu lại URL hiện tại (bao gồm cả query sort/filter)
+
+        async function fetchRoom(url = '/api/room') {
+            try {
+                // QUAN TRỌNG: Kiểm tra xem url đã có dấu '?' chưa để nối tham số cho đúng
+                const separator = url.includes('?') ? '&' : '?';
+                const paginatedUrl = `${url}${separator}pageNumber=${currentPage}&pageSize=${pageSize}`;
+
+                const response = await fetch(paginatedUrl);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch room data');
+                }
+
+                const payload = await response.json();
+
+                // Backend giờ trả về PagedResponse { data, totalRecords, totalPages }
+                if (payload.data) {
+                    return payload;
+                } else {
+                    // Fallback phòng hờ API lỗi trả về mảng cũ
+                    return { data: Array.isArray(payload) ? payload : [], totalPages: 1, totalRecords: payload.length || 0 };
+                }
+            } catch (error) {
+                console.error('Error fetching rooms:', error);
+                return { data: [], totalPages: 0, totalRecords: 0 };
+            }
+        }
+
+        //Tạo giao diện nút phân trang
+        function renderPaginationUI(totalPages) {
+            const paginationContainer = document.querySelector('.mt-24.flex.justify-center.items-center.gap-6');
+            if (!paginationContainer) return;
+
+            // Nếu chỉ có 1 trang hoặc không có data, ẩn phân trang
+            if (totalPages <= 1) {
+                paginationContainer.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+
+            // Nút "Trang trước"
+            html += `
+              <button onclick="changePage(${currentPage - 1})"
+                      class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm ${currentPage === 1 ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}">
+                  <span class="material-symbols-outlined text-xl">arrow_back</span>
               </button>
-            </div>
-          </div>
-        </div>
-      `;
-      // Setup dropdown toggle
-      setTimeout(() => {
-        const userMenuBtn = document.getElementById('userMenuBtn');
-        const userDropdown = document.getElementById('userDropdown');
-        if (userMenuBtn && userDropdown) {
-          userMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            userDropdown.classList.toggle('opacity-0');
-            userDropdown.classList.toggle('invisible');
-            userDropdown.classList.toggle('translate-y-2');
-          });
-          
-          // Close dropdown when clicking outside
-          document.addEventListener('click', () => {
-            userDropdown.classList.add('opacity-0', 'invisible', 'translate-y-2');
-          });
-        }
-      }, 0);
-    };
-  }
-
-  function handleLogout(){
-    localStorage.removeItem('userToken');
-    window.location.href = '/';
-  }
-
-    // Thay đổi key thành 1, 2, 3 để khớp với Enum trong Database
-  const ROOM_CATEGORY = {
-   '1': 'Normal',
-   '2': 'Vip',
-   '3': 'Luxury'
-  };
-
-  const ROOM_STATUS = {
-    'AVAILABLE': { label: 'Có sẵn', color: 'bg-emerald-100 text-emerald-800' },
-    'MAINTENANCE': { label: 'Bảo trì', color: 'bg-amber-100 text-amber-900' },
-    'DISABLED': { label: 'Ngừng kinh doanh', color: 'bg-rose-100 text-rose-900' },
-    '1': { label: 'Có sẵn', color: 'bg-emerald-100 text-emerald-800' },
-    '2': { label: 'Bảo trì', color: 'bg-amber-100 text-amber-900' },
-    '3': { label: 'Ngừng kinh doanh', color: 'bg-rose-100 text-rose-900' }
-  };
-
-  function getCategoryLabel(category) {
-    if (!category) return 'UNKNOWN';
-    const key = String(category).toUpperCase();
-    return ROOM_CATEGORY[key] || 'UNKNOWN';
-  }
-
-  function getStatusInfo(status) {
-    if (!status) return { label: 'Không xác định', color: 'bg-gray-100 text-gray-800' };
-    const key = String(status).toUpperCase();
-    return ROOM_STATUS[key] || { label: 'Không xác định', color: 'bg-gray-100 text-gray-800' };
-  }
-
-  function setActiveNavLink() {
-      const currentPath = window.location.pathname;
-      const navLinks = document.querySelectorAll('.nav-link');
-      
-      navLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        link.classList.remove('text-secondary', 'border-b-2', 'border-secondary', 'pb-1');
-        link.classList.add('text-primary/70', 'hover:text-secondary');
-        
-        if ((href === '/' && currentPath === '/') ||
-            (href !== '/' && currentPath.includes(href))) {
-          link.classList.remove('text-primary/70', 'hover:text-secondary');
-          link.classList.add('text-secondary', 'border-b-2', 'border-secondary', 'pb-1');
-        }
-      });
-    }
-
-    let currentPage = 1;
-    const pageSize = 6;
-    let currentFetchUrl = '/api/room'; // Lưu lại URL hiện tại (bao gồm cả query sort/filter)
-
-    async function fetchRoom(url = '/api/room') {
-        try {
-            // QUAN TRỌNG: Kiểm tra xem url đã có dấu '?' chưa để nối tham số cho đúng
-            const separator = url.includes('?') ? '&' : '?';
-            const paginatedUrl = `${url}${separator}pageNumber=${currentPage}&pageSize=${pageSize}`;
-
-            const response = await fetch(paginatedUrl);
-            if (!response.ok) {
-                throw new Error('Failed to fetch room data');
-            }
-
-            const payload = await response.json();
-
-            // Backend giờ trả về PagedResponse { data, totalRecords, totalPages }
-            if (payload.data) {
-                return payload;
-            } else {
-                // Fallback phòng hờ API lỗi trả về mảng cũ
-                return { data: Array.isArray(payload) ? payload : [], totalPages: 1, totalRecords: payload.length || 0 };
-            }
-        } catch (error) {
-            console.error('Error fetching rooms:', error);
-            return { data: [], totalPages: 0, totalRecords: 0 };
-        }
-    }
-    //Tạo giao diện nút phân trang
-    function renderPaginationUI(totalPages) {
-        // Tìm thẻ div chứa nút phân trang hiện tại (lấy class tương đồng trong HTML cũ của bạn)
-        const paginationContainer = document.querySelector('.mt-24.flex.justify-center.items-center.gap-6');
-        if (!paginationContainer) return;
-
-        // Nếu chỉ có 1 trang hoặc không có data, ẩn phân trang
-        if (totalPages <= 1) {
-            paginationContainer.innerHTML = '';
-            return;
-        }
-
-        let html = '';
-
-        // Nút "Trang trước"
-        html += `
-        <button onclick="changePage(${currentPage - 1})" 
-                class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm ${currentPage === 1 ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}">
-            <span class="material-symbols-outlined text-xl">arrow_back</span>
-        </button>
-        <div class="flex gap-3">
-    `;
-
-        // Các nút số trang (1, 2, 3...)
-        for (let i = 1; i <= totalPages; i++) {
-            if (i === currentPage) {
-                html += `<button class="w-12 h-12 flex items-center justify-center rounded-full bg-[#003345] text-white font-bold text-base shadow-md">${i}</button>`;
-            } else {
-                html += `<button onclick="changePage(${i})" class="w-12 h-12 flex items-center justify-center rounded-full text-stone-600 hover:bg-white hover:text-[#003345] transition-all font-bold text-base shadow-sm">${i}</button>`;
-            }
-        }
-
-        // Nút "Trang tiếp"
-        html += `
-        </div>
-        <button onclick="changePage(${currentPage + 1})" 
-                class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}">
-            <span class="material-symbols-outlined text-xl">arrow_forward</span>
-        </button>
-    `;
-
-        paginationContainer.innerHTML = html;
-    }
-
-    // Hàm kích hoạt khi ấn vào nút chuyển trang
-    function changePage(newPage) {
-        currentPage = newPage;
-        renderRoom(currentFetchUrl); // Fetch lại với URL bộ lọc hiện tại
-        // Tự động cuộn lên đầu danh sách phòng
-        document.querySelector('header').scrollIntoView({ behavior: 'smooth' });
-    }
-    async function renderRoom(url = '/api/room') {
-        currentFetchUrl = url; // Lưu lại url cho các nút bấm chuyển trang dùng
-        const responseData = await fetchRoom(url);
-        const rooms = responseData.data;
-        const roomContainer = document.getElementById('roomContainer');
-
-        // 1. Cập nhật dòng chữ "Hiển thị X trên Y phòng"
-        const headerInfo = document.querySelector('header .text-xs.font-manrope');
-        if (headerInfo) {
-            headerInfo.innerText = `Hiển thị ${rooms.length} trên ${responseData.totalRecords} phòng`;
-        }
-
-        
-        if (rooms.length === 0) {
-            roomContainer.innerHTML = '<p class="text-center text-on-surface-variant w-full col-span-full">Không có phòng nào để hiển thị.</p>';
-            renderPaginationUI(0); // Xóa nút phân trang
-            return;
-        }
-        const roomHTML = rooms.map(room => {
-          const categoryLabel = getCategoryLabel(room.category);
-          const statusInfo = getStatusInfo(room.roomStatus); 
-          const priceFormatted = (room.pricePerNight || 0).toLocaleString('vi-VN');
-          const avgRating = (room.averageStar || 0).toFixed(1);
-          return `
-            <div class="group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5">
-              <div class="relative aspect-[4/3] overflow-hidden">
-                <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="${room.name}" src="${room.thumbnailUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDM_HHpNCLv4213HWJgRg39v-0_FisKXI5_R4C4IAelZx_N9h3zUJlWlFousXB4wrNnCrI2M_rlPtAh9UnVWA9foDfQ6txUdoa2I4ogKf2Cv1wikBe8opJc-YHJ4i53aCyDefhrKg4FT5_HacPBy8fP7NdJTyk8DSca5SMxdFWBMHAfRB81EtNw9G_uW_hVXf7cbW7Il8uv1n4yc4DC09HIARl_cQNCAk2wEfnyCKuCoazhrs9dUCJcLkOhB4gu-FAt8crXY52SG4pE'}" />      
-                <div class="absolute top-4 left-4 flex gap-2">
-                  <span class="px-3 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-widest rounded-full">
-                    ${categoryLabel}
-                  </span>
-                </div>
-              </div>
-          
-              <div class="p-6 flex flex-col flex-1">
-                <div class="flex justify-between items-start mb-2">
-                  <h3 class="font-noto-serif text-xl text-primary">${room.name}</h3>
-              
-                  <div class="flex items-center gap-1 text-secondary">
-                    <span class="material-symbols-outlined text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="text-xs font-bold">${avgRating}</span>
-                    <span class="text-xs text-stone-400">(${room.totalRatingCount || 0})</span>
-                  </div>
-                </div>
-            
-                <div class="flex gap-4 mb-6 text-stone-400">
-                  <div class="flex items-center gap-1">
-                    <span class="material-symbols-outlined text-lg" data-icon="person">person</span>
-                    <span class="text-xs">${room.capacity || 0} khách</span>
-                  </div>
-                </div>
-            
-                <div class="mt-auto flex items-center justify-between">
-                  <div>
-                    <p class="text-[10px] uppercase tracking-tighter text-stone-400">Giá mỗi đêm</p>
-                    <p class="text-lg font-bold text-primary">${priceFormatted} VNĐ</p>
-                  </div>
-                  <a href="/room_detail.html?id=${room._id || room.id}" class="inline-block px-6 py-2.5 bg-gradient-to-r from-primary to-primary-container text-white text-xs font-bold rounded-lg transition-transform active:scale-95 text-center">
-                    Xem chi tiết
-                  </a>
-                </div>
-              </div>
-            </div>
+              <div class="flex gap-3">
           `;
-        }).join('');
-        roomContainer.innerHTML = roomHTML;
-        // 2. Render các nút phân trang
-        renderPaginationUI(responseData.totalPages);
-      };
-    function renderRoomCategory() {
-        const container = document.getElementById('roomCategoryContainer');
-        if (!container) return;
 
-        // 1. Thêm tùy chọn "Tất cả" để reset bộ lọc
-        let html = `
-            <label class="flex items-center gap-3 text-stone-500 hover:text-stone-800 transition-all cursor-pointer text-sm font-medium">
-              <input type="radio" name="roomCategory" value="all" checked 
-                class="rounded-full border-stone-300 text-secondary focus:ring-secondary w-4 h-4 cursor-pointer" /> 
-              <span>Tất cả</span>
-            </label>
-       `;
+            // Các nút số trang (1, 2, 3...)
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    html += `<button class="w-12 h-12 flex items-center justify-center rounded-full bg-[#003345] text-white font-bold text-base shadow-md">${i}</button>`;
+                } else {
+                    html += `<button onclick="changePage(${i})" class="w-12 h-12 flex items-center justify-center rounded-full text-stone-600 hover:bg-white hover:text-[#003345] transition-all font-bold text-base shadow-sm">${i}</button>`;
+                }
+            }
 
-        // 2. Render các loại phòng từ object ROOM_CATEGORY
-        html += Object.keys(ROOM_CATEGORY).map(key => {
-            return `
-          <label class="flex items-center gap-3 text-stone-500 hover:text-stone-800 transition-all cursor-pointer text-sm font-medium">
-            <input type="radio" name="roomCategory" value="${key}" 
-              class="rounded-full border-stone-300 text-secondary focus:ring-secondary w-4 h-4 cursor-pointer" /> 
-            <span>${ROOM_CATEGORY[key]}</span>
-          </label>
-        `;
-        }).join('');
+            // Nút "Trang tiếp"
+            html += `
+              </div>
+              <button onclick="changePage(${currentPage + 1})"
+                      class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}">
+                  <span class="material-symbols-outlined text-xl">arrow_forward</span>
+              </button>
+          `;
 
-        container.innerHTML = html;
-        //Lắng nghe lọc điều kiện
-        const radioButtons = container.querySelectorAll('input[name="roomCategory"]');
-        radioButtons.forEach(radio => {
-            radio.addEventListener('change', () => {
-                applyFilters(); 
+            paginationContainer.innerHTML = html;
+        }
+
+        // Hàm kích hoạt khi ấn vào nút chuyển trang
+        function changePage(newPage) {
+            currentPage = newPage;
+            renderRoom(currentFetchUrl); // Fetch lại với URL bộ lọc hiện tại
+            // Tự động cuộn lên đầu danh sách phòng
+            document.querySelector('header').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function renderRoom(url = '/api/room') {
+            currentFetchUrl = url; // Lưu lại url cho các nút bấm chuyển trang dùng
+            const responseData = await fetchRoom(url);
+            const rooms = responseData.data;
+            const roomContainer = document.getElementById('roomContainer');
+
+            // 1. Cập nhật dòng chữ "Hiển thị X trên Y phòng"
+            const headerInfo = document.querySelector('header .text-xs.font-manrope');
+            if (headerInfo) {
+                headerInfo.innerText = `Hiển thị ${rooms.length} trên ${responseData.totalRecords} phòng`;
+            }
+
+
+            if (rooms.length === 0) {
+                roomContainer.innerHTML = '<p class="text-center text-on-surface-variant w-full col-span-full">Không có phòng nào để hiển thị.</p>';
+                renderPaginationUI(0); // Xóa nút phân trang
+                return;
+            }
+            const roomHTML = rooms.map(room => {
+                const categoryLabel = getCategoryLabel(room.category);
+                const statusInfo = getStatusInfo(room.roomStatus);
+                const priceFormatted = (room.pricePerNight || 0).toLocaleString('vi-VN');
+                const avgRating = (room.averageStar || 0).toFixed(1);
+                return `
+                  <div class="group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5">
+                    <div class="relative aspect-[4/3] overflow-hidden">
+                      <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="${room.name}" src="${room.thumbnailUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDM_HHpNCLv4213HWJgRg39v-0_FisKXI5_R4C4IAelZx_N9h3zUJlWlFousXB4wrNnCrI2M_rlPtAh9UnVWA9foDfQ6txUdoa2I4ogKf2Cv1wikBe8opJc-YHJ4i53aCyDefhrKg4FT5_HacPBy8fP7NdJTyk8DSca5SMxdFWBMHAfRB81EtNw9G_uW_hVXf7cbW7Il8uv1n4yc4DC09HIARl_cQNCAk2wEfnyCKuCoazhrs9dUCJcLkOhB4gu-FAt8crXY52SG4pE'}" />
+                      <div class="absolute top-4 left-4 flex gap-2">
+                        <span class="px-3 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-widest rounded-full">
+                          ${categoryLabel}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="p-6 flex flex-col flex-1">
+                      <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-noto-serif text-xl text-primary">${room.name}</h3>
+
+                        <div class="flex items-center gap-1 text-secondary">
+                          <span class="material-symbols-outlined text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+                          <span class="text-xs font-bold">${avgRating}</span>
+                          <span class="text-xs text-stone-400">(${room.totalRatingCount || 0})</span>
+                        </div>
+                      </div>
+
+                      <div class="flex gap-4 mb-6 text-stone-400">
+                        <div class="flex items-center gap-1">
+                          <span class="material-symbols-outlined text-lg" data-icon="person">person</span>
+                          <span class="text-xs">${room.capacity || 0} khách</span>
+                        </div>
+                      </div>
+
+                      <div class="mt-auto flex items-center justify-between">
+                        <div>
+                          <p class="text-[10px] uppercase tracking-tighter text-stone-400">Giá mỗi đêm</p>
+                          <p class="text-lg font-bold text-primary">${priceFormatted} VNĐ</p>
+                        </div>
+                        <a href="/room_detail.html?id=${room._id || room.id}" class="inline-block px-6 py-2.5 bg-gradient-to-r from-primary to-primary-container text-white text-xs font-bold rounded-lg transition-transform active:scale-95 text-center">
+                          Xem chi tiết
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                `;
+            }).join('');
+            roomContainer.innerHTML = roomHTML;
+            // 2. Render các nút phân trang
+            renderPaginationUI(responseData.totalPages);
+        };
+
+        function renderRoomCategory() {
+            const container = document.getElementById('roomCategoryContainer');
+            if (!container) return;
+
+            // 1. Thêm tùy chọn "Tất cả" để reset bộ lọc
+            let html = `
+                  <label class="flex items-center gap-3 text-stone-500 hover:text-stone-800 transition-all cursor-pointer text-sm font-medium">
+                    <input type="radio" name="roomCategory" value="all" checked
+                      class="rounded-full border-stone-300 text-secondary focus:ring-secondary w-4 h-4 cursor-pointer" />
+                    <span>Tất cả</span>
+                  </label>
+             `;
+
+            // 2. Render các loại phòng từ object ROOM_CATEGORY
+            html += Object.keys(ROOM_CATEGORY).map(key => {
+                return `
+                <label class="flex items-center gap-3 text-stone-500 hover:text-stone-800 transition-all cursor-pointer text-sm font-medium">
+                  <input type="radio" name="roomCategory" value="${key}"
+                    class="rounded-full border-stone-300 text-secondary focus:ring-secondary w-4 h-4 cursor-pointer" />
+                  <span>${ROOM_CATEGORY[key]}</span>
+                </label>
+              `;
+            }).join('');
+
+            container.innerHTML = html;
+            //Lắng nghe lọc điều kiện
+            const radioButtons = container.querySelectorAll('input[name="roomCategory"]');
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    applyFilters();
+                });
             });
-        });
-    }
-    //Hàm lọc
-    function applyFilters() {
-        currentPage = 1; // Reset về trang 1
-
-        const selectedCategory = document.querySelector('input[name="roomCategory"]:checked').value;
-        const selectedSort = document.getElementById('sortSelect').value;
-
-        let url = '/api/room/search?'; // Trỏ tới API gộp mới ở Backend
-        const params = [];
-
-        if (selectedCategory !== 'all') {
-            params.push(`category=${selectedCategory}`);
         }
 
-        if (selectedSort !== 'default') {
-            const isAsc = selectedSort === 'asc' ? 'true' : 'false';
-            params.push(`isAscending=${isAsc}`);
+        //Hàm lọc
+        function applyFilters() {
+            currentPage = 1; // Reset về trang 1
+
+            const selectedCategory = document.querySelector('input[name="roomCategory"]:checked').value;
+            const selectedSort = document.getElementById('sortSelect').value;
+
+            let url = '/api/room/search?'; // Trỏ tới API gộp mới ở Backend
+            const params = [];
+
+            if (selectedCategory !== 'all') {
+                params.push(`category=${selectedCategory}`);
+            }
+
+            if (selectedSort !== 'default') {
+                const isAsc = selectedSort === 'asc' ? 'true' : 'false';
+                params.push(`isAscending=${isAsc}`);
+            }
+
+            if (params.length > 0) {
+                url += params.join('&');
+            } else {
+                url = '/api/room/search';
+            }
+
+            renderRoom(url);
         }
 
-        if (params.length > 0) {
-            url += params.join('&');
-        } else {
-            url = '/api/room/search';
-        }
+        document.addEventListener('DOMContentLoaded', () => {
+            renderRoomCategory();
+            renderRoom();
 
-        renderRoom(url);
-    }
-  document.addEventListener('DOMContentLoaded', () => {
-    renderRoomCategory();
-    checkLoginStatus();
-    renderRoom();
-    setActiveNavLink();
-    // SỰ KIỆN LẮNG NGHE SẮP XẾP (ĐÃ SỬA)
-    const sortSelect = document.getElementById('sortSelect');
-    if (sortSelect) {
-        sortSelect.addEventListener('change', () => {
-            applyFilters(); // Chỉ cần gọi hàm tổng hợp
+            // SỰ KIỆN LẮNG NGHE SẮP XẾP
+            const sortSelect = document.getElementById('sortSelect');
+            if (sortSelect) {
+                sortSelect.addEventListener('change', () => {
+                    applyFilters(); // Chỉ cần gọi hàm tổng hợp
+                });
+            }
+
+            // NÚT RESET TẤT CẢ
+            const resetAllBtn = document.getElementById('resetAllBtn');
+            if (resetAllBtn) {
+                resetAllBtn.addEventListener('click', () => {
+                    currentPage = 1;
+                    const allCategoryRadio = document.querySelector('input[name="roomCategory"][value="all"]');
+                    if (allCategoryRadio) allCategoryRadio.checked = true;
+
+                    if (sortSelect) sortSelect.value = 'default';
+
+                    // Trả về danh sách gốc sử dụng API mới
+                    renderRoom('/api/room/search');
+                });
+            }
         });
-    }
-
-    // NÚT RESET TẤT CẢ (ĐÃ SỬA)
-    const resetAllBtn = document.getElementById('resetAllBtn');
-    if (resetAllBtn) {
-        resetAllBtn.addEventListener('click', () => {
-            currentPage = 1;
-            const allCategoryRadio = document.querySelector('input[name="roomCategory"][value="all"]');
-            if (allCategoryRadio) allCategoryRadio.checked = true;
-
-            if (sortSelect) sortSelect.value = 'default';
-
-            // Trả về danh sách gốc sử dụng API mới
-            renderRoom('/api/room/search');
-        });
-    }
-  });
-</script>
+    </script>
+</body>
 </html>

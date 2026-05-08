@@ -10,12 +10,17 @@ namespace HotelManager.Infrastructure.Services
     {
         private readonly IRatingRepository _ratingRepository;
         private readonly IBookingRepository _bookingRepository;
+        private readonly IRoomRepository _roomRepository;
         private readonly RatingConverter _ratingConverter;
-        public RatingService(IRatingRepository ratingRepository, IBookingRepository bookingRepository, RatingConverter ratingConverter)
+        public RatingService(IRatingRepository ratingRepository,
+            IRoomRepository roomRepository,
+            IBookingRepository bookingRepository,
+            RatingConverter ratingConverter)
         {
             _ratingRepository = ratingRepository;
             _bookingRepository = bookingRepository;
             _ratingConverter = ratingConverter;
+            _roomRepository = roomRepository;
         }
         public async Task<IEnumerable<RatingResponse>> GetRoomRatings(int roomId)
         {
@@ -29,6 +34,12 @@ namespace HotelManager.Infrastructure.Services
             if (booking.AccountId != accountId) throw new ForbiddenException("Bạn không có quyền đánh giá Booking này");
             booking.AddRating(request.NumOfRating, request.Review);
             await _bookingRepository.Update(booking.Id, booking);
+            var room = await _roomRepository.GetById(booking.RoomId);
+            if(room != null)
+            {
+                room.ChangeAverageStar(request.NumOfRating);
+                await _roomRepository.Update(room.Id, room);
+            }
         }
     }
 }
