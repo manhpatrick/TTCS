@@ -234,50 +234,8 @@
         </div>
     </main>
 
-    <footer class="w-full rounded-t-3xl bg-surface-container-low text-primary font-body">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-16 py-20 max-w-screen-2xl mx-auto">
-            <div class="col-span-1 md:col-span-1 space-y-6">
-                <h3 class="text-xl font-headline text-primary">The Editorial Concierge</h3>
-                <p class="text-on-surface-variant text-sm leading-relaxed">Định nghĩa lại sự sang trọng thông qua những trải nghiệm được chọn lọc kỹ lưỡng và dịch vụ tận tâm.</p>
-                <div class="flex gap-4">
-                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">social_leaderboard</span></a>
-                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">photo_camera</span></a>
-                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">play_circle</span></a>
-                </div>
-            </div>
-            <div class="space-y-6">
-                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Khám phá</h4>
-                <ul class="space-y-4 text-sm text-on-surface-variant">
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Các hạng phòng</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Trải nghiệm ẩm thực</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Chương trình thành viên</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Thư viện hình ảnh</a></li>
-                </ul>
-            </div>
-            <div class="space-y-6">
-                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Công ty</h4>
-                <ul class="space-y-4 text-sm text-on-surface-variant">
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Terms of Service</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Sustainability</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Press</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Careers</a></li>
-                </ul>
-            </div>
-            <div class="space-y-6">
-                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Liên hệ</h4>
-                <p class="text-sm text-on-surface-variant leading-relaxed">123 Đường Editorial, Quận 1,<br />Thành phố Hồ Chí Minh, Việt Nam<br /><br />T: +84 (0) 28 3824 1234<br />E: concierge@editorial.com</p>
-            </div>
-        </div>
-        <div class="px-16 py-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center text-xs text-on-surface-variant gap-4">
-            <p>© 2024 The Editorial Concierge. All rights reserved.</p>
-            <div class="flex gap-8">
-                <a class="hover:text-primary" href="#">Chính sách bảo mật</a>
-                <a class="hover:text-primary" href="#">Điều khoản sử dụng</a>
-                <a class="hover:text-primary" href="#">Sơ đồ trang web</a>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
+    <script src="/js/footer.js"></script>
 
     <div id="modalBackdrop" class="fixed inset-0 bg-black/60 z-[60] hidden transition-opacity duration-300" onclick="closeAllModals()"></div>
 
@@ -483,40 +441,40 @@
 
             if (profileContainer) {
                 profileContainer.innerHTML = `
-                              <div class="space-y-1">
-                                <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Họ và Tên</label>
-                                <input name="name" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Nhập họ và tên của bạn" value="${displayFullName}" />        </div>
-                              <div class="space-y-1">
-                                <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Số điện thoại</label>
-                                <input name="phone" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Số điện thoại của bạn" value="${profile.phone || ''}" />
-                              </div>
-                              <div class="space-y-1">
-                                <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Ngày sinh</label>
-                                <input name="birthDay" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="date" value="${formatDateForInput(profile.birthDay)}" />
-                              </div>
-                              <div class="space-y-1">
-                                <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Giới tính</label>
-                                <select name="gender" class="profile-input w-full bg-surface-container-low border-transparent rounded-lg focus:ring-0 text-on-surface font-medium transition-all appearance-none pointer-events-none" disabled>
-                                  <option value="" disabled ${!profile.gender ? 'selected' : ''} class="text-on-surface-variant">Chọn giới tính</option>
-                                  <option value="1" ${isMale ? 'selected' : ''}>Nam</option>
-                                  <option value="2" ${isFemale ? 'selected' : ''}>Nữ</option>
-                                  <option value="3" ${!isMale && !isFemale && profile.gender ? 'selected' : ''}>Khác</option>
-                                </select>
-                              </div>
-                              <div class="md:col-span-2 space-y-1">
-                                <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Địa chỉ</label>
-                                <input name="address" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Hãy cập nhật địa chỉ" value="${profile.address || ''}" />
-                              </div>
+                                  <div class="space-y-1">
+                                    <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Họ và Tên</label>
+                                    <input name="name" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Nhập họ và tên của bạn" value="${displayFullName}" />        </div>
+                                  <div class="space-y-1">
+                                    <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Số điện thoại</label>
+                                    <input name="phone" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Số điện thoại của bạn" value="${profile.phone || ''}" />
+                                  </div>
+                                  <div class="space-y-1">
+                                    <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Ngày sinh</label>
+                                    <input name="birthDay" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="date" value="${formatDateForInput(profile.birthDay)}" />
+                                  </div>
+                                  <div class="space-y-1">
+                                    <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Giới tính</label>
+                                    <select name="gender" class="profile-input w-full bg-surface-container-low border-transparent rounded-lg focus:ring-0 text-on-surface font-medium transition-all appearance-none pointer-events-none" disabled>
+                                      <option value="" disabled ${!profile.gender ? 'selected' : ''} class="text-on-surface-variant">Chọn giới tính</option>
+                                      <option value="1" ${isMale ? 'selected' : ''}>Nam</option>
+                                      <option value="2" ${isFemale ? 'selected' : ''}>Nữ</option>
+                                      <option value="3" ${!isMale && !isFemale && profile.gender ? 'selected' : ''}>Khác</option>
+                                    </select>
+                                  </div>
+                                  <div class="md:col-span-2 space-y-1">
+                                    <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Địa chỉ</label>
+                                    <input name="address" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Hãy cập nhật địa chỉ" value="${profile.address || ''}" />
+                                  </div>
 
-                              <div id="actionButtons" class="md:col-span-2 flex justify-end gap-3 mt-4 hidden">
-                                <button type="button" onclick="toggleEditMode(false)" class="px-5 py-2 rounded-lg font-medium text-on-surface-variant hover:bg-surface-container transition-colors">
-                                  Hủy
-                                </button>
-                                <button type="submit" class="px-5 py-2 rounded-lg font-medium bg-primary text-white hover:bg-primary/90 shadow-md transition-colors">
-                                  Lưu thay đổi
-                                </button>
-                              </div>
-                            `;
+                                  <div id="actionButtons" class="md:col-span-2 flex justify-end gap-3 mt-4 hidden">
+                                    <button type="button" onclick="toggleEditMode(false)" class="px-5 py-2 rounded-lg font-medium text-on-surface-variant hover:bg-surface-container transition-colors">
+                                      Hủy
+                                    </button>
+                                    <button type="submit" class="px-5 py-2 rounded-lg font-medium bg-primary text-white hover:bg-primary/90 shadow-md transition-colors">
+                                      Lưu thay đổi
+                                    </button>
+                                  </div>
+                                `;
             }
         }
 
@@ -722,35 +680,35 @@
                 }
 
                 html += `
-                          <div class="group flex flex-col md:flex-row bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                            <div class="w-full md:w-64 h-48 md:h-auto overflow-hidden relative">
-                              <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="${image}" alt="Room Image" />
-                              <div class="absolute top-4 left-4">
-                                <span class="bg-primary text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">${statusName}</span>
-                              </div>
-                            </div>
-                            <div class="p-8 flex-1 flex flex-col justify-between">
-                              <div>
-                                <div class="flex justify-between items-start mb-2">
-                                  <h3 class="text-xl font-headline text-primary">${roomName}</h3>
-                                  <p class="text-secondary font-bold font-body">${priceStr}</p>
-                                </div>
-                                <div class="flex gap-4 text-sm text-on-surface-variant mb-6 font-body">
-                                  <div class="flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-sm">calendar_today</span> ${checkIn} — ${checkOut}
-                                  </div>
-                                  <div class="flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-sm">fact_check</span> ${statusName}
+                              <div class="group flex flex-col md:flex-row bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                                <div class="w-full md:w-64 h-48 md:h-auto overflow-hidden relative">
+                                  <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="${image}" alt="Room Image" />
+                                  <div class="absolute top-4 left-4">
+                                    <span class="bg-primary text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">${statusName}</span>
                                   </div>
                                 </div>
+                                <div class="p-8 flex-1 flex flex-col justify-between">
+                                  <div>
+                                    <div class="flex justify-between items-start mb-2">
+                                      <h3 class="text-xl font-headline text-primary">${roomName}</h3>
+                                      <p class="text-secondary font-bold font-body">${priceStr}</p>
+                                    </div>
+                                    <div class="flex gap-4 text-sm text-on-surface-variant mb-6 font-body">
+                                      <div class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-sm">calendar_today</span> ${checkIn} — ${checkOut}
+                                      </div>
+                                      <div class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-sm">fact_check</span> ${statusName}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="flex gap-4">
+                                    <button type="button" onclick="openDetailModal(${bookingId})" class="flex-1 bg-gradient-to-r from-primary to-primary-container text-white py-3 rounded-lg text-sm font-bold tracking-wide hover:shadow-lg transition-all">Chi tiết</button>
+                                    ${dynamicButtonHtml}
+                                  </div>
+                                </div>
                               </div>
-                              <div class="flex gap-4">
-                                <button type="button" onclick="openDetailModal(${bookingId})" class="flex-1 bg-gradient-to-r from-primary to-primary-container text-white py-3 rounded-lg text-sm font-bold tracking-wide hover:shadow-lg transition-all">Chi tiết</button>
-                                ${dynamicButtonHtml}
-                              </div>
-                            </div>
-                          </div>
-                        `;
+                            `;
             });
 
             bookingsContainer.innerHTML = html;
@@ -829,10 +787,10 @@
 
             if (!payments || payments.length === 0) {
                 container.innerHTML = `
-            <div class="text-center py-12 bg-surface-container-low rounded-xl border border-dashed border-outline-variant/50">
-                <span class="material-symbols-outlined text-4xl text-outline-variant mb-2">payments</span>
-                <p class="text-on-surface-variant text-sm">Bạn chưa thực hiện giao dịch nào.</p>
-            </div>`;
+                <div class="text-center py-12 bg-surface-container-low rounded-xl border border-dashed border-outline-variant/50">
+                    <span class="material-symbols-outlined text-4xl text-outline-variant mb-2">payments</span>
+                    <p class="text-on-surface-variant text-sm">Bạn chưa thực hiện giao dịch nào.</p>
+                </div>`;
                 return;
             }
 
@@ -851,29 +809,29 @@
 
                 // Trả về HTML dạng có thể click mở rộng
                 return `
-            <div class="bg-surface-container-low rounded-xl border border-outline-variant/10 overflow-hidden transition-colors hover:bg-surface-container mb-3">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 cursor-pointer select-none" onclick="togglePaymentDetail('${pay.id}')">
-                    <div class="space-y-1 mb-2 sm:mb-0">
-                        <div class="flex items-center gap-2">
-                            <p class="text-sm font-bold text-primary">Mã: ${pay.orderCode || pay.id}</p>
-                            ${statusBadge}
+                <div class="bg-surface-container-low rounded-xl border border-outline-variant/10 overflow-hidden transition-colors hover:bg-surface-container mb-3">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 cursor-pointer select-none" onclick="togglePaymentDetail('${pay.id}')">
+                        <div class="space-y-1 mb-2 sm:mb-0">
+                            <div class="flex items-center gap-2">
+                                <p class="text-sm font-bold text-primary">Mã: ${pay.orderCode || pay.id}</p>
+                                ${statusBadge}
+                            </div>
+                            <p class="text-xs text-on-surface-variant font-medium">
+                                Ngày thanh toán: ${formatDateTime(pay.createdAt || pay.paymentDate)}
+                            </p>
                         </div>
-                        <p class="text-xs text-on-surface-variant font-medium">
-                            Ngày thanh toán: ${formatDateTime(pay.createdAt || pay.paymentDate)}
-                        </p>
+                        <div class="text-right w-full sm:w-auto border-t sm:border-0 pt-2 sm:pt-0 flex items-center justify-between sm:justify-end gap-4">
+                            <p class="text-lg font-display font-bold text-secondary">${pay.amount.toLocaleString('vi-VN')}đ</p>
+                            <span id="payment-icon-${pay.id}" class="material-symbols-outlined text-outline-variant transition-transform duration-300">expand_more</span>
+                        </div>
                     </div>
-                    <div class="text-right w-full sm:w-auto border-t sm:border-0 pt-2 sm:pt-0 flex items-center justify-between sm:justify-end gap-4">
-                        <p class="text-lg font-display font-bold text-secondary">${pay.amount.toLocaleString('vi-VN')}đ</p>
-                        <span id="payment-icon-${pay.id}" class="material-symbols-outlined text-outline-variant transition-transform duration-300">expand_more</span>
+
+                    <div id="payment-detail-${pay.id}" class="hidden px-4 pb-4 pt-2 border-t border-outline-variant/10 bg-surface-container-lowest">
+                        <p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-1">Nội dung chuyển khoản</p>
+                        <p class="text-sm text-on-surface font-medium bg-surface p-3 rounded-lg border border-outline-variant/20 italic">${transferContent}</p>
                     </div>
                 </div>
-                
-                <div id="payment-detail-${pay.id}" class="hidden px-4 pb-4 pt-2 border-t border-outline-variant/10 bg-surface-container-lowest">
-                    <p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-1">Nội dung chuyển khoản</p>
-                    <p class="text-sm text-on-surface font-medium bg-surface p-3 rounded-lg border border-outline-variant/20 italic">${transferContent}</p>
-                </div>
-            </div>
-        `;
+            `;
             }).join('');
         }
         function togglePaymentDetail(id) {
@@ -936,9 +894,9 @@
                     const price = s.price || s.Price || 0;
 
                     return `<li class="flex justify-between items-center border-b border-outline-variant/10 pb-1 last:border-0">
-                              <span>• ${name} <span class="text-xs text-on-surface-variant">(x${quantity})</span></span>
-                              <span class="font-bold">${(price * quantity).toLocaleString('vi-VN')}đ</span>
-                            </li>`;
+                                  <span>• ${name} <span class="text-xs text-on-surface-variant">(x${quantity})</span></span>
+                                  <span class="font-bold">${(price * quantity).toLocaleString('vi-VN')}đ</span>
+                                </li>`;
                 }).join('');
             } else {
                 servicesContainer.classList.add('hidden');

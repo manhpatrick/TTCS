@@ -253,18 +253,8 @@
         </div>
     </main>
 
-    <footer class="w-full rounded-t-3xl bg-surface-container-low text-primary font-body shrink-0">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-16 py-20 max-w-screen-2xl mx-auto">
-            <div class="col-span-1 md:col-span-1 space-y-6">
-                <h3 class="text-xl font-headline text-primary">The Editorial Concierge</h3>
-                <p class="text-on-surface-variant text-sm leading-relaxed">Định nghĩa lại sự sang trọng thông qua những trải nghiệm được chọn lọc kỹ lưỡng và dịch vụ tận tâm.</p>
-            </div>
-            <div class="space-y-6">
-                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Liên hệ</h4>
-                <p class="text-sm text-on-surface-variant leading-relaxed">concierge@azuresands.com<br />T: +84 (0) 28 3824 1234</p>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
+    <script src="/js/footer.js"></script>
 
     <script>
         const signinTab = document.getElementById('signinTab');
@@ -333,14 +323,14 @@
             btn.disabled = true;
 
             try {
-                 //Tích hợp API thực tế tại đây:
-                 const response = await fetch('/api/auth/forgot-password/send-otp', {
-                     method: 'POST',
-                     headers: { 'Content-Type': 'application/json' },
-                     body: JSON.stringify({ Email: emailInput })
-                 });
-                 const data = await response.json();
-                 if (!response.ok) throw new Error(data.message || 'Không thể gửi mã. Vui lòng thử lại.');
+                //Tích hợp API thực tế tại đây:
+                const response = await fetch('/api/auth/forgot-password/send-otp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ Email: emailInput })
+                });
+                const data = await response.json();
+                if (!response.ok) throw new Error(data.message || 'Không thể gửi mã. Vui lòng thử lại.');
 
                 // Giả lập delay mạng
                 await new Promise(r => setTimeout(r, 1500));
@@ -456,14 +446,14 @@
                 }
 
                 try {
-                     //Tích hợp API xác nhận OTP thực tế tại đây:
-                     const response = await fetch('/api/auth/forgot-password/verify-otp', {
-                         method: 'POST',
-                         headers: { 'Content-Type': 'application/json' },
-                         body: JSON.stringify({ Email: email, Otp: otp, NewPassword: newPassword })
-                     });
-                     const data = await response.json();
-                     if (!response.ok) throw new Error(data.message || 'Xác nhận thất bại');
+                    //Tích hợp API xác nhận OTP thực tế tại đây:
+                    const response = await fetch('/api/auth/forgot-password/verify-otp', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ Email: email, Otp: otp, NewPassword: newPassword })
+                    });
+                    const data = await response.json();
+                    if (!response.ok) throw new Error(data.message || 'Xác nhận thất bại');
 
                     // Giả lập network delay
                     await new Promise(r => setTimeout(r, 1000));

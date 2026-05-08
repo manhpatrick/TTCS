@@ -173,51 +173,8 @@
         </main>
     </div>
 
-    <footer class="w-full rounded-t-3xl bg-surface-container-low text-primary font-body">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-16 py-20 max-w-screen-2xl mx-auto">
-            <div class="col-span-1 md:col-span-1 space-y-6">
-                <h3 class="text-xl font-headline text-primary">The Editorial Concierge</h3>
-                <p class="text-on-surface-variant text-sm leading-relaxed">Định nghĩa lại sự sang trọng thông qua những trải nghiệm được chọn lọc kỹ lưỡng và dịch vụ tận tâm.</p>
-                <div class="flex gap-4">
-                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">social_leaderboard</span></a>
-                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">photo_camera</span></a>
-                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#"><span class="material-symbols-outlined text-xl">play_circle</span></a>
-                </div>
-            </div>
-            <div class="space-y-6">
-                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Khám phá</h4>
-                <ul class="space-y-4 text-sm text-on-surface-variant">
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Các hạng phòng</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Trải nghiệm ẩm thực</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Chương trình thành viên</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Thư viện hình ảnh</a></li>
-                </ul>
-            </div>
-            <div class="space-y-6">
-                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Công ty</h4>
-                <ul class="space-y-4 text-sm text-on-surface-variant">
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Terms of Service</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Sustainability</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Press</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Careers</a></li>
-                </ul>
-            </div>
-            <div class="space-y-6">
-                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">Liên hệ</h4>
-                <p class="text-sm text-on-surface-variant leading-relaxed">123 Đường Editorial, Quận 1,<br />Thành phố Hồ Chí Minh, Việt Nam<br /><br />T: +84 (0) 28 3824 1234<br />E: concierge@editorial.com</p>
-            </div>
-        </div>
-        <div class="px-16 py-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center text-xs text-on-surface-variant gap-4">
-            <p>© 2024 The Editorial Concierge. All rights reserved.</p>
-            <div class="flex gap-8">
-                <a class="hover:text-primary" href="#">Chính sách bảo mật</a>
-                <a class="hover:text-primary" href="#">Điều khoản sử dụng</a>
-                <a class="hover:text-primary" href="#">Sơ đồ trang web</a>
-            </div>
-        </div>
-    </footer>
-
+    <div id="footer-placeholder"></div>
+    <script src="/js/footer.js"></script>
     <script src="/js/header.js"></script>
 
     <script>
@@ -293,12 +250,12 @@
 
             // Nút "Trang trước"
             html += `
-              <button onclick="changePage(${currentPage - 1})"
-                      class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm ${currentPage === 1 ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}">
-                  <span class="material-symbols-outlined text-xl">arrow_back</span>
-              </button>
-              <div class="flex gap-3">
-          `;
+                  <button onclick="changePage(${currentPage - 1})"
+                          class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm ${currentPage === 1 ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}">
+                      <span class="material-symbols-outlined text-xl">arrow_back</span>
+                  </button>
+                  <div class="flex gap-3">
+              `;
 
             // Các nút số trang (1, 2, 3...)
             for (let i = 1; i <= totalPages; i++) {
@@ -311,12 +268,12 @@
 
             // Nút "Trang tiếp"
             html += `
-              </div>
-              <button onclick="changePage(${currentPage + 1})"
-                      class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}">
-                  <span class="material-symbols-outlined text-xl">arrow_forward</span>
-              </button>
-          `;
+                  </div>
+                  <button onclick="changePage(${currentPage + 1})"
+                          class="w-12 h-12 flex items-center justify-center rounded-full text-stone-400 hover:text-[#003345] hover:bg-white transition-all shadow-sm ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}">
+                      <span class="material-symbols-outlined text-xl">arrow_forward</span>
+                  </button>
+              `;
 
             paginationContainer.innerHTML = html;
         }
@@ -353,46 +310,46 @@
                 const priceFormatted = (room.pricePerNight || 0).toLocaleString('vi-VN');
                 const avgRating = (room.averageStar || 0).toFixed(1);
                 return `
-                  <div class="group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5">
-                    <div class="relative aspect-[4/3] overflow-hidden">
-                      <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="${room.name}" src="${room.thumbnailUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDM_HHpNCLv4213HWJgRg39v-0_FisKXI5_R4C4IAelZx_N9h3zUJlWlFousXB4wrNnCrI2M_rlPtAh9UnVWA9foDfQ6txUdoa2I4ogKf2Cv1wikBe8opJc-YHJ4i53aCyDefhrKg4FT5_HacPBy8fP7NdJTyk8DSca5SMxdFWBMHAfRB81EtNw9G_uW_hVXf7cbW7Il8uv1n4yc4DC09HIARl_cQNCAk2wEfnyCKuCoazhrs9dUCJcLkOhB4gu-FAt8crXY52SG4pE'}" />
-                      <div class="absolute top-4 left-4 flex gap-2">
-                        <span class="px-3 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-widest rounded-full">
-                          ${categoryLabel}
-                        </span>
-                      </div>
-                    </div>
+                      <div class="group flex flex-col bg-surface-container-lowest rounded-xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5">
+                        <div class="relative aspect-[4/3] overflow-hidden">
+                          <img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="${room.name}" src="${room.thumbnailUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDM_HHpNCLv4213HWJgRg39v-0_FisKXI5_R4C4IAelZx_N9h3zUJlWlFousXB4wrNnCrI2M_rlPtAh9UnVWA9foDfQ6txUdoa2I4ogKf2Cv1wikBe8opJc-YHJ4i53aCyDefhrKg4FT5_HacPBy8fP7NdJTyk8DSca5SMxdFWBMHAfRB81EtNw9G_uW_hVXf7cbW7Il8uv1n4yc4DC09HIARl_cQNCAk2wEfnyCKuCoazhrs9dUCJcLkOhB4gu-FAt8crXY52SG4pE'}" />
+                          <div class="absolute top-4 left-4 flex gap-2">
+                            <span class="px-3 py-1 bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-widest rounded-full">
+                              ${categoryLabel}
+                            </span>
+                          </div>
+                        </div>
 
-                    <div class="p-6 flex flex-col flex-1">
-                      <div class="flex justify-between items-start mb-2">
-                        <h3 class="font-noto-serif text-xl text-primary">${room.name}</h3>
+                        <div class="p-6 flex flex-col flex-1">
+                          <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-noto-serif text-xl text-primary">${room.name}</h3>
 
-                        <div class="flex items-center gap-1 text-secondary">
-                          <span class="material-symbols-outlined text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
-                          <span class="text-xs font-bold">${avgRating}</span>
-                          <span class="text-xs text-stone-400">(${room.totalRatingCount || 0})</span>
+                            <div class="flex items-center gap-1 text-secondary">
+                              <span class="material-symbols-outlined text-sm" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+                              <span class="text-xs font-bold">${avgRating}</span>
+                              <span class="text-xs text-stone-400">(${room.totalRatingCount || 0})</span>
+                            </div>
+                          </div>
+
+                          <div class="flex gap-4 mb-6 text-stone-400">
+                            <div class="flex items-center gap-1">
+                              <span class="material-symbols-outlined text-lg" data-icon="person">person</span>
+                              <span class="text-xs">${room.capacity || 0} khách</span>
+                            </div>
+                          </div>
+
+                          <div class="mt-auto flex items-center justify-between">
+                            <div>
+                              <p class="text-[10px] uppercase tracking-tighter text-stone-400">Giá mỗi đêm</p>
+                              <p class="text-lg font-bold text-primary">${priceFormatted} VNĐ</p>
+                            </div>
+                            <a href="/room_detail.html?id=${room._id || room.id}" class="inline-block px-6 py-2.5 bg-gradient-to-r from-primary to-primary-container text-white text-xs font-bold rounded-lg transition-transform active:scale-95 text-center">
+                              Xem chi tiết
+                            </a>
+                          </div>
                         </div>
                       </div>
-
-                      <div class="flex gap-4 mb-6 text-stone-400">
-                        <div class="flex items-center gap-1">
-                          <span class="material-symbols-outlined text-lg" data-icon="person">person</span>
-                          <span class="text-xs">${room.capacity || 0} khách</span>
-                        </div>
-                      </div>
-
-                      <div class="mt-auto flex items-center justify-between">
-                        <div>
-                          <p class="text-[10px] uppercase tracking-tighter text-stone-400">Giá mỗi đêm</p>
-                          <p class="text-lg font-bold text-primary">${priceFormatted} VNĐ</p>
-                        </div>
-                        <a href="/room_detail.html?id=${room._id || room.id}" class="inline-block px-6 py-2.5 bg-gradient-to-r from-primary to-primary-container text-white text-xs font-bold rounded-lg transition-transform active:scale-95 text-center">
-                          Xem chi tiết
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                `;
+                    `;
             }).join('');
             roomContainer.innerHTML = roomHTML;
             // 2. Render các nút phân trang
@@ -405,22 +362,22 @@
 
             // 1. Thêm tùy chọn "Tất cả" để reset bộ lọc
             let html = `
-                  <label class="flex items-center gap-3 text-stone-500 hover:text-stone-800 transition-all cursor-pointer text-sm font-medium">
-                    <input type="radio" name="roomCategory" value="all" checked
-                      class="rounded-full border-stone-300 text-secondary focus:ring-secondary w-4 h-4 cursor-pointer" />
-                    <span>Tất cả</span>
-                  </label>
-             `;
+                      <label class="flex items-center gap-3 text-stone-500 hover:text-stone-800 transition-all cursor-pointer text-sm font-medium">
+                        <input type="radio" name="roomCategory" value="all" checked
+                          class="rounded-full border-stone-300 text-secondary focus:ring-secondary w-4 h-4 cursor-pointer" />
+                        <span>Tất cả</span>
+                      </label>
+                 `;
 
             // 2. Render các loại phòng từ object ROOM_CATEGORY
             html += Object.keys(ROOM_CATEGORY).map(key => {
                 return `
-                <label class="flex items-center gap-3 text-stone-500 hover:text-stone-800 transition-all cursor-pointer text-sm font-medium">
-                  <input type="radio" name="roomCategory" value="${key}"
-                    class="rounded-full border-stone-300 text-secondary focus:ring-secondary w-4 h-4 cursor-pointer" />
-                  <span>${ROOM_CATEGORY[key]}</span>
-                </label>
-              `;
+                    <label class="flex items-center gap-3 text-stone-500 hover:text-stone-800 transition-all cursor-pointer text-sm font-medium">
+                      <input type="radio" name="roomCategory" value="${key}"
+                        class="rounded-full border-stone-300 text-secondary focus:ring-secondary w-4 h-4 cursor-pointer" />
+                      <span>${ROOM_CATEGORY[key]}</span>
+                    </label>
+                  `;
             }).join('');
 
             container.innerHTML = html;

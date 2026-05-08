@@ -11,7 +11,7 @@ namespace HotelManager.Infrastructure.Repositories
 
         public async Task<IEnumerable<Rating>> GetRatingsByRoomId(int roomId)
         {
-            return await _dbSet.Where(r => r.Booking.RoomId == roomId).ToListAsync();
+            return await _dbSet.Include(r => r.Booking).ThenInclude(b => b.Account).Where(r => r.Booking.RoomId == roomId).ToListAsync();
         }
     }
 }

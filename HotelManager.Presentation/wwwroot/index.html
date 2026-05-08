@@ -249,74 +249,8 @@
             </a>
         </div>
     </main>
-
-    <footer class="w-full rounded-t-3xl mt-24 bg-surface-container-low text-primary font-body">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-16 py-20 max-w-screen-2xl mx-auto">
-            <div class="col-span-1 md:col-span-1 space-y-6">
-                <h3 class="text-xl font-headline text-primary">
-                    The Editorial Concierge
-                </h3>
-                <p class="text-on-surface-variant text-sm leading-relaxed">
-                    Định nghĩa lại sự sang trọng thông qua những trải nghiệm được chọn
-                    lọc kỹ lưỡng và dịch vụ tận tâm.
-                </p>
-                <div class="flex gap-4">
-                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#">
-                        <span class="material-symbols-outlined text-xl">social_leaderboard</span>
-                    </a>
-                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#">
-                        <span class="material-symbols-outlined text-xl">photo_camera</span>
-                    </a>
-                    <a class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary hover:bg-secondary hover:text-white transition-all" href="#">
-                        <span class="material-symbols-outlined text-xl">play_circle</span>
-                    </a>
-                </div>
-            </div>
-            <div class="space-y-6">
-                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">
-                    Khám phá
-                </h4>
-                <ul class="space-y-4 text-sm text-on-surface-variant">
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Các hạng phòng</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Trải nghiệm ẩm thực</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Chương trình thành viên</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Thư viện hình ảnh</a></li>
-                </ul>
-            </div>
-            <div class="space-y-6">
-                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">
-                    Công ty
-                </h4>
-                <ul class="space-y-4 text-sm text-on-surface-variant">
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Privacy Policy</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Terms of Service</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Sustainability</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Press</a></li>
-                    <li><a class="hover:text-primary hover:underline transition-all" href="#">Careers</a></li>
-                </ul>
-            </div>
-            <div class="space-y-6">
-                <h4 class="font-bold text-sm tracking-widest uppercase text-secondary">
-                    Liên hệ
-                </h4>
-                <p class="text-sm text-on-surface-variant leading-relaxed">
-                    123 Đường Editorial, Quận 1,<br />
-                    Thành phố Hồ Chí Minh, Việt Nam<br />
-                    <br />
-                    T: +84 (0) 28 3824 1234<br />
-                    E: concierge@editorial.com
-                </p>
-            </div>
-        </div>
-        <div class="px-16 py-8 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-center text-xs text-on-surface-variant gap-4">
-            <p>© 2024 The Editorial Concierge. All rights reserved.</p>
-            <div class="flex gap-8">
-                <a class="hover:text-primary" href="#">Chính sách bảo mật</a>
-                <a class="hover:text-primary" href="#">Điều khoản sử dụng</a>
-                <a class="hover:text-primary" href="#">Sơ đồ trang web</a>
-            </div>
-        </div>
-    </footer>
+    <div id="footer-placeholder"></div>
+    <script src="/js/footer.js"></script>
 
     <script src="/js/header.js"></script>
 
@@ -424,57 +358,57 @@
                 const statusInfo = getStatusInfo(room.roomStatus);
                 const priceFormatted = (room.pricePerNight || 0).toLocaleString('vi-VN');
                 return `
-              <div class="group bg-surface-container-lowest rounded-xl overflow-hidden editorial-shadow transition-transform hover:-translate-y-2">
-                <div class="aspect-[4/3] relative">
-                  <img
-                    class="w-full h-full object-cover"
-                    alt="${room.name}"
-                    src="${room.thumbnailUrl || 'https://via.placeholder.com/400x300'}"
-                  />
-                  <div class="absolute top-4 left-4 ${getCategoryColor(room.category)} px-3 py-1 rounded-full text-xs font-semibold tracking-wider">
-                    ${categoryLabel}
-                  </div>
-                  <div class="absolute top-4 right-4 ${statusInfo.color} px-3 py-1 rounded-full text-xs font-semibold tracking-wider">
-                    ${statusInfo.label}
-                  </div>
-                </div>
-                <div class="p-8 space-y-4">
-                  <div class="flex justify-between items-center">
-                    <h3 class="font-headline text-2xl text-primary">
-                      ${room.name}
-                    </h3>
-                    <div class="flex items-center gap-1 text-secondary">
-                      <span
-                        class="material-symbols-outlined text-sm"
-                        style="font-variation-settings: 'FILL' 1"
-                      >star</span>
-                      <span class="text-sm font-bold">${(room.averageStar || 0).toFixed(1)}</span>
+                  <div class="group bg-surface-container-lowest rounded-xl overflow-hidden editorial-shadow transition-transform hover:-translate-y-2">
+                    <div class="aspect-[4/3] relative">
+                      <img
+                        class="w-full h-full object-cover"
+                        alt="${room.name}"
+                        src="${room.thumbnailUrl || 'https://via.placeholder.com/400x300'}"
+                      />
+                      <div class="absolute top-4 left-4 ${getCategoryColor(room.category)} px-3 py-1 rounded-full text-xs font-semibold tracking-wider">
+                        ${categoryLabel}
+                      </div>
+                      <div class="absolute top-4 right-4 ${statusInfo.color} px-3 py-1 rounded-full text-xs font-semibold tracking-wider">
+                        ${statusInfo.label}
+                      </div>
+                    </div>
+                    <div class="p-8 space-y-4">
+                      <div class="flex justify-between items-center">
+                        <h3 class="font-headline text-2xl text-primary">
+                          ${room.name}
+                        </h3>
+                        <div class="flex items-center gap-1 text-secondary">
+                          <span
+                            class="material-symbols-outlined text-sm"
+                            style="font-variation-settings: 'FILL' 1"
+                          >star</span>
+                          <span class="text-sm font-bold">${(room.averageStar || 0).toFixed(1)}</span>
+                        </div>
+                      </div>
+                      <div class="flex gap-4 text-on-surface-variant text-sm">
+                        <span class="flex items-center gap-1">
+                          <span class="material-symbols-outlined text-lg">person</span>
+                          ${room.capacity} người
+                        </span>
+                        <span class="flex items-center gap-1">
+                          <span class="material-symbols-outlined text-lg">info</span>
+                          ${room.totalRatingCount} đánh giá
+                        </span>
+                      </div>
+                      <p class="text-on-surface-variant text-sm line-clamp-2">${room.description || ''}</p>
+                      <div class="pt-4 border-t border-outline-variant/20 flex justify-between items-center">
+                        <span class="text-secondary text-xl font-bold">
+                          ${priceFormatted}đ
+                          <span class="text-sm font-normal text-on-surface-variant">/ đêm</span>
+                        </span>
+                        <button class="text-primary hover:text-secondary font-medium flex items-center gap-1 group" onclick="window.location.href='/room_detail.html?id=${room.id}'">
+                          Chi tiết
+                          <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">chevron_right</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  <div class="flex gap-4 text-on-surface-variant text-sm">
-                    <span class="flex items-center gap-1">
-                      <span class="material-symbols-outlined text-lg">person</span>
-                      ${room.capacity} người
-                    </span>
-                    <span class="flex items-center gap-1">
-                      <span class="material-symbols-outlined text-lg">info</span>
-                      ${room.totalRatingCount} đánh giá
-                    </span>
-                  </div>
-                  <p class="text-on-surface-variant text-sm line-clamp-2">${room.description || ''}</p>
-                  <div class="pt-4 border-t border-outline-variant/20 flex justify-between items-center">
-                    <span class="text-secondary text-xl font-bold">
-                      ${priceFormatted}đ
-                      <span class="text-sm font-normal text-on-surface-variant">/ đêm</span>
-                    </span>
-                    <button class="text-primary hover:text-secondary font-medium flex items-center gap-1 group" onclick="window.location.href='/room_detail.html?id=${room.id}'">
-                      Chi tiết
-                      <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">chevron_right</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              `;
+                  `;
             }).join('');
             roomContainer.innerHTML = roomHTML;
         }
@@ -491,36 +425,36 @@
                 const formattedPrice = new Intl.NumberFormat('vi-VN').format(service.price);
                 const categoryVi = getCategoryVietnam(service.category);
                 return `<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                  <div class="order-2 lg:order-1 space-y-6">
-                    <span
-                      class="text-secondary tracking-widest text-xs font-bold uppercase"
-                      >${categoryVi}</span
-                    >
-                    <h3 class="font-headline text-4xl text-primary leading-tight">
-                      ${service.name}
-                    </h3>
-                    <p class="text-on-surface-variant text-base leading-relaxed">
-                      ${service.description}
-                    </p>
-                    <div class="pt-4 border-t border-outline-variant/20 flex justify-between items-center">
-                      <span class="text-secondary text-xl font-bold"> ${formattedPrice}đ <span class="text-sm font-normal text-on-surface-variant">/ ${service.unit}</span></span>
+                      <div class="order-2 lg:order-1 space-y-6">
+                        <span
+                          class="text-secondary tracking-widest text-xs font-bold uppercase"
+                          >${categoryVi}</span
+                        >
+                        <h3 class="font-headline text-4xl text-primary leading-tight">
+                          ${service.name}
+                        </h3>
+                        <p class="text-on-surface-variant text-base leading-relaxed">
+                          ${service.description}
+                        </p>
+                        <div class="pt-4 border-t border-outline-variant/20 flex justify-between items-center">
+                          <span class="text-secondary text-xl font-bold"> ${formattedPrice}đ <span class="text-sm font-normal text-on-surface-variant">/ ${service.unit}</span></span>
+                        </div>
+                        <a href="/service.html#detail-${service.id}" class="border-2 border-secondary text-secondary hover:bg-secondary hover:text-white font-bold py-2.5 px-6 rounded-lg transition-all duration-300 flex items-center gap-2 group w-fit">
+                          Xem chi tiết
+                          <span class="material-symbols-outlined text-xl transition-transform group-hover:translate-x-1">chevron_right</span>
+                        </a>
+                      </div>
+                      <div
+                        class="order-1 lg:order-2 aspect-video rounded-xl overflow-hidden editorial-shadow"
+                      >
+                        <img
+                          class="w-full h-full object-cover"
+                          data-alt="luxury spa treatment room with burning candles and natural stone elements, serene atmosphere"
+                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCX8cFCDDGXTFFc9sPLMxl_HQaIgVsynWbS_AIUBuBcSIBooq0VQCZdEBYvWJ7ggLDREl4TPhpoN7AOE4OO4Igk9dmbQGSsX58UsXgyPIiDpxaPaH3sjQU6L3TNvRkrr0AS1K72GUR27uNfR9QgWSsjDKSea310vA0FCcwthBwxx8gzFB6CKH32QgmQnUypW35nEiGmT2TtFowTAkrruXGS4CnkJIsBF5x37C9ceB1ow2uxJPRKKNAA7FpE0Wa0m9oZ_Rc66Shnu1nE"
+                        />
+                      </div>
                     </div>
-                    <a href="/service.html#detail-${service.id}" class="border-2 border-secondary text-secondary hover:bg-secondary hover:text-white font-bold py-2.5 px-6 rounded-lg transition-all duration-300 flex items-center gap-2 group w-fit">
-                      Xem chi tiết
-                      <span class="material-symbols-outlined text-xl transition-transform group-hover:translate-x-1">chevron_right</span>
-                    </a>
-                  </div>
-                  <div
-                    class="order-1 lg:order-2 aspect-video rounded-xl overflow-hidden editorial-shadow"
-                  >
-                    <img
-                      class="w-full h-full object-cover"
-                      data-alt="luxury spa treatment room with burning candles and natural stone elements, serene atmosphere"
-                      src="https://lh3.googleusercontent.com/aida-public/AB6AXuCX8cFCDDGXTFFc9sPLMxl_HQaIgVsynWbS_AIUBuBcSIBooq0VQCZdEBYvWJ7ggLDREl4TPhpoN7AOE4OO4Igk9dmbQGSsX58UsXgyPIiDpxaPaH3sjQU6L3TNvRkrr0AS1K72GUR27uNfR9QgWSsjDKSea310vA0FCcwthBwxx8gzFB6CKH32QgmQnUypW35nEiGmT2TtFowTAkrruXGS4CnkJIsBF5x37C9ceB1ow2uxJPRKKNAA7FpE0Wa0m9oZ_Rc66Shnu1nE"
-                    />
-                  </div>
-                </div>
-              `;
+                  `;
             }).join('');
             serviceContainer.innerHTML = serviceHTML;
         }
