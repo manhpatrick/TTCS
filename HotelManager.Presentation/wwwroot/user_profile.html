@@ -169,14 +169,19 @@
             <h2 class="font-headline text-xl font-bold text-[#004B63]">The Curator</h2>
             <p class="text-stone-600 text-xs tracking-widest uppercase mt-1">Elite Member</p>
         </div>
-        <nav class="flex-1 font-body text-sm font-medium tracking-wide">
-            <a class="flex items-center gap-3 text-[#775a19] border-r-4 border-[#775a19] bg-stone-50 font-bold px-6 py-4 transition-all" href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-                <span class="material-symbols-outlined">dashboard</span> Thông tin cá nhân  
+        <nav class="flex-1 font-body text-sm font-medium tracking-wide" id="sidebarNav">
+            <a class="sidebar-link flex items-center gap-3 text-[#775a19] border-r-4 border-[#775a19] bg-stone-50 font-bold px-6 py-4 transition-all cursor-pointer"
+               onclick="handleSidebarClick(this); window.scrollTo({top: 0, behavior: 'smooth'})">
+                <span class="material-symbols-outlined">dashboard</span> Thông tin cá nhân
             </a>
-            <a class="flex items-center gap-3 text-stone-600 px-6 py-4 hover:bg-stone-200 transition-all" href="#bookingsSection" onclick="smoothScroll(event, 'bookingsSection')">
+
+            <a class="sidebar-link flex items-center gap-3 text-stone-600 border-r-4 border-transparent px-6 py-4 hover:bg-stone-200 transition-all cursor-pointer"
+               onclick="handleSidebarClick(this); smoothScroll(event, 'bookingsSection')">
                 <span class="material-symbols-outlined">calendar_month</span> Đặt phòng
             </a>
-            <a class="flex items-center gap-3 text-stone-600 px-6 py-4 hover:bg-stone-200 transition-all" href="#paymentSection" onclick="smoothScroll(event, 'paymentSection')">
+
+            <a class="sidebar-link flex items-center gap-3 text-stone-600 border-r-4 border-transparent px-6 py-4 hover:bg-stone-200 transition-all cursor-pointer"
+               onclick="handleSidebarClick(this); openPaymentModal()">
                 <span class="material-symbols-outlined">payments</span> Thanh toán
             </a>
         </nav>
@@ -262,16 +267,6 @@
                         <div class="absolute -bottom-10 -right-10 opacity-10">
                             <span class="material-symbols-outlined text-[160px]" style="font-variation-settings: 'FILL' 1;">bedtime</span>
                         </div>
-                    </div>
-
-                    <div id="paymentSection" class="bg-surface-container-lowest p-8 rounded-xl shadow-sm scroll-mt-24">
-                        <h3 class="text-xl font-headline text-primary mb-6">Thanh toán & Hóa đơn</h3>
-
-                        <div id="paymentList" class="space-y-6">
-                            <p class="text-on-surface-variant text-sm">Đang tải lịch sử thanh toán...</p>
-                        </div>
-
-                        <button class="w-full mt-8 text-secondary text-sm font-semibold underline underline-offset-4 hover:text-primary transition-colors">Tải tất cả hóa đơn</button>
                     </div>
 
                     <div class="bg-gradient-to-br from-stone-50 to-stone-200 p-8 rounded-xl border border-white/50">
@@ -458,12 +453,33 @@
             </div>
         </form>
     </div>
+    <div id="paymentModal" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-surface w-[95%] max-w-2xl rounded-2xl p-8 z-[70] hidden shadow-2xl max-h-[85vh] overflow-y-auto custom-scrollbar transition-all duration-300">
+        <div class="flex justify-between items-start mb-6">
+            <div>
+                <h3 class="text-2xl font-headline text-primary mb-1">Lịch sử thanh toán</h3>
+                <p class="text-on-surface-variant text-sm font-body">Danh sách các giao dịch đã thực hiện qua VNPAY</p>
+            </div>
+            <button onclick="closeAllModals()" class="text-on-surface-variant hover:text-error transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+
+        <div id="paymentModalList" class="space-y-4 font-body">
+            <p class="text-center py-10 text-on-surface-variant">Đang tải dữ liệu...</p>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-surface-container flex justify-end">
+            <button onclick="closeAllModals()" class="px-6 py-2.5 bg-surface-container-high text-primary rounded-lg text-sm font-bold hover:bg-surface-container-highest transition-all">
+                Đóng
+            </button>
+        </div>
+    </div>
 
     <div class="md:hidden fixed bottom-6 left-6 right-6 z-50">
         <div class="bg-surface-container-lowest/80 backdrop-blur-xl border border-outline-variant/10 shadow-2xl p-4 rounded-full flex justify-around items-center px-8">
             <span class="material-symbols-outlined text-primary cursor-pointer" style="font-variation-settings: 'FILL' 1;" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">dashboard</span>
 
-            <div class="bg-primary p-3 rounded-full -mt-12 shadow-lg shadow-primary/40 cursor-pointer" onclick="smoothScroll(event, 'paymentSection')">
+            <div class="bg-primary p-3 rounded-full -mt-12 shadow-lg shadow-primary/40 cursor-pointer" onclick="openPaymentModal()">
                 <span class="material-symbols-outlined text-white">payments</span>
             </div>
 
@@ -533,60 +549,60 @@
             const authContainer = document.getElementById('authContainer');
             if (!isLogin) {
                 authContainer.innerHTML = `
-                  <a href="/user_auth.html#signin"
-                    class="text-primary/70 hover:text-primary font-medium transition-all duration-300"
-                  >
-                    Đăng nhập
-                  </a>
-                  <a href="/user_auth.html#signup"
-                    class="bg-gradient-to-r from-primary to-primary-container text-white px-6 py-2.5 rounded-lg font-medium shadow-lg active:scale-95 transition-all"
-                  >
-                    Đăng ký
-                  </a>
-                `;
+                          <a href="/user_auth.html#signin"
+                            class="text-primary/70 hover:text-primary font-medium transition-all duration-300"
+                          >
+                            Đăng nhập
+                          </a>
+                          <a href="/user_auth.html#signup"
+                            class="bg-gradient-to-r from-primary to-primary-container text-white px-6 py-2.5 rounded-lg font-medium shadow-lg active:scale-95 transition-all"
+                          >
+                            Đăng ký
+                          </a>
+                        `;
             } else {
                 authContainer.innerHTML = `
-                  <div class="flex items-center gap-6 relative">
-                    <div class="flex items-center gap-4">
-                      <button id="userMenuBtn" class="flex items-center gap-2 group focus:outline-none">
-                        <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/10 group-hover:border-secondary transition-all">
-                          <img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD34i7k1w4t-x06-tI0kZ8R7YF_8y_P2k9pYyYyYyYyYyYyYyYyYyYy"/>
-                        </div>
-                        <div class="flex flex-col items-start hidden sm:flex">
-                          <span class="text-sm font-semibold text-primary font-body">${localStorage.getItem('demo_auth_user') || 'Người dùng'}</span>
-                          <span class="text-[10px] text-on-surface-variant font-medium tracking-wider uppercase">Thành viên Gold</span>
-                        </div>
-                        <span class="material-symbols-outlined text-primary/60 group-hover:text-secondary transition-colors">expand_more</span>
-                      </button>
-                    </div>
-                    <div id="userDropdown" class="absolute top-full right-0 mt-3 w-64 bg-surface rounded-xl editorial-shadow border border-outline-variant/20 opacity-0 invisible translate-y-2 transition-all duration-300 z-50 overflow-hidden">
-                      <div class="px-5 py-4 border-b border-outline-variant/10 md:hidden bg-surface-container-low">
-                        <p class="text-base font-semibold text-primary font-headline">${localStorage.getItem('demo_auth_user') || 'Người dùng'}</p>
-                        <p class="text-xs uppercase tracking-widest text-secondary font-bold mt-1">Thành viên Gold</p>
-                      </div>
-                      <div class="p-2 space-y-1">
-                        <a href="/user_profile.html" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
-                          <span class="material-symbols-outlined text-[20px]">person</span>
-                          Hồ sơ cá nhân
-                        </a>
-                        <a href="/booking.html" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
-                          <span class="material-symbols-outlined text-[20px]">book_online</span>
-                          Quản lý đặt phòng
-                        </a>
-                        <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
-                          <span class="material-symbols-outlined text-[20px]">loyalty</span>
-                          Đặc quyền Gold
-                        </a>
-                      </div>
-                      <div class="border-t border-outline-variant/10 p-2 bg-surface-container-lowest">
-                        <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-error hover:bg-error-container/30 rounded-lg transition-colors text-left font-medium">
-                          <span class="material-symbols-outlined text-[20px]">logout</span>
-                          Đăng xuất
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                `;
+                          <div class="flex items-center gap-6 relative">
+                            <div class="flex items-center gap-4">
+                              <button id="userMenuBtn" class="flex items-center gap-2 group focus:outline-none">
+                                <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/10 group-hover:border-secondary transition-all">
+                                  <img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD34i7k1w4t-x06-tI0kZ8R7YF_8y_P2k9pYyYyYyYyYyYyYyYyYyYy"/>
+                                </div>
+                                <div class="flex flex-col items-start hidden sm:flex">
+                                  <span class="text-sm font-semibold text-primary font-body">${localStorage.getItem('demo_auth_user') || 'Người dùng'}</span>
+                                  <span class="text-[10px] text-on-surface-variant font-medium tracking-wider uppercase">Thành viên Gold</span>
+                                </div>
+                                <span class="material-symbols-outlined text-primary/60 group-hover:text-secondary transition-colors">expand_more</span>
+                              </button>
+                            </div>
+                            <div id="userDropdown" class="absolute top-full right-0 mt-3 w-64 bg-surface rounded-xl editorial-shadow border border-outline-variant/20 opacity-0 invisible translate-y-2 transition-all duration-300 z-50 overflow-hidden">
+                              <div class="px-5 py-4 border-b border-outline-variant/10 md:hidden bg-surface-container-low">
+                                <p class="text-base font-semibold text-primary font-headline">${localStorage.getItem('demo_auth_user') || 'Người dùng'}</p>
+                                <p class="text-xs uppercase tracking-widest text-secondary font-bold mt-1">Thành viên Gold</p>
+                              </div>
+                              <div class="p-2 space-y-1">
+                                <a href="/user_profile.html" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
+                                  <span class="material-symbols-outlined text-[20px]">person</span>
+                                  Hồ sơ cá nhân
+                                </a>
+                                <a href="/booking.html" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
+                                  <span class="material-symbols-outlined text-[20px]">book_online</span>
+                                  Quản lý đặt phòng
+                                </a>
+                                <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
+                                  <span class="material-symbols-outlined text-[20px]">loyalty</span>
+                                  Đặc quyền Gold
+                                </a>
+                              </div>
+                              <div class="border-t border-outline-variant/10 p-2 bg-surface-container-lowest">
+                                <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-error hover:bg-error-container/30 rounded-lg transition-colors text-left font-medium">
+                                  <span class="material-symbols-outlined text-[20px]">logout</span>
+                                  Đăng xuất
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        `;
                 setTimeout(() => {
                     const userMenuBtn = document.getElementById('userMenuBtn');
                     const userDropdown = document.getElementById('userDropdown');
@@ -673,40 +689,40 @@
             const isFemale = profile.gender === 'Nữ' || profile.gender === 'Female' || profile.gender === 2;
             const displayFullName = profile.name === "Người dùng mới" ? "" : profile.name;
             profileContainer.innerHTML = `
-                <div class="space-y-1">
-                  <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Họ và Tên</label>
-                  <input name="name" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Nhập họ và tên của bạn" value="${displayFullName}" />        </div>
-                <div class="space-y-1">
-                  <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Số điện thoại</label>
-                  <input name="phone" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Số điện thoại của bạn" value="${profile.phone || ''}" />
-                </div>
-                <div class="space-y-1">
-                  <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Ngày sinh</label>
-                  <input name="birthDay" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="date" value="${formatDateForInput(profile.birthDay)}" />
-                </div>
-                <div class="space-y-1">
-                  <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Giới tính</label>
-                  <select name="gender" class="profile-input w-full bg-surface-container-low border-transparent rounded-lg focus:ring-0 text-on-surface font-medium transition-all appearance-none pointer-events-none" disabled>
-                    <option value="" disabled ${!profile.gender ? 'selected' : ''} class="text-on-surface-variant">Chọn giới tính</option>
-                    <option value="1" ${isMale ? 'selected' : ''}>Nam</option>
-                    <option value="2" ${isFemale ? 'selected' : ''}>Nữ</option>
-                    <option value="3" ${!isMale && !isFemale && profile.gender ? 'selected' : ''}>Khác</option>
-                  </select>
-                </div>
-                <div class="md:col-span-2 space-y-1">
-                  <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Địa chỉ</label>
-                  <input name="address" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Hãy cập nhật địa chỉ" value="${profile.address || ''}" />
-                </div>
+                        <div class="space-y-1">
+                          <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Họ và Tên</label>
+                          <input name="name" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Nhập họ và tên của bạn" value="${displayFullName}" />        </div>
+                        <div class="space-y-1">
+                          <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Số điện thoại</label>
+                          <input name="phone" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Số điện thoại của bạn" value="${profile.phone || ''}" />
+                        </div>
+                        <div class="space-y-1">
+                          <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Ngày sinh</label>
+                          <input name="birthDay" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="date" value="${formatDateForInput(profile.birthDay)}" />
+                        </div>
+                        <div class="space-y-1">
+                          <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Giới tính</label>
+                          <select name="gender" class="profile-input w-full bg-surface-container-low border-transparent rounded-lg focus:ring-0 text-on-surface font-medium transition-all appearance-none pointer-events-none" disabled>
+                            <option value="" disabled ${!profile.gender ? 'selected' : ''} class="text-on-surface-variant">Chọn giới tính</option>
+                            <option value="1" ${isMale ? 'selected' : ''}>Nam</option>
+                            <option value="2" ${isFemale ? 'selected' : ''}>Nữ</option>
+                            <option value="3" ${!isMale && !isFemale && profile.gender ? 'selected' : ''}>Khác</option>
+                          </select>
+                        </div>
+                        <div class="md:col-span-2 space-y-1">
+                          <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Địa chỉ</label>
+                          <input name="address" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Hãy cập nhật địa chỉ" value="${profile.address || ''}" />
+                        </div>
 
-                <div id="actionButtons" class="md:col-span-2 flex justify-end gap-3 mt-4 hidden">
-                  <button type="button" onclick="toggleEditMode(false)" class="px-5 py-2 rounded-lg font-medium text-on-surface-variant hover:bg-surface-container transition-colors">
-                    Hủy
-                  </button>
-                  <button type="submit" class="px-5 py-2 rounded-lg font-medium bg-primary text-white hover:bg-primary/90 shadow-md transition-colors">
-                    Lưu thay đổi
-                  </button>
-                </div>
-              `;
+                        <div id="actionButtons" class="md:col-span-2 flex justify-end gap-3 mt-4 hidden">
+                          <button type="button" onclick="toggleEditMode(false)" class="px-5 py-2 rounded-lg font-medium text-on-surface-variant hover:bg-surface-container transition-colors">
+                            Hủy
+                          </button>
+                          <button type="submit" class="px-5 py-2 rounded-lg font-medium bg-primary text-white hover:bg-primary/90 shadow-md transition-colors">
+                            Lưu thay đổi
+                          </button>
+                        </div>
+                      `;
         }
 
         window.toggleEditMode = function (isEditing) {
@@ -816,6 +832,18 @@
                 target.scrollIntoView({ behavior: 'smooth' });
             }
         }
+        function handleSidebarClick(clickedElement) {
+            // 1. Lấy tất cả các menu item
+            const links = document.querySelectorAll('.sidebar-link');
+
+            // 2. Trả tất cả về trạng thái chưa được chọn (màu xám, không viền)
+            links.forEach(link => {
+                link.className = "sidebar-link flex items-center gap-3 text-stone-600 border-r-4 border-transparent px-6 py-4 hover:bg-stone-200 transition-all cursor-pointer";
+            });
+
+            // 3. Set trạng thái đang chọn (màu vàng, có viền, in đậm) cho thẻ vừa click
+            clickedElement.className = "sidebar-link flex items-center gap-3 text-[#775a19] border-r-4 border-[#775a19] bg-stone-50 font-bold px-6 py-4 transition-all cursor-pointer";
+        }
 
         // Hàm phụ trợ lấy text trạng thái
         function getBookingStatusText(statusCode) {
@@ -898,35 +926,35 @@
 
 
                 html += `
-              <div class="group flex flex-col md:flex-row bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
-                <div class="w-full md:w-64 h-48 md:h-auto overflow-hidden relative">
-                  <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="${image}" alt="Room Image" />
-                  <div class="absolute top-4 left-4">
-                    <span class="bg-primary text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">${statusName}</span>
-                  </div>
-                </div>
-                <div class="p-8 flex-1 flex flex-col justify-between">
-                  <div>
-                    <div class="flex justify-between items-start mb-2">
-                      <h3 class="text-xl font-headline text-primary">${roomName}</h3>
-                      <p class="text-secondary font-bold font-body">${priceStr}</p>
-                    </div>
-                    <div class="flex gap-4 text-sm text-on-surface-variant mb-6 font-body">
-                      <div class="flex items-center gap-1">
-                        <span class="material-symbols-outlined text-sm">calendar_today</span> ${checkIn} — ${checkOut}
+                      <div class="group flex flex-col md:flex-row bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                        <div class="w-full md:w-64 h-48 md:h-auto overflow-hidden relative">
+                          <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="${image}" alt="Room Image" />
+                          <div class="absolute top-4 left-4">
+                            <span class="bg-primary text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">${statusName}</span>
+                          </div>
+                        </div>
+                        <div class="p-8 flex-1 flex flex-col justify-between">
+                          <div>
+                            <div class="flex justify-between items-start mb-2">
+                              <h3 class="text-xl font-headline text-primary">${roomName}</h3>
+                              <p class="text-secondary font-bold font-body">${priceStr}</p>
+                            </div>
+                            <div class="flex gap-4 text-sm text-on-surface-variant mb-6 font-body">
+                              <div class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">calendar_today</span> ${checkIn} — ${checkOut}
+                              </div>
+                              <div class="flex items-center gap-1">
+                                <span class="material-symbols-outlined text-sm">fact_check</span> ${statusName}
+                              </div>
+                            </div>
+                          </div>
+                          <div class="flex gap-4">
+                            <button type="button" onclick="openDetailModal(${bookingId})" class="flex-1 bg-gradient-to-r from-primary to-primary-container text-white py-3 rounded-lg text-sm font-bold tracking-wide hover:shadow-lg transition-all">Chi tiết</button>
+                            ${reviewButtonHtml}
+                          </div>
+                        </div>
                       </div>
-                      <div class="flex items-center gap-1">
-                        <span class="material-symbols-outlined text-sm">fact_check</span> ${statusName}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex gap-4">
-                    <button type="button" onclick="openDetailModal(${bookingId})" class="flex-1 bg-gradient-to-r from-primary to-primary-container text-white py-3 rounded-lg text-sm font-bold tracking-wide hover:shadow-lg transition-all">Chi tiết</button>
-                    ${reviewButtonHtml}
-                  </div>
-                </div>
-              </div>
-            `;
+                    `;
             });
 
             bookingsContainer.innerHTML = html;
@@ -969,15 +997,15 @@
                 else if (pay.status === 2) { statusText = 'Thất bại'; statusStyle = 'text-error'; }
 
                 return `
-                <div class="flex justify-between items-start border-b border-surface-container pb-4">
-                    <div>
-                        <p class="text-sm font-bold text-on-surface">Mã đơn: ${pay.orderCode || pay.id}</p>
-                        <p class="text-xs text-on-surface-variant font-body">${formatDateTime(pay.createdAt)}</p>
-                        <p class="text-[10px] font-bold uppercase ${statusStyle}">${statusText}</p>
-                    </div>
-                    <p class="text-sm font-bold text-primary">${pay.amount.toLocaleString('vi-VN')}đ</p>
-                </div>
-            `;
+                        <div class="flex justify-between items-start border-b border-surface-container pb-4">
+                            <div>
+                                <p class="text-sm font-bold text-on-surface">Mã đơn: ${pay.orderCode || pay.id}</p>
+                                <p class="text-xs text-on-surface-variant font-body">${formatDateTime(pay.createdAt)}</p>
+                                <p class="text-[10px] font-bold uppercase ${statusStyle}">${statusText}</p>
+                            </div>
+                            <p class="text-sm font-bold text-primary">${pay.amount.toLocaleString('vi-VN')}đ</p>
+                        </div>
+                    `;
             }).join('');
         }
 
@@ -986,17 +1014,15 @@
             setActiveNavLink();
             renderUserProfile();
             renderBookings();
-            renderPayments();
         });
 
         // === XỬ LÝ MODAL ===
         function closeAllModals() {
             document.getElementById('modalBackdrop').classList.add('hidden');
-            const detailModal = document.getElementById('detailModal');
-            if (detailModal) detailModal.classList.add('hidden');
-
-            const ratingModal = document.getElementById('ratingModal');
-            if (ratingModal) ratingModal.classList.add('hidden');
+            if (document.getElementById('detailModal')) document.getElementById('detailModal').classList.add('hidden');
+            if (document.getElementById('ratingModal')) document.getElementById('ratingModal').classList.add('hidden');
+            // THÊM DÒNG NÀY
+            if (document.getElementById('paymentModal')) document.getElementById('paymentModal').classList.add('hidden');
         }
 
         function openDetailModal(bookingId) {
@@ -1041,9 +1067,9 @@
 
                     // Hiển thị: Tên dịch vụ (xSố lượng) - Giá tiền
                     return `<li class="flex justify-between items-center border-b border-outline-variant/10 pb-1 last:border-0">
-                  <span>• ${name} <span class="text-xs text-on-surface-variant">(x${quantity})</span></span>
-                  <span class="font-bold">${(price * quantity).toLocaleString('vi-VN')}đ</span>
-                </li>`;
+                          <span>• ${name} <span class="text-xs text-on-surface-variant">(x${quantity})</span></span>
+                          <span class="font-bold">${(price * quantity).toLocaleString('vi-VN')}đ</span>
+                        </li>`;
                 }).join('');
             } else {
                 servicesContainer.classList.add('hidden');
@@ -1135,6 +1161,61 @@
                 msgBox.innerText = error.message || "Có lỗi xảy ra khi gửi đánh giá. Vui lòng thử lại!";
                 msgBox.classList.remove('hidden');
             }
+        }
+        function openPaymentModal() {
+            // 1. Hiển thị lớp nền và modal
+            document.getElementById('modalBackdrop').classList.remove('hidden');
+            document.getElementById('paymentModal').classList.remove('hidden');
+
+            // 2. Gọi hàm đổ dữ liệu vào modal
+            renderPaymentsInModal();
+        }
+
+        async function renderPaymentsInModal() {
+            const container = document.getElementById('paymentModalList');
+            if (!container) return;
+
+            // Sử dụng hàm fetchPayments bạn đã có để lấy dữ liệu từ BE
+            const payments = await fetchPayments();
+
+            if (!payments || payments.length === 0) {
+                container.innerHTML = `
+            <div class="text-center py-12 bg-surface-container-low rounded-xl border border-dashed border-outline-variant/50">
+                <span class="material-symbols-outlined text-4xl text-outline-variant mb-2">payments</span>
+                <p class="text-on-surface-variant text-sm">Bạn chưa thực hiện giao dịch nào.</p>
+            </div>`;
+                return;
+            }
+
+            container.innerHTML = payments.map(pay => {
+                // Map trạng thái theo Enum PaymentStatus
+                // 1: Success, 2: Failed, 3: Pending
+                let statusBadge = '';
+                if (pay.status === 1) {
+                    statusBadge = `<span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-[10px] font-bold uppercase">Thành công</span>`;
+                } else if (pay.status === 2) {
+                    statusBadge = `<span class="bg-error-container text-error px-2 py-0.5 rounded text-[10px] font-bold uppercase">Thất bại</span>`;
+                } else {
+                    statusBadge = `<span class="bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase">Chờ xử lý</span>`;
+                }
+
+                return `
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 bg-surface-container-low rounded-xl border border-outline-variant/10 hover:bg-surface-container transition-colors">
+                <div class="space-y-1 mb-2 sm:mb-0">
+                    <div class="flex items-center gap-2">
+                        <p class="text-sm font-bold text-primary">Mã: ${pay.orderCode || pay.id}</p>
+                        ${statusBadge}
+                    </div>
+                    <p class="text-xs text-on-surface-variant font-medium">
+                        Ngày thanh toán: ${formatDateTime(pay.createdAt || pay.paymentDate)}
+                    </p>
+                </div>
+                <div class="text-right w-full sm:w-auto border-t sm:border-0 pt-2 sm:pt-0">
+                    <p class="text-lg font-display font-bold text-secondary">${pay.amount.toLocaleString('vi-VN')}đ</p>
+                </div>
+            </div>
+        `;
+            }).join('');
         }
     </script>
 

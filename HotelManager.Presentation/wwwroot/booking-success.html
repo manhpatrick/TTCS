@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html class="light" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán thành công | The Editorial Concierge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+
+        h1 {
+            font-family: 'Noto Serif', serif;
+        }
+    </style>
+</head>
+<body class="bg-[#faf9f8] min-h-screen flex items-center justify-center p-6">
+    <div class="max-w-md w-full bg-white rounded-3xl shadow-2xl p-10 text-center border border-gray-100">
+        <div class="mb-6 flex justify-center">
+            <div class="w-24 h-24 bg-emerald-100 rounded-full flex items-center justify-center shadow-inner">
+                <span class="material-symbols-outlined text-emerald-600" style="font-size: 48px; font-variation-settings: 'FILL' 1;">check_circle</span>
+            </div>
+        </div>
+
+        <h1 class="text-3xl font-bold text-[#003345] mb-4">Thanh toán thành công!</h1>
+        <p class="text-stone-500 mb-8 leading-relaxed text-sm">
+            Cảm ơn bạn đã tin tưởng The Editorial Concierge. Đơn đặt phòng của bạn đã được xác nhận và thanh toán hoàn tất.
+        </p>
+
+        <div class="bg-emerald-50 text-emerald-800 rounded-2xl p-4 mb-8 text-sm font-medium border border-emerald-100">
+            Hóa đơn chi tiết đã được cập nhật trong hồ sơ của bạn.
+        </div>
+
+        <button onclick="window.location.href='/user_profile.html'"
+                class="w-full bg-[#003345] text-white py-4 rounded-xl font-bold text-sm tracking-widest hover:bg-[#004b63] transition-all shadow-lg active:scale-95 uppercase">
+            OK - Xem đơn hàng
+        </button>
+    </div>
+
+    <script>
+        // Xóa dữ liệu đặt phòng tạm thời khỏi SessionStorage sau khi thanh toán xong
+        document.addEventListener('DOMContentLoaded', () => {
+            sessionStorage.removeItem('roomBookingData');
+            sessionStorage.removeItem('serviceBookingData');
+        });
+    </script>
+</body>
+</html>

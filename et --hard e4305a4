@@ -1,0 +1,33 @@
+[33me571156[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m update header
+[33me4305a4[m update list booking and payment in user profile
+[33mf170077[m update pagination and select category , sort service
+[33m833ea32[m update Pagination and sort or select category room
+[33maaec6be[m update sort and select category service and room fr
+[33m3bfae9b[m Merge branch 'main' of https://github.com/datgiaodau/HotelManager_TTCS
+[33maa0b3b2[m update booking, payment notification, service
+[33m5d9f3b8[m Remove setup section from README
+[33mee55c2b[m update notification, create feedback
+[33m2c0ef16[m update range view available time of room
+[33mf2a86a8[m update time booking and available day
+[33md4a25c8[m update payment booking
+[33m28c9497[m delete the second addimage method in entity room
+[33mf53f36a[m update service add and remove edit image of room
+[33m03b68df[m update image room
+[33m9a22432[m update images to Room
+[33mf8c864d[m update payment be
+[33m75c448e[m update booking fe
+[33mbdd312a[m update booking be and fe, disable booked date
+[33m8c21660[m update fullname user in index page
+[33m2364705[m update update profile user
+[33m378a2fb[m Merge pull request #2 from datgiaodau/fe-update-api-guests
+[33mc3187a2[m[33m ([m[1;31morigin/fe-update-api-guests[m[33m)[m chore: clean build artifacts and update project code
+[33m766fcc6[m feat: update models, api responses, and migrations for FE integration
+[33ma91832c[m merge: sync latest main into fe-update-api-guests
+[33m6c0da1a[m FE update and added API for guests
+[33m43f67a1[m update room list and rating of room
+[33m4e723b7[m update listroom and rating of room
+[33me035583[m create
+[33ma3390aa[m create pj
+[33m4b1bd05[m Merge pull request #1 from datgiaodau/datpt
+[33m2cd5e8c[m[33m ([m[1;31morigin/datpt[m[33m)[m Create Project
+[33m1253f9f[m[33m ([m[1;31morigin/dat[m[33m)[m Create Project

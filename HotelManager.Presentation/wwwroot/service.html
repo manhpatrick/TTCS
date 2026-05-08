@@ -314,46 +314,76 @@
     }, 2200);
   }
 
-  function checkLoginStatus() {
-    const token = getAuthToken();
-    const authContainer = document.getElementById('authContainer');
-    if (!token) {
-      authContainer.innerHTML = `
-        <a href="/user_auth.html#signin" class="text-primary/70 hover:text-primary font-medium transition-all duration-300">Đăng nhập</a>
-        <a href="/user_auth.html#signup" class="bg-[#003345] text-white px-6 py-2.5 rounded-lg font-bold shadow-md hover:bg-opacity-90 active:scale-95 transition-all">Đăng ký</a>
-      `;
-    } else {
-      authContainer.innerHTML = `
-        <div class="flex items-center gap-6 relative">
-          <button id="userMenuBtn" class="flex items-center gap-2 group focus:outline-none">
-            <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/10 group-hover:border-[#775a19] transition-all">
-              <img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD34i7k1w4t-x06-tI0kZ8R7YF_8y_P2k9pYyYyYyYyYyYyYyYyYyYy"/>
-            </div>
-            <div class="flex flex-col items-start hidden sm:flex">
-              <span class="text-sm font-bold text-primary font-body">${localStorage.getItem('demo_auth_user') || 'Người dùng'}</span>
-              <span class="text-[10px] text-secondary font-bold tracking-wider uppercase">Thành viên Gold</span>
-            </div>
-            <span class="material-symbols-outlined text-primary/60 group-hover:text-secondary transition-colors">expand_more</span>
-          </button>
-          <div id="userDropdown" class="absolute top-full right-0 mt-3 w-64 bg-white rounded-xl shadow-xl border border-stone-100 opacity-0 invisible translate-y-2 transition-all duration-300 z-50 overflow-hidden">
-            <div class="p-2 space-y-1">
-              <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors text-left font-bold">
-                <span class="material-symbols-outlined text-[20px]">logout</span> Đăng xuất
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-      setTimeout(() => {
-        const btn = document.getElementById('userMenuBtn');
-        const drop = document.getElementById('userDropdown');
-        if (btn && drop) {
-          btn.onclick = (e) => { e.stopPropagation(); drop.classList.toggle('opacity-0'); drop.classList.toggle('invisible'); drop.classList.toggle('translate-y-2'); };
-          document.onclick = () => { drop.classList.add('opacity-0', 'invisible', 'translate-y-2'); };
+    function checkLoginStatus() {
+        const token = getAuthToken();
+        const isLogin = Boolean(token);
+        const authContainer = document.getElementById('authContainer');
+        if (!authContainer) return;
+
+        if (!isLogin) {
+            authContainer.innerHTML = `
+      <a href="/user_auth.html#signin" class="text-primary/70 hover:text-primary font-medium transition-all duration-300">Đăng nhập</a>
+      <a href="/user_auth.html#signup" class="bg-gradient-to-r from-primary to-primary-container text-white px-6 py-2.5 rounded-lg font-medium shadow-lg active:scale-95 transition-all">Đăng ký</a>
+    `;
+            return;
         }
-      }, 0);
+
+        authContainer.innerHTML = `
+    <div class="flex items-center gap-6 relative">
+      <div class="flex items-center gap-4">
+        <button id="userMenuBtn" class="flex items-center gap-2 group focus:outline-none">
+          <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/10 group-hover:border-secondary transition-all">
+            <img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD34i7k1w4t-x06-tI0kZ8R7YF_8y_P2k9pYyYyYyYyYyYyYyYyYyYy"/>
+          </div>
+          <div class="flex flex-col items-start hidden sm:flex">
+            <span class="text-sm font-semibold text-primary font-body">${localStorage.getItem('demo_auth_user') || 'Người dùng'}</span>
+            <span class="text-[10px] text-on-surface-variant font-medium tracking-wider uppercase">Thành viên Gold</span>
+          </div>
+          <span class="material-symbols-outlined text-primary/60 group-hover:text-secondary transition-colors">expand_more</span>
+        </button>
+      </div>
+      <div id="userDropdown" class="absolute top-full right-0 mt-3 w-64 bg-surface rounded-xl shadow-[0_32px_64px_rgba(26,28,28,0.06)] border border-outline-variant/20 opacity-0 invisible translate-y-2 transition-all duration-300 z-50 overflow-hidden">
+        <div class="p-2 space-y-1">
+          <a href="/user_profile.html" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
+            <span class="material-symbols-outlined text-[20px]">person</span>
+            Hồ sơ cá nhân
+          </a>
+          <a href="/booking.html" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
+            <span class="material-symbols-outlined text-[20px]">book_online</span>
+            Quản lý đặt phòng
+          </a>
+          <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
+            <span class="material-symbols-outlined text-[20px]">loyalty</span>
+            Đặc quyền Gold
+          </a>
+        </div>
+        <div class="border-t border-outline-variant/10 p-2 bg-surface-container-lowest">
+          <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-error hover:bg-error-container/30 rounded-lg transition-colors text-left font-medium">
+            <span class="material-symbols-outlined text-[20px]">logout</span>
+            Đăng xuất
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+        setTimeout(() => {
+            const userMenuBtn = document.getElementById('userMenuBtn');
+            const userDropdown = document.getElementById('userDropdown');
+            if (userMenuBtn && userDropdown) {
+                userMenuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    userDropdown.classList.toggle('opacity-0');
+                    userDropdown.classList.toggle('invisible');
+                    userDropdown.classList.toggle('translate-y-2');
+                });
+
+                document.addEventListener('click', () => {
+                    userDropdown.classList.add('opacity-0', 'invisible', 'translate-y-2');
+                });
+            }
+        }, 0);
     }
-  }
 
   function handleLogout() { 
     localStorage.removeItem('userToken'); 
