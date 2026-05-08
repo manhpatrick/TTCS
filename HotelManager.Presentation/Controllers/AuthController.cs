@@ -32,5 +32,33 @@ namespace HotelManager.Presentation.Controllers
         {
             return Ok(await _authService.Login(dto));
         }
+
+        [HttpPost("forgot-password/send-otp")]
+        public async Task<IActionResult> SendOtp([FromBody] SendOtpRequest request)
+        {
+            try
+            {
+                var result = await _authService.SendOtpAsync(request.Email);
+                return Ok(new { success = true, message = "OTP đã được gửi thành công." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpPost("forgot-password/verify-otp")]
+        public async Task<IActionResult> VerifyOtp([FromBody] VerifyOtpRequest request)
+        {
+            try
+            {
+                var result = await _authService.ResetPasswordWithOtpAsync(request);
+                return Ok(new { success = true, message = "Đổi mật khẩu thành công." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
+        }
     }
 }

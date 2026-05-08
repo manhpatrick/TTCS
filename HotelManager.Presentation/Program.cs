@@ -66,6 +66,7 @@ namespace HotelManager.Presentation
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure();
             builder.Services.AddHostedService<BookingStatusUpdateService>();
+            builder.Services.AddMemoryCache();
             builder.Services.AddCors(option =>
             {
                 option.AddPolicy("AllowReactApp",

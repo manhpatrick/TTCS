@@ -9,9 +9,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mail;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace HotelManager.Infrastructure.Services
 {
@@ -21,14 +24,16 @@ namespace HotelManager.Infrastructure.Services
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher<Account> _passwordHasher;
         private readonly JwtSettings _jwtSettings;
+        private readonly IMemoryCache _cache;
 
         public AuthService(IAuthRepository authRepository, IUserRepository userRepository, IPasswordHasher<Account> passwordHasher,
-            IOptions<JwtSettings> jwtsettings)
+            IOptions<JwtSettings> jwtsettings, IMemoryCache cache)
         {
             _authRepository = authRepository;
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
             _jwtSettings = jwtsettings.Value;
+            _cache = cache;
         }
         public async Task<RegisterResponse> Register(RegisterRequest registerDTO){
             try{
@@ -105,7 +110,79 @@ namespace HotelManager.Infrastructure.Services
                 FullName = exist.User?.Name
             };
         }
+        public async Task<bool> SendOtpAsync(string email)
+        {
+            // Kiểm tra user có tồn tại không (Giả sử Username đang lưu Email)
+            var account = await _authRepository.GetAccountByUsername(email);
+            if (account == null)
+            {
+                throw new Exception("Email không tồn tại trong hệ thống.");
+            }
 
-        
+            // Tạo OTP ngẫu nhiên 6 số
+            Random random = new Random();
+            string otp = random.Next(100000, 999999).ToString();
+
+            // Lưu OTP vào Cache, set thời gian sống là 5 phút
+            _cache.Set($"OTP_{email}", otp, TimeSpan.FromMinutes(5));
+
+            // Logic gửi Email bằng SMTP Gmail
+            try
+            {
+                var smtpClient = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = 587,
+                    Credentials = new NetworkCredential("phamtuandat50@gmail.com", "pllwtcveakotwgdg"),
+                    EnableSsl = true,
+                };
+
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress("phamtuandat50@gmail.com", "Azure Sands Hotel"),
+                    Subject = "Mã xác nhận khôi phục mật khẩu",
+                    Body = $"Mã OTP khôi phục mật khẩu của bạn là: <b>{otp}</b>. Mã này sẽ hết hạn sau 5 phút.",
+                    IsBodyHtml = true,
+                };
+                mailMessage.To.Add(email);
+
+                await smtpClient.SendMailAsync(mailMessage);
+                return true;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Lỗi khi gửi email. Vui lòng kiểm tra lại cấu hình SMTP.");
+            }
+        }
+
+        // 2. HÀM KIỂM TRA OTP VÀ ĐỔI MẬT KHẨU
+        public async Task<bool> ResetPasswordWithOtpAsync(VerifyOtpRequest request)
+        {
+            // Lấy OTP từ Cache ra để so sánh
+            if (_cache.TryGetValue($"OTP_{request.Email}", out string cachedOtp))
+            {
+                if (cachedOtp == request.Otp)
+                {
+                    // OTP đúng -> Lấy tài khoản ra và đổi mật khẩu
+                    var account = await _authRepository.GetAccountByUsername(request.Email);
+                    if (account == null) throw new Exception("Tài khoản không tồn tại.");
+
+                    // Hash mật khẩu mới (Nếu hệ thống của bạn có dùng hàm Hash, hãy thay bằng hàm Hash của bạn)
+                    var newPasswordHash = _passwordHasher.HashPassword(account, request.NewPassword);
+
+                    // Cập nhật pass (Tuỳ vào Entity Account của bạn có hàm đổi pass hay không)
+                    account.ChangePasswordHash(newPasswordHash); // Cần đảm bảo có hàm này trong Entity Account
+
+                    await _authRepository.Update(account.Id, account);
+
+                    // Đổi xong thì xoá OTP khỏi Cache
+                    _cache.Remove($"OTP_{request.Email}");
+
+                    return true;
+                }
+            }
+
+            throw new Exception("Mã OTP không chính xác hoặc đã hết hạn.");
+        }
+
     }
 }
