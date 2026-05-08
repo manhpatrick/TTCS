@@ -1,101 +1,107 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Heritage Presidential Suite - The Editorial Concierge</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script id="tailwind-config">
+    <script src="/js/auth-guard.js"></script>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Heritage Presidential Suite - The Editorial Concierge</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script id="tailwind-config">
         tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "surface-container-highest": "#e3e2e1",
-                      "secondary": "#775a19",
-                      "primary-fixed-dim": "#96ceeb",
-                      "primary": "#003345",
-                      "surface-container": "#eeeeed",
-                      "on-error-container": "#93000a",
-                      "secondary-fixed": "#ffdea5",
-                      "surface": "#faf9f8",
-                      "tertiary-fixed": "#eee0d5",
-                      "surface-dim": "#dadad9",
-                      "on-primary-fixed": "#001f2b",
-                      "tertiary-container": "#4c433b",
-                      "surface-container-low": "#f4f3f2",
-                      "on-secondary-fixed-variant": "#5d4201",
-                      "on-primary": "#ffffff",
-                      "surface-container-lowest": "#ffffff",
-                      "inverse-surface": "#2f3130",
-                      "surface-variant": "#e3e2e1",
-                      "surface-bright": "#faf9f8",
-                      "secondary-container": "#fed488",
-                      "primary-container": "#004b63",
-                      "on-primary-container": "#83bad6",
-                      "secondary-fixed-dim": "#e9c176",
-                      "surface-tint": "#2a657e",
-                      "on-secondary-fixed": "#261900",
-                      "on-secondary-container": "#785a1a",
-                      "error-container": "#ffdad6",
-                      "background": "#faf9f8",
-                      "on-primary-fixed-variant": "#044d65",
-                      "tertiary-fixed-dim": "#d2c4b9",
-                      "on-surface-variant": "#40484c",
-                      "on-surface": "#1a1c1c",
-                      "surface-container-high": "#e9e8e7",
-                      "on-secondary": "#ffffff",
-                      "inverse-on-surface": "#f1f0f0",
-                      "on-tertiary-container": "#bdb0a5",
-                      "on-error": "#ffffff",
-                      "on-tertiary-fixed": "#211a14",
-                      "on-tertiary": "#ffffff",
-                      "inverse-primary": "#96ceeb",
-                      "primary-fixed": "#bfe8ff",
-                      "on-tertiary-fixed-variant": "#4e453d",
-                      "tertiary": "#352d26",
-                      "on-background": "#1a1c1c",
-                      "error": "#ba1a1a",
-                      "outline": "#71787d",
-                      "outline-variant": "#c0c7cd"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.25rem",
-                      "lg": "0.5rem",
-                      "xl": "0.75rem",
-                      "full": "9999px"
-              },
-              "fontFamily": {
-                      "headline": ["Noto Serif"],
-                      "body": ["Manrope"],
-                      "label": ["Manrope"]
-              }
-      },
-          },
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#e3e2e1",
+                        "secondary": "#775a19",
+                        "primary-fixed-dim": "#96ceeb",
+                        "primary": "#003345",
+                        "surface-container": "#eeeeed",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#ffdea5",
+                        "surface": "#faf9f8",
+                        "tertiary-fixed": "#eee0d5",
+                        "surface-dim": "#dadad9",
+                        "on-primary-fixed": "#001f2b",
+                        "tertiary-container": "#4c433b",
+                        "surface-container-low": "#f4f3f2",
+                        "on-secondary-fixed-variant": "#5d4201",
+                        "on-primary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-surface": "#2f3130",
+                        "surface-variant": "#e3e2e1",
+                        "surface-bright": "#faf9f8",
+                        "secondary-container": "#fed488",
+                        "primary-container": "#004b63",
+                        "on-primary-container": "#83bad6",
+                        "secondary-fixed-dim": "#e9c176",
+                        "surface-tint": "#2a657e",
+                        "on-secondary-fixed": "#261900",
+                        "on-secondary-container": "#785a1a",
+                        "error-container": "#ffdad6",
+                        "background": "#faf9f8",
+                        "on-primary-fixed-variant": "#044d65",
+                        "tertiary-fixed-dim": "#d2c4b9",
+                        "on-surface-variant": "#40484c",
+                        "on-surface": "#1a1c1c",
+                        "surface-container-high": "#e9e8e7",
+                        "on-secondary": "#ffffff",
+                        "inverse-on-surface": "#f1f0f0",
+                        "on-tertiary-container": "#bdb0a5",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed": "#211a14",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#96ceeb",
+                        "primary-fixed": "#bfe8ff",
+                        "on-tertiary-fixed-variant": "#4e453d",
+                        "tertiary": "#352d26",
+                        "on-background": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "outline": "#71787d",
+                        "outline-variant": "#c0c7cd"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
         }
-      </script>
-<style>
-    body {
-      font-family: 'Manrope', sans-serif;
-      background-color: #faf9f8;
-    }
+    </script>
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #faf9f8;
+        }
 
-    html { scrollbar-gutter: stable; }
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-    }
-    .glass-nav {
-      background: rgba(250, 249, 248, 0.8);
-      backdrop-filter: blur(24px);
-    }
-    .editorial-shadow {
-      box-shadow: 0 32px 64px rgba(26, 28, 28, 0.06);
-    }
-  </style>
+        html {
+            scrollbar-gutter: stable;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .glass-nav {
+            background: rgba(250, 249, 248, 0.8);
+            backdrop-filter: blur(24px);
+        }
+
+        .editorial-shadow {
+            box-shadow: 0 32px 64px rgba(26, 28, 28, 0.06);
+        }
+    </style>
 </head>
 <body class="bg-surface text-on-surface font-body antialiased selection:bg-secondary-container
 selection:text-on-secondary-container">

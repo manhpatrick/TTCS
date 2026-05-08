@@ -388,6 +388,12 @@
                     if (!response.ok || data.success === false) {
                         throw new Error(data.error || data.message || 'Đăng nhập thất bại');
                     }
+                    if (data.role === 'Admin') {
+                        showAuthMessage('signinMessages', 'Tài khoản này là Admin. Đang chuyển hướng sang trang quản trị...', 'success');
+                        localStorage.setItem('adminToken', data.accessToken);
+                        setTimeout(() => window.location.href = '/admin_dashboard.html', 1000);
+                        return;
+                    }
                     showAuthMessage('signinMessages', 'Đăng nhập thành công!', 'success');
                     localStorage.setItem('userToken', data.accessToken);
                     localStorage.setItem('demo_auth_user', data.fullName || email);

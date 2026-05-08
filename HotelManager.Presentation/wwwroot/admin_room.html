@@ -1,0 +1,321 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Quản lý Phòng - The Editorial Admin</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#003345",
+                        "secondary": "#775a19",
+                        "surface": "#faf9f8",
+                        "on-surface": "#1a1c1c",
+                        "on-surface-variant": "#40484c",
+                        "outline-variant": "#c0c7cd",
+                        "error": "#ba1a1a"
+                    },
+                    fontFamily: { "headline": ["Noto Serif"], "body": ["Manrope"] }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #faf9f8;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .filled {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* Custom scrollbar cho bảng */
+        .table-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .table-container::-webkit-scrollbar-thumb {
+            background: #c0c7cd;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-primary text-white flex flex-col hidden md:flex shrink-0 shadow-2xl z-20">
+        <div class="p-6 flex items-center justify-center border-b border-white/10">
+            <h1 class="text-xl font-headline italic font-bold tracking-widest text-center">
+                The Editorial<br><span class="text-secondary text-sm not-italic uppercase font-body">Admin Portal</span>
+            </h1>
+        </div>
+        <div class="flex-1 overflow-y-auto py-6 flex flex-col gap-2 px-4">
+            <a href="/admin_dashboard.html" class="flex items-center gap-4 px-4 py-3 text-white/70 hover:text-white hover:bg-white/5 rounded-xl font-medium transition-colors">
+                <span class="material-symbols-outlined">dashboard</span> Tổng quan
+            </a>
+            <a href="/admin_room.html" class="flex items-center gap-4 px-4 py-3 bg-white/10 text-white rounded-xl font-semibold transition-colors">
+                <span class="material-symbols-outlined filled">meeting_room</span> Quản lý Phòng
+            </a>
+            <a href="#" class="flex items-center gap-4 px-4 py-3 text-white/70 hover:text-white hover:bg-white/5 rounded-xl font-medium transition-colors">
+                <span class="material-symbols-outlined">book_online</span> Quản lý Đặt phòng
+            </a>
+            <a href="#" class="flex items-center gap-4 px-4 py-3 text-white/70 hover:text-white hover:bg-white/5 rounded-xl font-medium transition-colors">
+                <span class="material-symbols-outlined">room_service</span> Dịch vụ
+            </a>
+        </div>
+        <div class="p-4 border-t border-white/10">
+            <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-4 py-3 text-error hover:bg-error/10 rounded-xl font-bold transition-colors">
+                <span class="material-symbols-outlined">logout</span> Đăng xuất
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-surface-container-low">
+
+        <header class="h-20 bg-white border-b border-outline-variant/20 flex items-center justify-between px-8 shrink-0">
+            <h2 class="text-xl font-headline font-bold text-primary">Danh sách Phòng</h2>
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-full bg-primary-container text-white flex items-center justify-center font-bold">A</div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8">
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+                <div class="flex items-center gap-4 w-full md:w-auto">
+                    <div class="relative w-full md:w-80">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+                        <input id="searchInput" type="text" placeholder="Tìm tên phòng..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border-outline-variant/30 focus:border-primary focus:ring-0 text-sm" />
+                    </div>
+                    <select id="statusFilter" class="rounded-xl border-outline-variant/30 text-sm focus:border-primary focus:ring-0 py-2.5">
+                        <option value="All">Tất cả trạng thái</option>
+                        <option value="Available">Còn trống</option>
+                        <option value="Occupied">Đang ở</option>
+                        <option value="Maintenance">Bảo trì</option>
+                    </select>
+                </div>
+                <button onclick="openRoomModal()" class="w-full md:w-auto bg-primary text-white px-6 py-2.5 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-primary-container transition-all shadow-lg active:scale-95">
+                    <span class="material-symbols-outlined">add</span> Thêm Phòng Mới
+                </button>
+            </div>
+
+            <div class="bg-white border border-outline-variant/20 rounded-2xl shadow-sm overflow-hidden">
+                <div class="overflow-x-auto table-container">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-surface-container-low text-[11px] uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/20">
+                                <th class="p-4 font-bold">Ảnh</th>
+                                <th class="p-4 font-bold">Tên Phòng</th>
+                                <th class="p-4 font-bold">Loại</th>
+                                <th class="p-4 font-bold">Sức chứa</th>
+                                <th class="p-4 font-bold">Giá/Đêm</th>
+                                <th class="p-4 font-bold">Trạng thái</th>
+                                <th class="p-4 font-bold text-center">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="roomTableBody" class="text-sm divide-y divide-outline-variant/10">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="roomModal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeRoomModal()"></div>
+        <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="p-6 border-b border-outline-variant/20 flex justify-between items-center bg-surface">
+                <h3 id="modalTitle" class="text-xl font-headline font-bold text-primary">Thêm Phòng Mới</h3>
+                <button onclick="closeRoomModal()" class="p-2 hover:bg-surface-container rounded-full transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form id="roomForm" class="p-8 overflow-y-auto space-y-6">
+                <input type="hidden" id="roomId">
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="col-span-2">
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Tên Phòng</label>
+                        <input type="text" id="name" required class="w-full rounded-xl border-outline-variant/30 focus:border-primary focus:ring-0" placeholder="VD: Heritage Suite 101">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Hạng Phòng</label>
+                        <select id="category" class="w-full rounded-xl border-outline-variant/30 focus:border-primary focus:ring-0">
+                            <option value="Standard">Standard</option>
+                            <option value="Deluxe">Deluxe</option>
+                            <option value="Suite">Suite</option>
+                            <option value="Presidential">Presidential</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Sức chứa (Người)</label>
+                        <input type="number" id="capacity" min="1" required class="w-full rounded-xl border-outline-variant/30 focus:border-primary focus:ring-0">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Giá mỗi đêm (VNĐ)</label>
+                        <input type="number" id="price" required class="w-full rounded-xl border-outline-variant/30 focus:border-primary focus:ring-0">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Trạng thái</label>
+                        <select id="status" class="w-full rounded-xl border-outline-variant/30 focus:border-primary focus:ring-0">
+                            <option value="Available">Còn trống</option>
+                            <option value="Occupied">Đang ở</option>
+                            <option value="Maintenance">Bảo trì</option>
+                        </select>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Mô tả chi tiết</label>
+                        <textarea id="description" rows="3" class="w-full rounded-xl border-outline-variant/30 focus:border-primary focus:ring-0"></textarea>
+                    </div>
+                </div>
+                <div class="flex justify-end gap-4 pt-4">
+                    <button type="button" onclick="closeRoomModal()" class="px-6 py-2.5 rounded-xl font-bold text-on-surface-variant hover:bg-surface-container transition-colors">Hủy</button>
+                    <button type="submit" class="px-8 py-2.5 bg-primary text-white rounded-xl font-bold hover:bg-primary-container shadow-lg transition-all active:scale-95">Lưu thông tin</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 1. KIỂM TRA QUYỀN TRUY CẬP
+        const adminToken = localStorage.getItem('adminToken');
+        if (!adminToken) {
+            window.location.replace('/admin_auth.html');
+        }
+
+        // 2. FETCH DANH SÁCH PHÒNG TỪ API
+        async function fetchRooms() {
+            try {
+                const response = await fetch('/api/room/admin-list', { // Sử dụng endpoint admin bạn đã có
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+                const rooms = await response.json();
+                renderRoomTable(rooms);
+            } catch (error) {
+                console.error("Lỗi khi tải danh sách phòng:", error);
+            }
+        }
+
+        function renderRoomTable(rooms) {
+            const body = document.getElementById('roomTableBody');
+            body.innerHTML = rooms.map(room => `
+                <tr class="hover:bg-surface/50 transition-colors">
+                    <td class="p-4">
+                        <img src="${room.thumbnailUrl || 'https://placehold.co/60x40?text=No+Image'}" class="w-16 h-10 object-cover rounded-lg border border-outline-variant/20">
+                    </td>
+                    <td class="p-4 font-bold text-primary">${room.name}</td>
+                    <td class="p-4"><span class="bg-surface-container px-2 py-1 rounded text-xs font-medium">${room.category}</span></td>
+                    <td class="p-4">${room.capacity} khách</td>
+                    <td class="p-4 font-bold text-secondary">${room.pricePerNight.toLocaleString()}đ</td>
+                    <td class="p-4">
+                        ${getStatusBadge(room.roomStatus)}
+                    </td>
+                    <td class="p-4 text-center">
+                        <button onclick='editRoom(${JSON.stringify(room).replace(/'/g, "&apos;")})' class="p-2 text-primary hover:bg-surface-container rounded-lg transition-colors">
+                            <span class="material-symbols-outlined text-[20px]">edit</span>
+                        </button>
+                        <button onclick="deleteRoom(${room.id})" class="p-2 text-error hover:bg-error/10 rounded-lg transition-colors ml-1">
+                            <span class="material-symbols-outlined text-[20px]">delete</span>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function getStatusBadge(status) {
+            const styles = {
+                'Available': 'bg-green-100 text-green-700',
+                'Occupied': 'bg-blue-100 text-blue-700',
+                'Maintenance': 'bg-red-100 text-red-700'
+            };
+            const labels = { 'Available': 'Còn trống', 'Occupied': 'Đang ở', 'Maintenance': 'Bảo trì' };
+            return `<span class="${styles[status]} px-3 py-1 rounded-full text-[10px] font-bold uppercase">${labels[status]}</span>`;
+        }
+
+        // 3. XỬ LÝ MODAL & FORM
+        function openRoomModal(isEdit = false) {
+            document.getElementById('roomModal').classList.remove('hidden');
+            document.getElementById('modalTitle').innerText = isEdit ? "Cập nhật thông tin phòng" : "Thêm Phòng Mới";
+            if(!isEdit) document.getElementById('roomForm').reset();
+        }
+
+        function closeRoomModal() {
+            document.getElementById('roomModal').classList.add('hidden');
+        }
+
+        async function editRoom(room) {
+            openRoomModal(true);
+            document.getElementById('roomId').value = room.id;
+            document.getElementById('name').value = room.name;
+            document.getElementById('category').value = room.category;
+            document.getElementById('capacity').value = room.capacity;
+            document.getElementById('price').value = room.pricePerNight;
+            document.getElementById('status').value = room.roomStatus;
+            document.getElementById('description').value = room.description;
+        }
+
+        document.getElementById('roomForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('roomId').value;
+            const dto = {
+                Name: document.getElementById('name').value,
+                Category: document.getElementById('category').value,
+                Capacity: parseInt(document.getElementById('capacity').value),
+                PricePerNight: parseFloat(document.getElementById('price').value),
+                RoomStatus: document.getElementById('status').value,
+                Description: document.getElementById('description').value
+            };
+
+            const method = id ? 'PUT' : 'POST';
+            const url = id ? `/api/admin/room/${id}` : '/api/admin/room';
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${adminToken}`
+                    },
+                    body: JSON.stringify(dto)
+                });
+
+                if(response.ok) {
+                    alert('Lưu thành công!');
+                    closeRoomModal();
+                    fetchRooms();
+                } else {
+                    alert('Có lỗi xảy ra, vui lòng kiểm tra lại.');
+                }
+            } catch (error) {
+                console.error("Lỗi API:", error);
+            }
+        });
+
+        async function deleteRoom(id) {
+            if(confirm('Bạn có chắc chắn muốn xóa phòng này? Chú ý: Dữ liệu đặt phòng liên quan có thể bị ảnh hưởng.')) {
+                await fetch(`/api/admin/room/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${adminToken}` }
+                });
+                fetchRooms();
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem('adminToken');
+            window.location.replace('/admin_auth.html');
+        }
+
+        // Khởi chạy
+        document.addEventListener('DOMContentLoaded', fetchRooms);
+    </script>
+</body>
+</html>

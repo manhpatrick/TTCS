@@ -109,7 +109,8 @@ namespace HotelManager.Infrastructure.Services
             {
                 AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
                 ExpiredAt = token.ValidTo,
-                FullName = exist.User?.Name
+                FullName = exist.User?.Name,
+                Role = exist.Role.ToString()
             };
         }
         public async Task<bool> SendOtpAsync(string email)
