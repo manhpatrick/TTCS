@@ -17,5 +17,11 @@ namespace HotelManager.Presentation.Controllers.Admin
         {
             return Ok(await _bookingService.GetListBookings());
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateBooking([FromRoute] int id, [FromBody]BookingUpdateRequest request)
+        {
+            await _bookingService.Update(id, request);
+            return Ok();
+        }
     }
 }

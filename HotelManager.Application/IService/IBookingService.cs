@@ -9,5 +9,6 @@ namespace HotelManager.Application.IService
         Task<IEnumerable<BookingTimeResponse>> GetBookingsByRoomId(int roomId, DateOnly from, DateOnly to);
         Task<IEnumerable<BookingDetailResponse>> GetBookingsByAccountId(int accountId);
         Task<IEnumerable<BookingDetailAdminResponse>> GetListBookings();
+        Task Update(int bookingId, BookingUpdateRequest request);
     }
 }

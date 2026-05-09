@@ -17,5 +17,22 @@ namespace HotelManager.Application.Converters
                 OrderInfo = payment.OrderInfo!
             };
         }
+        public PaymentHistoryAdminResponse entityToDtoAdmin(Payment payment)
+        {
+            return new PaymentHistoryAdminResponse
+            {
+                Id = payment.Id,
+                Amount = payment.Amount,
+                CreatedAt = payment.PaymentDate,
+                OrderCode = payment.ExternalTransactionId ?? payment.Id.ToString(),
+                Status = (int)payment.Status,
+                OrderInfo = payment.OrderInfo!,
+                BookingId = payment.BookingId,
+                PaymentMethod = payment.PaymentMethod,
+                CustomerName = payment.Booking?.Account?.User?.Name,
+                Email = payment.Booking?.Account?.User?.Email,
+                Phone = payment.Booking?.Account?.User?.Phone
+            };
+        }
     }
 }

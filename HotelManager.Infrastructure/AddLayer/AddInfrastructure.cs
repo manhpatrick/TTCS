@@ -34,6 +34,8 @@ namespace HotelManager.Infrastructure.AddLayer
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<IFeedbackService, FeedbackService>();
             services.AddScoped<IChatbotService, ChatbotService>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IAccountService, AccountService>();
             
             return services;
         }

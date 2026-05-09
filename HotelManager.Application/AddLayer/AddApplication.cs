@@ -16,6 +16,7 @@ namespace HotelManager.Application.AddLayer
             services.AddScoped<RatingConverter>();
             services.AddScoped<FeedbackConverter>();
             services.AddScoped<PaymentConverter>();
+            services.AddScoped<AccountConverter>();
             return services;
         }
     }

@@ -426,11 +426,92 @@
                 </div>
             </div>
         </div>
-        <div class="p-8 max-w-[1600px] w-full mx-auto flex-grow flex flex-col gap-10 content-section hidden" id="payments-content">
-            <h2 class="text-3xl font-headline text-primary tracking-tight">Thanh toán</h2>
+        <div class="p-8 max-w-[1600px] w-full mx-auto flex-grow flex flex-col gap-6 content-section hidden" id="payments-content">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-4">
+                <div>
+                    <h2 class="text-3xl font-headline font-bold text-primary">Lịch sử Thanh toán</h2>
+                    <p class="text-sm text-on-surface-variant mt-1">Danh sách các giao dịch đặt phòng đã thanh toán thành công</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-4 rounded-2xl border border-outline-variant/20 shadow-sm flex flex-col md:flex-row gap-4 mb-2">
+                <div class="relative flex-1">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+                    <input id="searchPaymentInput" type="text" placeholder="Tìm theo mã giao dịch, mã đơn hoặc tên khách..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-0 text-sm outline-none bg-surface-container-lowest" />
+                </div>
+                <select id="methodPaymentFilter" class="rounded-xl border border-outline-variant/30 text-sm focus:border-primary focus:ring-0 py-2.5 px-4 outline-none bg-surface-container-lowest min-w-[200px]">
+                    <option value="All">Tất cả phương thức</option>
+                    <option value="VnPay">VNPay</option>
+                    <option value="Cash">Tiền mặt</option>
+                    <option value="Banking">Chuyển khoản</option>
+                </select>
+            </div>
+
+            <div class="bg-white border border-outline-variant/20 rounded-2xl shadow-sm overflow-hidden flex-1">
+                <div class="overflow-x-auto table-container h-full">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-surface-container-low text-[11px] uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/20 sticky top-0 z-10">
+                                <th class="p-4 font-bold">Mã GD</th>
+                                <th class="p-4 font-bold">Mã Đơn (Booking)</th>
+                                <th class="p-4 font-bold">Khách hàng</th>
+                                <th class="p-4 font-bold">Thời gian GD</th>
+                                <th class="p-4 font-bold text-right">Số tiền</th>
+                                <th class="p-4 font-bold text-center">Phương thức</th>
+                                <th class="p-4 font-bold text-center">Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentTableBody" class="text-sm divide-y divide-outline-variant/10">
+                            <tr><td colspan="7" class="p-8 text-center text-on-surface-variant">Đang tải dữ liệu...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="p-8 max-w-[1600px] w-full mx-auto flex-grow flex flex-col gap-10 content-section hidden" id="users-content">
-            <h2 class="text-3xl font-headline text-primary tracking-tight">Quản lý Người dùng</h2>
+        <div class="p-8 max-w-[1600px] w-full mx-auto flex-grow flex flex-col gap-6 content-section hidden" id="users-content">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-4">
+                <div>
+                    <h2 class="text-3xl font-headline font-bold text-primary">Quản lý Người dùng</h2>
+                    <p class="text-sm text-on-surface-variant mt-1">Danh sách tài khoản hệ thống và trạng thái hoạt động</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-4 rounded-2xl border border-outline-variant/20 shadow-sm flex flex-col md:flex-row gap-4 mb-2">
+                <div class="relative flex-1">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+                    <input id="searchAccountInput" type="text" placeholder="Tìm theo tên đăng nhập hoặc email..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-0 text-sm outline-none bg-surface-container-lowest" />
+                </div>
+                <select id="roleAccountFilter" class="rounded-xl border border-outline-variant/30 text-sm focus:border-primary focus:ring-0 py-2.5 px-4 outline-none bg-surface-container-lowest min-w-[150px]">
+                    <option value="All">Tất cả vai trò</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Customer">Khách hàng</option>
+                </select>
+                <select id="statusAccountFilter" class="rounded-xl border border-outline-variant/30 text-sm focus:border-primary focus:ring-0 py-2.5 px-4 outline-none bg-surface-container-lowest min-w-[150px]">
+                    <option value="All">Tất cả trạng thái</option>
+                    <option value="1">Đang hoạt động</option>
+                    <option value="0">Bị khóa</option>
+                </select>
+            </div>
+
+            <div class="bg-white border border-outline-variant/20 rounded-2xl shadow-sm overflow-hidden flex-1">
+                <div class="overflow-x-auto table-container h-full">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-surface-container-low text-[11px] uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/20 sticky top-0 z-10">
+                                <th class="p-4 font-bold">ID</th>
+                                <th class="p-4 font-bold">Tên đăng nhập</th>
+                                <th class="p-4 font-bold">Email</th>
+                                <th class="p-4 font-bold text-center">Vai trò</th>
+                                <th class="p-4 font-bold text-center">Trạng thái</th>
+                                <th class="p-4 font-bold text-center">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accountTableBody" class="text-sm divide-y divide-outline-variant/10">
+                            <tr><td colspan="6" class="p-8 text-center text-on-surface-variant">Đang tải dữ liệu...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -642,6 +723,33 @@
                     </div>
                 </div>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-secondary flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">edit_note</span> Ghi chú
+                        </h4>
+                        <div class="bg-white p-4 rounded-xl border border-outline-variant/20 shadow-sm text-sm min-h-[80px]" id="detailNote">
+                            Không có ghi chú
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-secondary flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[18px]">room_service</span> Dịch vụ đi kèm
+                        </h4>
+                        <ul class="bg-white p-4 rounded-xl border border-outline-variant/20 shadow-sm text-sm space-y-2 min-h-[80px]" id="detailServicesList">
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="detailReviewContainer" class="space-y-4 hidden">
+                    <h4 class="text-sm font-bold uppercase tracking-widest text-secondary flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">star</span> Đánh giá từ khách hàng
+                    </h4>
+                    <div class="bg-[#fdfaf3] p-5 rounded-xl border border-[#e5d3b3] shadow-sm flex flex-col gap-2" id="detailReview">
+                    </div>
+                </div>
+
                 <div class="border-t border-outline-variant/20 pt-6">
                     <h4 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant mb-4">Cập nhật Trạng thái</h4>
                     <div class="flex items-center gap-4">
@@ -700,11 +808,52 @@
         // =====================================
         // SPA NAVIGATION
         // =====================================
+        let allAdminRooms = [];
+        let allAdminPayments = [];
+        let allAdminServices = [];
+        let allAdminBookings = [];
+        let allAdminAccounts = [];
+
+
         document.addEventListener('DOMContentLoaded', () => {
             const navItems = document.querySelectorAll('.nav-item');
             const contentSections = document.querySelectorAll('.content-section');
 
             fetchRooms();
+            fetchPayments();
+            fetchServices();
+            fetchBookings();
+            fetchAccounts();
+
+            const searchRoomInput = document.getElementById('searchRoomInput');
+            const statusFilter = document.getElementById('statusFilter');
+            if (searchRoomInput) searchRoomInput.addEventListener('input', filterRooms);
+            if (statusFilter) statusFilter.addEventListener('change', filterRooms);
+
+            // Gán event cho thanh tìm kiếm Service
+            const searchServiceInput = document.getElementById('searchServiceInput');
+            const statusServiceFilter = document.getElementById('statusServiceFilter');
+            if (searchServiceInput) searchServiceInput.addEventListener('input', filterServices);
+            if (statusServiceFilter) statusServiceFilter.addEventListener('change', filterServices);
+
+            // Gán event cho thanh tìm kiếm Booking
+            const searchBookingInput = document.getElementById('searchBookingInput');
+            const statusBookingFilter = document.getElementById('statusBookingFilter');
+            if (searchBookingInput) searchBookingInput.addEventListener('input', filterBookings);
+            if (statusBookingFilter) statusBookingFilter.addEventListener('change', filterBookings);
+
+            const searchPaymentInput = document.getElementById('searchPaymentInput');
+            const methodPaymentFilter = document.getElementById('methodPaymentFilter');
+            if (searchPaymentInput) searchPaymentInput.addEventListener('input', filterPayments);
+            if (methodPaymentFilter) methodPaymentFilter.addEventListener('change', filterPayments);
+
+            // <-- GẮN EVENT CHO TÌM KIẾM TÀI KHOẢN -->
+            const searchAcc = document.getElementById('searchAccountInput');
+            const roleAcc = document.getElementById('roleAccountFilter');
+            const statusAcc = document.getElementById('statusAccountFilter');
+            if (searchAcc) searchAcc.addEventListener('input', filterAccounts);
+            if (roleAcc) roleAcc.addEventListener('change', filterAccounts);
+            if (statusAcc) statusAcc.addEventListener('change', filterAccounts);
 
             navItems.forEach(item => {
                 item.addEventListener('click', (e) => {
@@ -830,14 +979,45 @@
                 });
 
                 if (response.ok) {
-                    const rooms = await response.json();
-                    renderRoomTable(rooms);
+                    allAdminRooms = await response.json(); // Lưu vào biến toàn cục
+                    filterRooms(); // Gọi hàm filter để render
                 } else {
                     document.getElementById('roomTableBody').innerHTML = `<tr><td colspan="7" class="p-8 text-center text-error">Không thể tải dữ liệu phòng.</td></tr>`;
                 }
             } catch (error) {
                 console.error("Lỗi:", error);
             }
+        }
+        function filterRooms() {
+            const searchInput = document.getElementById('searchRoomInput');
+            const statusFilter = document.getElementById('statusFilter');
+            if (!searchInput || !statusFilter) return;
+
+            const searchText = searchInput.value.toLowerCase().trim();
+            const statusVal = statusFilter.value; // Lấy từ select: "All", "Available", "Maintenance", "Disabled"
+
+            const filteredRooms = allAdminRooms.filter(room => {
+                // 1. Lọc theo tên phòng
+                const matchName = room.name.toLowerCase().includes(searchText);
+
+                // 2. Lọc theo trạng thái (ĐÃ FIX)
+                let matchStatus = true;
+                if (statusVal !== 'All') {
+                    // Ép giá trị dropdown về '1', '2', '3'
+                    const expectedStatus = parseStatusToId(statusVal);
+
+                    // Ép giá trị API trả về cũng về chuẩn '1', '2', '3'
+                    const currentStatus = parseStatusToId(room.roomStatus || room.status || 1);
+
+                    // So sánh 2 số với nhau
+                    matchStatus = (expectedStatus === currentStatus);
+                }
+
+                return matchName && matchStatus;
+            });
+
+            // 3. Render lại bảng
+            renderRoomTable(filteredRooms);
         }
 
         // =====================================
@@ -924,8 +1104,10 @@
             container.innerHTML = `<div class="text-center p-8 text-on-surface-variant">Đang tải đánh giá...</div>`;
 
             try {
-                // Sử dụng lại API lấy Review mà bạn đang dùng bên phía Client
-                const response = await fetch(`/api/room/${roomId}/ratings`);
+                // ĐÃ THÊM: Header chứa token đồng nhất với toàn bộ hệ thống
+                const response = await fetch(`/api/room/${roomId}/ratings`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
 
                 if (!response.ok) {
                     throw new Error("Không thể tải danh sách đánh giá.");
@@ -1158,18 +1340,7 @@
         // =====================================
         // API - SERVICE MANAGEMENT LOGIC
         // =====================================
-        let allAdminServices = [];
-
-        // Fetch khi load trang (Gọi chung trong DOMContentLoaded)
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchServices(); // Khởi chạy cùng lúc với fetchRooms();
-
-            // Gán event cho thanh tìm kiếm và bộ lọc Service
-            const searchServiceInput = document.getElementById('searchServiceInput');
-            const statusServiceFilter = document.getElementById('statusServiceFilter');
-            if (searchServiceInput) searchServiceInput.addEventListener('input', filterServices);
-            if (statusServiceFilter) statusServiceFilter.addEventListener('change', filterServices);
-        });
+        
 
         async function fetchServices() {
             try {
@@ -1194,16 +1365,26 @@
             if (!searchInput || !statusFilter) return;
 
             const searchText = searchInput.value.toLowerCase().trim();
-            const statusVal = statusFilter.value;
+            const statusVal = statusFilter.value; // "All", "1", "0"
 
             const filteredServices = allAdminServices.filter(srv => {
                 const matchName = srv.name.toLowerCase().includes(searchText);
+
+                // Xử lý đồng bộ trạng thái Dịch vụ
                 let matchStatus = true;
                 if (statusVal !== 'All') {
-                    // Giả định srv.status hoặc srv.isActive
-                    const currentStatus = srv.status ?? srv.isActive ?? 1;
-                    matchStatus = (String(currentStatus) === String(statusVal));
+                    let currentStatus = "1"; // Mặc định là Active
+
+                    // Xử lý các trường hợp dữ liệu Backend có thể trả về
+                    if (srv.isActive !== undefined) {
+                        currentStatus = (srv.isActive === true || String(srv.isActive).toLowerCase() === 'true') ? "1" : "0";
+                    } else if (srv.status !== undefined) {
+                        currentStatus = (srv.status == 1 || String(srv.status).toLowerCase() === 'active') ? "1" : "0";
+                    }
+
+                    matchStatus = (currentStatus === statusVal);
                 }
+
                 return matchName && matchStatus;
             });
 
@@ -1350,18 +1531,6 @@
         // =====================================
         // API - BOOKING MANAGEMENT LOGIC
         // =====================================
-        let allAdminBookings = [];
-
-        // Thêm vào khối DOMContentLoaded hiện tại của bạn
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchBookings(); // Load dữ liệu
-
-            // Gán event cho bộ lọc Đặt phòng
-            const searchBookingInput = document.getElementById('searchBookingInput');
-            const statusBookingFilter = document.getElementById('statusBookingFilter');
-            if (searchBookingInput) searchBookingInput.addEventListener('input', filterBookings);
-            if (statusBookingFilter) statusBookingFilter.addEventListener('change', filterBookings);
-        });
 
         async function fetchBookings() {
             try {
@@ -1383,24 +1552,39 @@
             }
         }
 
+        // Hàm phụ đồng bộ trạng thái Booking (chữ/số -> chuẩn chuỗi "1", "2"...)
+        function parseBookingStatusToId(status) {
+            if (status == null) return "1";
+            const s = String(status).toLowerCase();
+
+            if (s === '1' || s === 'pending' || s === 'choxacnhan') return "1";
+            if (s === '2' || s === 'confirmed' || s === 'daxacnhan') return "2";
+            if (s === '3' || s === 'checkedin' || s === 'dangluutru') return "3";
+            if (s === '4' || s === 'completed' || s === 'hoanthanh') return "4";
+            if (s === '5' || s === '0' || s === 'cancelled' || s === 'dahuy') return "5";
+
+            return String(status);
+        }
+
         function filterBookings() {
             const searchInput = document.getElementById('searchBookingInput');
             const statusFilter = document.getElementById('statusBookingFilter');
             if (!searchInput || !statusFilter) return;
 
             const searchText = searchInput.value.toLowerCase().trim();
-            const statusVal = statusFilter.value;
+            const statusVal = statusFilter.value; // "All", "1", "2", "3", "4", "5"
 
             const filteredBookings = allAdminBookings.filter(bk => {
+                // Lọc theo tên khách hàng hoặc mã đơn
                 const customerName = (bk.customerName || bk.fullName || '').toLowerCase();
                 const bookingIdStr = String(bk.id || bk._id).toLowerCase();
-
                 const matchSearch = customerName.includes(searchText) || bookingIdStr.includes(searchText);
 
+                // Xử lý đồng bộ trạng thái Booking
                 let matchStatus = true;
                 if (statusVal !== 'All') {
-                    const currentStatus = bk.status || bk.bookingStatus;
-                    matchStatus = (String(currentStatus) === String(statusVal));
+                    const currentStatus = parseBookingStatusToId(bk.bookingStatus || bk.status);
+                    matchStatus = (currentStatus === statusVal);
                 }
 
                 return matchSearch && matchStatus;
@@ -1410,14 +1594,23 @@
         }
 
         function getBookingStatusBadge(status) {
-            // Enum giả định: 1: Chờ xác nhận, 2: Đã xác nhận, 3: Đang lưu trú, 4: Hoàn thành, 5 (hoặc 0): Đã hủy
-            const s = parseInt(status);
-            if (s === 1) return `<span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Chờ xác nhận</span>`;
-            if (s === 2) return `<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Đã xác nhận</span>`;
-            if (s === 3) return `<span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Đang lưu trú</span>`;
-            if (s === 4) return `<span class="bg-success-container text-success px-3 py-1 rounded-full text-[10px] font-bold uppercase">Hoàn thành</span>`;
-            if (s === 5 || s === 0) return `<span class="bg-error-container text-error px-3 py-1 rounded-full text-[10px] font-bold uppercase">Đã hủy</span>`;
-            return `<span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Unknown</span>`;
+            if (status == null) return `<span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Unknown</span>`;
+
+            // Ép về chữ thường để dễ so sánh, phòng trường hợp C# trả về chữ (Pending, Confirmed...)
+            const s = status.toString().toLowerCase();
+
+            if (s === '1' || s === 'pending' || s === 'choxacnhan')
+                return `<span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Chờ xác nhận</span>`;
+            if (s === '2' || s === 'confirmed' || s === 'daxacnhan')
+                return `<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Đã xác nhận</span>`;
+            if (s === '3' || s === 'checkedin' || s === 'dangluutru')
+                return `<span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Đang lưu trú</span>`;
+            if (s === '4' || s === 'completed' || s === 'hoanthanh')
+                return `<span class="bg-success-container text-success px-3 py-1 rounded-full text-[10px] font-bold uppercase">Hoàn thành</span>`;
+            if (s === '5' || s === '0' || s === 'cancelled' || s === 'dahuy')
+                return `<span class="bg-error-container text-error px-3 py-1 rounded-full text-[10px] font-bold uppercase">Đã hủy</span>`;
+
+            return `<span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-[10px] font-bold uppercase">Unknown (${status})</span>`;
         }
 
         function formatDateDisplay(dateString) {
@@ -1482,28 +1675,37 @@
         function viewBookingDetail(bk) {
             document.getElementById('bookingModal').classList.remove('hidden');
 
-            // 1. Mã đơn và Thông tin khách hàng (Khớp với CustomerName, Email, Phone)
+            // 1. Mã đơn và Thông tin khách hàng
             document.getElementById('modalBookingId').innerText = `Mã đơn: #${bk.id}`;
             document.getElementById('bkCustomerName').innerText = bk.customerName || 'N/A';
             document.getElementById('bkCustomerPhone').innerText = bk.phone || 'N/A';
             document.getElementById('bkCustomerEmail').innerText = bk.email || 'N/A';
 
-            // 2. Thông tin phòng (Khớp với RoomName, NumOfPeople, TotalPrice)
+            // 2. Thông tin phòng
             document.getElementById('bkRoomName').innerText = bk.roomName || 'N/A';
             document.getElementById('bkCapacity').innerText = `${bk.numOfPeople || 0} người`;
             document.getElementById('bkTotalPrice').innerText = (bk.totalPrice || 0).toLocaleString('vi-VN') + 'đ';
 
-            // 3. Thời gian (Khớp với startTime, endTime)
+            // 3. Thời gian
             document.getElementById('bkCheckIn').innerText = formatDateDisplay(bk.startTime);
             document.getElementById('bkCheckOut').innerText = formatDateDisplay(bk.endTime);
 
             // 4. Ghi chú (Note)
             const noteEl = document.getElementById('detailNote');
-            if (noteEl) noteEl.innerText = bk.note || 'Không có ghi chú';
+            if (noteEl) noteEl.innerText = bk.note ? bk.note : 'Không có ghi chú từ khách hàng.';
 
-            // 5. Gán ID và Trạng thái cho Form cập nhật (BookingStatus)
+            // 5. GÁN ID VÀ TRẠNG THÁI CHO FORM CẬP NHẬT (Fix lỗi gán Enum)
             document.getElementById('updateBookingId').value = bk.id;
-            document.getElementById('updateBookingStatus').value = bk.bookingStatus.toString();
+
+            // Xử lý thông minh: map trạng thái string từ backend ra số để set vào dropdown
+            let st = bk.bookingStatus ? bk.bookingStatus.toString().toLowerCase() : "1";
+            let statusValue = "1";
+            if (st === '2' || st === 'confirmed') statusValue = "2";
+            else if (st === '3' || st === 'checkedin') statusValue = "3";
+            else if (st === '4' || st === 'completed') statusValue = "4";
+            else if (st === '5' || st === '0' || st === 'cancelled') statusValue = "5";
+
+            document.getElementById('updateBookingStatus').value = statusValue;
 
             // 6. Hiển thị danh sách dịch vụ (serviceLists)
             const servicesListContainer = document.getElementById('detailServicesList');
@@ -1511,24 +1713,34 @@
                 const services = bk.serviceLists || [];
                 if (services.length > 0) {
                     servicesListContainer.innerHTML = services.map(s => `
-                <li class="flex justify-between items-center border-b border-outline-variant/10 pb-1">
-                    <span>• ${s.name} <span class="text-xs text-on-surface-variant">(x${s.quantity})</span></span>
-                    <span class="font-bold">${(s.price * s.quantity).toLocaleString('vi-VN')}đ</span>
-                </li>
-            `).join('');
+                        <li class="flex justify-between items-center border-b border-outline-variant/10 pb-2 mb-2 last:border-0 last:pb-0 last:mb-0">
+                            <span>• ${s.name || s.serviceName} <span class="text-xs text-on-surface-variant font-bold">(x${s.quantity || 1})</span></span>
+                            <span class="font-bold text-secondary">${((s.price || 0) * (s.quantity || 1)).toLocaleString('vi-VN')}đ</span>
+                        </li>
+                    `).join('');
                 } else {
-                    servicesListContainer.innerHTML = `<li class="text-xs text-on-surface-variant italic">Không có dịch vụ đi kèm</li>`;
+                    servicesListContainer.innerHTML = `<li class="text-sm text-on-surface-variant italic">Không có dịch vụ đi kèm.</li>`;
                 }
             }
 
-            // 7. Hiển thị đánh giá nếu có (ratingResponse)
+            // 7. Hiển thị đánh giá
             const reviewContainer = document.getElementById('detailReviewContainer');
             const reviewText = document.getElementById('detailReview');
-            if (bk.ratingResponse) {
+            if (bk.ratingResponse && bk.ratingResponse.numOfRating > 0) {
                 reviewContainer?.classList.remove('hidden');
                 if (reviewText) {
-                    const stars = '⭐'.repeat(bk.ratingResponse.numOfRating);
-                    reviewText.innerHTML = `<div class="mb-1">${stars}</div><div>"${bk.ratingResponse.review}"</div>`;
+                    let starsHtml = '';
+                    for (let i = 1; i <= 5; i++) {
+                        if (i <= bk.ratingResponse.numOfRating) {
+                            starsHtml += `<span class="material-symbols-outlined text-[20px] text-secondary" style="font-variation-settings: 'FILL' 1;">star</span>`;
+                        } else {
+                            starsHtml += `<span class="material-symbols-outlined text-[20px] text-outline-variant">star</span>`;
+                        }
+                    }
+                    reviewText.innerHTML = `
+                        <div class="flex">${starsHtml}</div>
+                        <p class="text-sm text-on-surface mt-1 italic leading-relaxed">"${bk.ratingResponse.review || 'Không có bình luận.'}"</p>
+                    `;
                 }
             } else {
                 reviewContainer?.classList.add('hidden');
@@ -1546,26 +1758,270 @@
             if (!id) return;
 
             try {
-                // Đảm bảo URL này khớp với AdminBookingController của bạn
-                const response = await fetch(`/api/admin/booking/${id}/status`, {
+                const response = await fetch(`/api/admin/booking/${id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify(newStatus) // Gửi trực tiếp số Enum nếu Backend nhận [FromBody] int status
+                    body: JSON.stringify({
+                        bookingStatus: newStatus
+                    })
                 });
 
                 if (response.ok) {
                     alert('Cập nhật trạng thái thành công!');
                     closeBookingModal();
-                    fetchBookings(); // Tải lại danh sách
+                    fetchBookings(); // Tải lại danh sách để reset bảng
                 } else {
-                    const err = await response.text();
-                    alert('Lỗi: ' + err);
+                    // ĐÃ SỬA: Đồng bộ cách báo lỗi giống hàm editRoom và editService
+                    const err = await response.json();
+                    alert('Lỗi: ' + JSON.stringify(err.errors || err.message || err));
                 }
             } catch (error) {
                 console.error("Lỗi cập nhật:", error);
+                alert("Không thể kết nối đến máy chủ.");
+            }
+        }
+        // =====================================
+        // API - PAYMENT MANAGEMENT LOGIC
+        // =====================================
+
+        async function fetchPayments() {
+            try {
+                // Tùy chỉnh URL dưới đây cho đúng với [Route] trong Controller của bạn
+                const response = await fetch('/api/admin/payment', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    allAdminPayments = await response.json();
+
+                    // Sắp xếp giao dịch mới nhất lên đầu
+                    allAdminPayments.sort((a, b) => new Date(b.paymentDate || b.createdAt) - new Date(a.paymentDate || a.createdAt));
+
+                    filterPayments();
+                } else {
+                    document.getElementById('paymentTableBody').innerHTML = `<tr><td colspan="7" class="p-8 text-center text-error">Không thể tải dữ liệu thanh toán.</td></tr>`;
+                }
+            } catch (error) {
+                console.error("Lỗi fetch payments:", error);
+                document.getElementById('paymentTableBody').innerHTML = `<tr><td colspan="7" class="p-8 text-center text-error">Lỗi kết nối Server.</td></tr>`;
+            }
+        }
+
+        function filterPayments() {
+            const searchInput = document.getElementById('searchPaymentInput');
+            const methodFilter = document.getElementById('methodPaymentFilter');
+            if (!searchInput || !methodFilter) return;
+
+            const searchText = searchInput.value.toLowerCase().trim();
+            const methodVal = methodFilter.value.toLowerCase();
+
+            const filteredPayments = allAdminPayments.filter(pm => {
+                // 1. Tìm theo Tên khách, Mã Đơn, hoặc Mã Giao dịch
+                const customerName = (pm.customerName || pm.fullName || '').toLowerCase();
+                const bookingIdStr = String(pm.bookingId || '').toLowerCase();
+                const paymentIdStr = String(pm.id || pm.paymentId || '').toLowerCase();
+
+                const matchSearch = customerName.includes(searchText) || bookingIdStr.includes(searchText) || paymentIdStr.includes(searchText);
+
+                // 2. Lọc theo phương thức (VnPay, Cash, Banking)
+                let matchMethod = true;
+                if (methodVal !== 'all') {
+                    const currentMethod = (pm.paymentMethod || pm.method || '').toLowerCase();
+                    matchMethod = currentMethod.includes(methodVal);
+                }
+
+                return matchSearch && matchMethod;
+            });
+
+            renderPaymentTable(filteredPayments);
+        }
+
+        function renderPaymentTable(payments) {
+            const body = document.getElementById('paymentTableBody');
+            if (!body) return;
+
+            if (!payments || payments.length === 0) {
+                body.innerHTML = `<tr><td colspan="7" class="p-8 text-center text-on-surface-variant font-medium">Không tìm thấy giao dịch nào phù hợp.</td></tr>`;
+                return;
+            }
+
+            body.innerHTML = payments.map(pm => {
+                const pmId = pm.id || pm.paymentId || 'N/A';
+                const bookingId = pm.bookingId || 'N/A';
+                const customerName = pm.customerName || pm.fullName || "Khách ẩn danh";
+                const amount = (pm.amount || pm.totalAmount || 0).toLocaleString('vi-VN') + 'đ';
+
+                // Format ngày giờ
+                const rawDate = pm.paymentDate || pm.createdAt;
+                const dateStr = rawDate ? new Date(rawDate).toLocaleString('vi-VN', {
+                    hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric'
+                }) : 'N/A';
+
+                // Vẽ Badge cho Phương thức thanh toán
+                const method = pm.paymentMethod || pm.method || 'N/A';
+                let methodHtml = `<span class="bg-surface-container px-2 py-1 rounded text-xs font-semibold text-on-surface-variant">${method}</span>`;
+
+                if (method.toLowerCase().includes('vnpay')) {
+                    methodHtml = `<span class="bg-[#005BAA]/10 text-[#005BAA] px-2 py-1 rounded text-xs font-bold border border-[#005BAA]/20">VNPay</span>`;
+                } else if (method.toLowerCase().includes('cash')) {
+                    methodHtml = `<span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-bold border border-green-200">Tiền mặt</span>`;
+                } else if (method.toLowerCase().includes('bank')) {
+                    methodHtml = `<span class="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs font-bold border border-purple-200">Chuyển khoản</span>`;
+                }
+
+                // API trả về Payment Available (Thành công)
+                const statusHtml = `<span class="bg-success-container text-success px-3 py-1 rounded-full text-[10px] font-bold uppercase">Thành công</span>`;
+
+                return `
+                    <tr class="hover:bg-surface/50 transition-colors group">
+                        <td class="p-4 font-bold text-primary">#${pmId}</td>
+                        <td class="p-4 text-on-surface-variant font-semibold">#${bookingId}</td>
+                        <td class="p-4 font-bold text-on-surface">${customerName}</td>
+                        <td class="p-4 text-sm text-on-surface-variant">${dateStr}</td>
+                        <td class="p-4 font-bold text-success text-base text-right">+${amount}</td>
+                        <td class="p-4 text-center">${methodHtml}</td>
+                        <td class="p-4 text-center">${statusHtml}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        // =====================================
+        // API - ACCOUNT (USER) MANAGEMENT LOGIC
+        // =====================================
+
+        async function fetchAccounts() {
+            try {
+                const response = await fetch('/api/admin/account', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    allAdminAccounts = await response.json();
+                    filterAccounts();
+                } else {
+                    document.getElementById('accountTableBody').innerHTML = `<tr><td colspan="6" class="p-8 text-center text-error">Không thể tải danh sách tài khoản.</td></tr>`;
+                }
+            } catch (error) {
+                console.error("Lỗi fetch accounts:", error);
+                document.getElementById('accountTableBody').innerHTML = `<tr><td colspan="6" class="p-8 text-center text-error">Lỗi kết nối Server.</td></tr>`;
+            }
+        }
+
+        function filterAccounts() {
+            const searchInput = document.getElementById('searchAccountInput');
+            const roleFilter = document.getElementById('roleAccountFilter');
+            const statusFilter = document.getElementById('statusAccountFilter');
+            if (!searchInput || !roleFilter || !statusFilter) return;
+
+            const searchText = searchInput.value.toLowerCase().trim();
+            const roleVal = roleFilter.value;
+            const statusVal = statusFilter.value;
+
+            const filteredAccounts = allAdminAccounts.filter(acc => {
+                const username = (acc.username || acc.userName || '').toLowerCase();
+                const email = (acc.email || '').toLowerCase();
+                const matchSearch = username.includes(searchText) || email.includes(searchText);
+
+                let matchRole = true;
+                if (roleVal !== 'All') {
+                    // ĐÃ SỬA: 1 là Admin, 2 là Customer
+                    const roleStr = (acc.role == 1 || acc.role === 'Admin') ? 'Admin' : 'Customer';
+                    matchRole = roleStr === roleVal;
+                }
+
+                let matchStatus = true;
+                if (statusVal !== 'All') {
+                    // ĐẢM BẢO isActive là true/false
+                    const currentStatus = (acc.isActive === true || String(acc.isActive).toLowerCase() === 'true') ? "1" : "0";
+                    matchStatus = currentStatus === statusVal;
+                }
+
+                return matchSearch && matchRole && matchStatus;
+            });
+
+            renderAccountTable(filteredAccounts);
+        }
+
+        function renderAccountTable(accounts) {
+            const body = document.getElementById('accountTableBody');
+            if (!body) return;
+
+            if (!accounts || accounts.length === 0) {
+                body.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-on-surface-variant font-medium">Không tìm thấy tài khoản nào phù hợp.</td></tr>`;
+                return;
+            }
+
+            body.innerHTML = accounts.map(acc => {
+                const accId = acc.id || acc.accountId || 'N/A';
+                const username = acc.username || acc.userName || "N/A";
+                const email = acc.email || "Chưa cập nhật";
+
+                // ĐẢM BẢO isActive chuẩn true/false
+                const isActive = acc.isActive === true || String(acc.isActive).toLowerCase() === 'true';
+
+                // ĐÃ SỬA: 1 là Admin, 2 là Customer
+                const isRoleAdmin = (acc.role == 1 || acc.role === 'Admin');
+                const roleHtml = isRoleAdmin
+                    ? `<span class="bg-purple-100 text-purple-700 border border-purple-200 px-2.5 py-1 rounded text-[10px] font-bold uppercase">Admin</span>`
+                    : `<span class="bg-blue-100 text-blue-700 border border-blue-200 px-2.5 py-1 rounded text-[10px] font-bold uppercase">Customer</span>`;
+
+                const statusHtml = isActive
+                    ? `<span class="bg-success-container text-success px-3 py-1 rounded-full text-[10px] font-bold uppercase">Hoạt động</span>`
+                    : `<span class="bg-error-container text-error px-3 py-1 rounded-full text-[10px] font-bold uppercase">Bị khóa</span>`;
+
+                // Nút Khóa / Mở Khóa dựa trên isActive
+                const actionBtn = isActive
+                    ? `<button onclick="toggleAccountStatus(${accId}, false)" class="p-1.5 text-error hover:bg-error/10 rounded-lg transition-colors flex items-center justify-center mx-auto" title="Khóa tài khoản này">
+                           <span class="material-symbols-outlined text-[20px]">lock</span>
+                       </button>`
+                    : `<button onclick="toggleAccountStatus(${accId}, true)" class="p-1.5 text-success hover:bg-success/10 rounded-lg transition-colors flex items-center justify-center mx-auto" title="Mở khóa tài khoản">
+                           <span class="material-symbols-outlined text-[20px]">lock_open</span>
+                       </button>`;
+
+                return `
+                    <tr class="hover:bg-surface/50 transition-colors group">
+                        <td class="p-4 font-bold text-primary">#${accId}</td>
+                        <td class="p-4 font-bold text-on-surface">${username}</td>
+                        <td class="p-4 text-on-surface-variant text-sm">${email}</td>
+                        <td class="p-4 text-center">${roleHtml}</td>
+                        <td class="p-4 text-center">${statusHtml}</td>
+                        <td class="p-4 text-center">${actionBtn}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Gọi API PUT UpdateIsActive (Body gửi thẳng boolean true/false)
+        async function toggleAccountStatus(id, newStatus) {
+            const actionText = newStatus ? "MỞ KHÓA" : "KHÓA";
+            if (!confirm(`Bạn có chắc chắn muốn ${actionText} tài khoản này?`)) return;
+
+            try {
+                const response = await fetch(`/api/admin/account/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(newStatus)
+                });
+
+                if (response.ok) {
+                    // Cập nhật mảng trực tiếp cho nhanh, khỏi tải lại toàn bộ API
+                    const accIndex = allAdminAccounts.findIndex(a => a.id === id || a.accountId === id);
+                    if (accIndex > -1) {
+                        allAdminAccounts[accIndex].isActive = newStatus;
+                    }
+                    filterAccounts(); // Render lại bảng
+                } else {
+                    const err = await response.json();
+                    alert(`Lỗi: ${JSON.stringify(err.message || err.errors || err)}`);
+                }
+            } catch (error) {
+                console.error("Lỗi:", error);
                 alert("Không thể kết nối đến máy chủ.");
             }
         }

@@ -107,5 +107,11 @@ namespace HotelManager.Infrastructure.Services
             var lists = await _paymentRepository.GetPaymentsByAccountId(accountId);
             return lists.Select(p => _paymentConverter.entityToDto(p));
         }
+
+        public async Task<IEnumerable<PaymentHistoryAdminResponse>> GetListPaymentsSuccess()
+        {
+            var lists = await _paymentRepository.GetListPaymentSuccess();
+            return lists.Select(p => _paymentConverter.entityToDtoAdmin(p));
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using HotelManager.Application.Converters;
+using HotelManager.Application.CustomException;
 using HotelManager.Application.CustomException.Rooms;
 using HotelManager.Application.DTO.Bookings;
 using HotelManager.Application.IRepository;
@@ -58,6 +59,14 @@ namespace HotelManager.Infrastructure.Services
         {
             var list = await _bookingRepository.GetAllBookings();
             return list.Select(b => _bookingConverter.EntityToDetailAdminDto(b));
+        }
+
+        public async Task Update(int bookingId, BookingUpdateRequest request)
+        {
+            var booking = await _bookingRepository.GetById(bookingId);
+            if (booking == null) throw new NotExistsException("Không tồn tại Booking");
+            booking.ChangeBookingStatus(request.bookingStatus);
+            await _bookingRepository.Update(bookingId, booking);
         }
     }
 }
