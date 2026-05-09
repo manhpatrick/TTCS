@@ -1,6 +1,8 @@
 ﻿using HotelManager.Application.DTO.AppConfig;
+using HotelManager.Application.DTO;
 using HotelManager.Infrastructure.Data;
 using HotelManager.Presentation.Middleware;
+using HotelManager.Presentation.Hubs;
 using Microsoft.EntityFrameworkCore;
 using HotelManager.Infrastructure.AddLayer;
 using System.Text.Json.Serialization;
@@ -63,18 +65,19 @@ namespace HotelManager.Presentation
                 }
             );
             // Đăng ký MailSettings
-            builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+             builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure();
-            builder.Services.AddHostedService<BookingStatusUpdateService>();
-            builder.Services.AddMemoryCache();
             builder.Services.AddCors(option =>
             {
                 option.AddPolicy("AllowReactApp",
                 policy =>
                 {
-                    policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod();
+                    policy.WithOrigins("http://localhost:5173")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials(); // Quan trọng cho SignalR
                 });
             });
             var app = builder.Build();
@@ -94,6 +97,9 @@ namespace HotelManager.Presentation
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
+            
+            // Ánh xạ SignalR Hub
+            app.MapHub<NotificationHub>("/hubs/notification");
 
             app.Run();
         }
