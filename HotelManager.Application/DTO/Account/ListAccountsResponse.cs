@@ -13,5 +13,6 @@ namespace HotelManager.Application.DTO.Account
         public DateOnly? Birthday { get; set; }
         public string? Address { get; set; }
         public bool IsActive { get; set; }
+        public int Role { get; set; }
     }
 }

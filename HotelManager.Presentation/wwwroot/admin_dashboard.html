@@ -142,6 +142,10 @@
                 <span class="material-symbols-outlined">group</span>
                 <span class="font-label">Người dùng</span>
             </a>
+            <a class="nav-item flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest transition-colors duration-200 rounded-lg" data-target="notifications-content" href="#">
+                <span class="material-symbols-outlined">campaign</span>
+                <span class="font-label">Thông báo</span>
+            </a>
         </div>
         <div class="p-4 border-t border-outline-variant/15">
             <button onclick="handleAdminLogout()" class="w-full flex items-center gap-3 px-4 py-3 text-error hover:bg-error/10 rounded-xl font-bold transition-colors">
@@ -513,6 +517,92 @@
                 </div>
             </div>
         </div>
+        <div class="p-8 max-w-[1600px] w-full mx-auto flex-grow flex flex-col gap-6 content-section hidden" id="notifications-content">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-4">
+                <div>
+                    <h2 class="text-3xl font-headline font-bold text-primary">Quản lý Thông báo</h2>
+                    <p class="text-sm text-on-surface-variant mt-1">Gửi và quản lý các thông báo đến khách hàng trên hệ thống</p>
+                </div>
+                <button onclick="openNotificationModal()" class="flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-primary-container transition-colors shadow-md active:scale-95">
+                    <span class="material-symbols-outlined text-[20px]">add</span>
+                    Soạn thông báo
+                </button>
+            </div>
+
+            <div class="bg-white p-4 rounded-2xl border border-outline-variant/20 shadow-sm flex mb-2">
+                <div class="relative flex-1">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+                    <input id="searchNotificationInput" type="text" placeholder="Tìm kiếm theo tiêu đề hoặc nội dung..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-0 text-sm outline-none bg-surface-container-lowest" />
+                </div>
+            </div>
+
+            <div class="bg-white border border-outline-variant/20 rounded-2xl shadow-sm overflow-hidden flex-1">
+                <div class="overflow-x-auto table-container h-full">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-surface-container-low text-[11px] uppercase tracking-widest text-on-surface-variant border-b border-outline-variant/20 sticky top-0 z-10">
+                                <th class="p-4 font-bold w-16">ID</th>
+                                <th class="p-4 font-bold w-1/4">Tiêu đề</th>
+                                <th class="p-4 font-bold w-1/3">Nội dung</th>
+                                <th class="p-4 font-bold text-center">Người nhận</th>
+                                <th class="p-4 font-bold">Ngày tạo</th>
+                                <th class="p-4 font-bold text-center">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="notificationTableBody" class="text-sm divide-y divide-outline-variant/10">
+                            <tr><td colspan="6" class="p-8 text-center text-on-surface-variant">Đang tải dữ liệu...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="notificationModal" class="fixed inset-0 z-[100] hidden">
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="closeNotificationModal()"></div>
+            <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-surface rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+                <div class="p-6 border-b border-outline-variant/20 flex justify-between items-center bg-white">
+                    <h3 id="notiModalTitle" class="text-xl font-headline font-bold text-primary">Soạn Thông Báo Mới</h3>
+                    <button onclick="closeNotificationModal()" class="p-2 hover:bg-surface-container rounded-full transition-colors text-on-surface-variant">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+
+                <form id="notificationForm" class="p-6 md:p-8 overflow-y-auto space-y-6 bg-surface custom-scrollbar">
+                    <input type="hidden" id="notificationId">
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Người nhận *</label>
+                        <div class="bg-surface-container-low p-4 rounded-xl border border-outline-variant/30 max-h-48 overflow-y-auto custom-scrollbar">
+                            <label class="flex items-center gap-3 p-2 hover:bg-surface-container rounded-lg cursor-pointer transition-colors border-b border-outline-variant/10 mb-2 pb-3">
+                                <input type="checkbox" id="sendToAllUsers" onchange="toggleUserSelection(this.checked)" checked class="w-4 h-4 text-primary rounded border-outline-variant/50 focus:ring-primary">
+                                <span class="text-sm font-bold text-primary">Gửi tất cả khách hàng</span>
+                            </label>
+
+                            <div id="userSelectionList" class="space-y-1 pl-2 opacity-50 pointer-events-none transition-opacity">
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-on-surface-variant mt-1 italic">* Bỏ chọn "Gửi tất cả" để chọn từng người nhận cụ thể.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Tiêu đề thông báo *</label>
+                        <input type="text" id="notiTitle" required class="w-full rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-3 outline-none" placeholder="VD: Khuyến mãi 50% dịp Lễ...">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Nội dung chi tiết *</label>
+                        <textarea id="notiContent" rows="5" required class="w-full rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-3 outline-none resize-none" placeholder="Nhập nội dung thông báo..."></textarea>
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-6 border-t border-outline-variant/20">
+                        <button type="button" onclick="closeNotificationModal()" class="px-6 py-2.5 rounded-xl font-bold text-on-surface-variant hover:bg-surface-container-high transition-colors">Hủy</button>
+                        <button type="submit" class="px-8 py-2.5 bg-primary text-white rounded-xl font-bold hover:bg-primary-container shadow-md transition-all active:scale-95 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-[20px]">send</span> Phát hành
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </main>
 
     <div id="roomModal" class="fixed inset-0 z-[100] hidden">
@@ -813,7 +903,7 @@
         let allAdminServices = [];
         let allAdminBookings = [];
         let allAdminAccounts = [];
-
+        let allAdminNotifications = [];
 
         document.addEventListener('DOMContentLoaded', () => {
             const navItems = document.querySelectorAll('.nav-item');
@@ -824,6 +914,7 @@
             fetchServices();
             fetchBookings();
             fetchAccounts();
+            fetchNotifications();
 
             const searchRoomInput = document.getElementById('searchRoomInput');
             const statusFilter = document.getElementById('statusFilter');
@@ -854,6 +945,9 @@
             if (searchAcc) searchAcc.addEventListener('input', filterAccounts);
             if (roleAcc) roleAcc.addEventListener('change', filterAccounts);
             if (statusAcc) statusAcc.addEventListener('change', filterAccounts);
+
+            const searchNoti = document.getElementById('searchNotificationInput');
+            if (searchNoti) searchNoti.addEventListener('input', filterNotifications);
 
             navItems.forEach(item => {
                 item.addEventListener('click', (e) => {
@@ -2025,6 +2119,314 @@
                 alert("Không thể kết nối đến máy chủ.");
             }
         }
+        // =====================================
+        // API - NOTIFICATION MANAGEMENT LOGIC
+        // =====================================
+
+        async function fetchNotifications() {
+            try {
+                const response = await fetch('/api/admin/notification', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    allAdminNotifications = await response.json();
+                    // Sắp xếp thông báo mới nhất lên đầu
+                    allAdminNotifications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                    filterNotifications();
+                } else {
+                    document.getElementById('notificationTableBody').innerHTML = `<tr><td colspan="6" class="p-8 text-center text-error">Không thể tải dữ liệu thông báo.</td></tr>`;
+                }
+            } catch (error) {
+                console.error("Lỗi fetch notifications:", error);
+            }
+        }
+
+        function filterNotifications() {
+            const searchInput = document.getElementById('searchNotificationInput');
+            if (!searchInput) return;
+
+            const searchText = searchInput.value.toLowerCase().trim();
+
+            const filtered = allAdminNotifications.filter(n => {
+                const title = (n.title || '').toLowerCase();
+                const content = (n.content || '').toLowerCase();
+                return title.includes(searchText) || content.includes(searchText);
+            });
+
+            renderNotificationTable(filtered);
+        }
+
+        function renderNotificationTable(notifications) {
+            const body = document.getElementById('notificationTableBody');
+            if (!body) return;
+
+            if (!notifications || notifications.length === 0) {
+                body.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-on-surface-variant font-medium">Chưa có thông báo nào.</td></tr>`;
+                return;
+            }
+
+            body.innerHTML = notifications.map(n => {
+                const dateStr = n.createdAt ? new Date(n.createdAt).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' }) : 'N/A';
+
+                // Số người nhận: Nếu null hoặc rỗng = Gửi toàn hệ thống
+                const receiverCount = (n.listReceiver && n.listReceiver.length > 0) ? `${n.listReceiver.length} người` : 'Toàn hệ thống';
+
+                return `
+                    <tr class="hover:bg-surface/50 transition-colors group">
+                        <td class="p-4 font-bold text-primary">#${n.id}</td>
+                        <td class="p-4 font-bold text-on-surface">${n.title}</td>
+                        <td class="p-4 text-on-surface-variant text-sm">
+                            <div class="line-clamp-2" title="${n.content}">${n.content}</div>
+                        </td>
+                        <td class="p-4 text-center">
+                            <span class="bg-surface-container px-2 py-1 rounded text-xs font-semibold text-on-surface-variant">${receiverCount}</span>
+                        </td>
+                        <td class="p-4 text-sm text-on-surface-variant">${dateStr}</td>
+                        <td class="p-4 text-center whitespace-nowrap">
+                            <button onclick='editNotification(${JSON.stringify(n).replace(/'/g, "&apos;")})' class="p-1.5 text-primary hover:bg-surface-container rounded-lg transition-colors" title="Sửa">
+                                <span class="material-symbols-outlined text-[20px]">edit</span>
+                            </button>
+                            <button onclick="deleteNotification(${n.id})" class="p-1.5 text-error hover:bg-error/10 rounded-lg transition-colors ml-1" title="Xóa">
+                                <span class="material-symbols-outlined text-[20px]">delete</span>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // --- Modal Logic ---
+        function openNotificationModal(isEdit = false) {
+            document.getElementById('notificationModal').classList.remove('hidden');
+            document.getElementById('notiModalTitle').innerText = isEdit ? "Cập nhật Thông Báo" : "Soạn Thông Báo Mới";
+
+            if (!isEdit) {
+                document.getElementById('notificationForm').reset();
+                document.getElementById('notificationId').value = '';
+            }
+        }
+
+        function closeNotificationModal() {
+            document.getElementById('notificationModal').classList.add('hidden');
+        }
+
+        function editNotification(n) {
+            openNotificationModal(true);
+            document.getElementById('notificationId').value = n.id;
+            document.getElementById('notiTitle').value = n.title;
+            document.getElementById('notiContent').value = n.content;
+        }
+
+        // Xử lý Thêm / Sửa
+        // Xử lý Thêm / Sửa và Map DTO ListReceiver
+        document.getElementById('notificationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('notificationId').value;
+            const isEdit = Boolean(id);
+
+            const title = document.getElementById('notiTitle').value.trim();
+            const content = document.getElementById('notiContent').value.trim();
+
+            // Xử lý danh sách người nhận
+            let receivers = [];
+
+            // Khi thêm mới, chúng ta mới lấy danh sách người nhận từ giao diện
+            if (!isEdit) {
+                const sendToAll = document.getElementById('sendToAllUsers').checked;
+                if (!sendToAll) {
+                    const checkboxes = document.querySelectorAll('.user-select-cb:checked');
+                    checkboxes.forEach(cb => {
+                        // Cấu trúc ReceiverRequest { Id: ... }
+                        receivers.push({ Id: parseInt(cb.value) });
+                    });
+
+                    if (receivers.length === 0) {
+                        alert("Vui lòng chọn ít nhất 1 người nhận hoặc tích chọn 'Gửi tất cả'!");
+                        return;
+                    }
+                }
+            }
+
+            // QUAN TRỌNG: Key phải khớp 100% với tên Property trong C# DTO (Cả viết hoa/thường)
+            const dto = {
+                Title: title,
+                Content: content,
+                ListReceiver: receivers // Đã sửa: L viết hoa để khớp C#
+            };
+
+            // Log để bạn kiểm tra trong console (F12) trước khi gửi
+            console.log("DTO gửi lên Backend:", dto);
+
+            try {
+                const response = await fetch(isEdit ? `/api/admin/notification/${id}` : '/api/admin/notification', {
+                    method: isEdit ? 'PUT' : 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(dto)
+                });
+
+                if (response.ok) {
+                    alert(isEdit ? 'Cập nhật thành công!' : 'Đã phát hành thông báo thành công!');
+                    closeNotificationModal();
+                    fetchNotifications();
+                } else {
+                    const err = await response.json();
+                    alert(`Lỗi từ Server: ${JSON.stringify(err.message || err.errors || err)}`);
+                }
+            } catch (error) {
+                console.error("Lỗi khi gọi API Notification:", error);
+                alert("Không thể kết nối đến máy chủ.");
+            }
+        });
+
+        // Xử lý Xóa
+        async function deleteNotification(id) {
+            if (!confirm('Bạn có chắc chắn muốn xóa thông báo này? Hành động này sẽ thu hồi thông báo từ phía khách hàng.')) return;
+
+            try {
+                const response = await fetch(`/api/admin/notification/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (response.ok) {
+                    fetchNotifications();
+                } else {
+                    alert('Lỗi khi xóa thông báo!');
+                }
+            } catch (error) {
+                console.error("Lỗi xóa:", error);
+            }
+        }
+        // --- Modal Logic (CẬP NHẬT TÍNH NĂNG CHỌN USER) ---
+        function openNotificationModal(isEdit = false) {
+            document.getElementById('notificationModal').classList.remove('hidden');
+            document.getElementById('notiModalTitle').innerText = isEdit ? "Cập nhật Thông Báo" : "Soạn Thông Báo Mới";
+
+            if (!isEdit) {
+                document.getElementById('notificationForm').reset();
+                document.getElementById('notificationId').value = '';
+
+                // Render danh sách user để chọn
+                renderUserSelectionList();
+                toggleUserSelection(true); // Mặc định là gửi tất cả
+            }
+        }
+
+        // Render mảng allAdminAccounts vào danh sách Checkbox
+        function renderUserSelectionList() {
+            const container = document.getElementById('userSelectionList');
+            if (!container) return;
+
+            // Kiểm tra nếu chưa load được accounts thì báo lỗi
+            if (allAdminAccounts.length === 0) {
+                container.innerHTML = '<p class="text-xs text-error p-2 italic">Chưa tải được danh sách tài khoản. Vui lòng thử lại.</p>';
+                return;
+            }
+
+            // Chỉ hiện các tài khoản là Customer (role = 2) và đang hoạt động
+            const activeCustomers = allAdminAccounts.filter(a => (a.role == 2 || a.role === 'Customer') && a.isActive);
+
+            container.innerHTML = activeCustomers.map(u => `
+                <label class="flex items-center gap-3 p-1.5 hover:bg-surface-container rounded-lg cursor-pointer transition-colors">
+                    <input type="checkbox" value="${u.id || u.accountId}" class="user-select-cb w-4 h-4 text-primary rounded border-outline-variant/50 focus:ring-primary">
+                    <span class="text-sm text-on-surface">
+                        <span class="font-bold">${u.username || u.userName}</span> 
+                        <span class="text-xs text-on-surface-variant ml-1">(${u.email || 'N/A'})</span>
+                    </span>
+                </label>
+            `).join('');
+        }
+
+        // Bật / Tắt trạng thái chọn từng user
+        function toggleUserSelection(isAll) {
+            const container = document.getElementById('userSelectionList');
+            const selectAllCb = document.getElementById('sendToAllUsers');
+            selectAllCb.checked = isAll;
+
+            if (isAll) {
+                container.classList.add('opacity-50', 'pointer-events-none');
+                // Bỏ check tất cả user ở dưới
+                document.querySelectorAll('.user-select-cb').forEach(cb => cb.checked = false);
+            } else {
+                container.classList.remove('opacity-50', 'pointer-events-none');
+            }
+        }
+
+        function closeNotificationModal() {
+            document.getElementById('notificationModal').classList.add('hidden');
+        }
+
+        function editNotification(n) {
+            openNotificationModal(true);
+            document.getElementById('notificationId').value = n.id;
+            document.getElementById('notiTitle').value = n.title;
+            document.getElementById('notiContent').value = n.content;
+
+            // Ẩn tính năng chọn User khi đang Sửa (Vì thường thông báo gửi rồi chỉ sửa nội dung)
+            document.getElementById('sendToAllUsers').parentElement.classList.add('hidden');
+            document.getElementById('userSelectionList').classList.add('hidden');
+        }
+
+        // Xử lý Thêm / Sửa và Map DTO listReceiver
+        document.getElementById('notificationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('notificationId').value;
+            const isEdit = Boolean(id);
+
+            const title = document.getElementById('notiTitle').value.trim();
+            const content = document.getElementById('notiContent').value.trim();
+
+            // Xử lý danh sách người nhận
+            let receivers = [];
+            if (!isEdit) {
+                const sendToAll = document.getElementById('sendToAllUsers').checked;
+                if (!sendToAll) {
+                    const checkboxes = document.querySelectorAll('.user-select-cb:checked');
+                    checkboxes.forEach(cb => {
+                        receivers.push({ Id: parseInt(cb.value) });
+                    });
+
+                    if (receivers.length === 0) {
+                        alert("Vui lòng chọn ít nhất 1 người nhận hoặc tích chọn 'Gửi tất cả'!");
+                        return;
+                    }
+                }
+            }
+
+            // Xây dựng DTO chính xác theo Backend của bạn
+            const dto = {
+                Title: title,
+                Content: content,
+                listReceiver: receivers // Trùng với tên thuộc tính trong C#
+            };
+
+            try {
+                const response = await fetch(isEdit ? `/api/admin/notification/${id}` : '/api/admin/notification', {
+                    method: isEdit ? 'PUT' : 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(dto)
+                });
+
+                if (response.ok) {
+                    alert(isEdit ? 'Cập nhật thành công!' : 'Đã phát hành thông báo thành công!');
+                    closeNotificationModal();
+                    fetchNotifications();
+                } else {
+                    const err = await response.json();
+                    alert(`Lỗi: ${JSON.stringify(err.message || err.errors || err)}`);
+                }
+            } catch (error) {
+                console.error("Lỗi:", error);
+                alert("Không thể kết nối đến máy chủ.");
+            }
+        });
     </script>
 </body>
 </html>

@@ -17,7 +17,8 @@ namespace HotelManager.Application.Converters
                 Gender = account.User?.Gender,
                 Birthday = account.User?.BirthDay,
                 Address = account.User?.Address,
-                IsActive = account.IsActive
+                IsActive = account.IsActive,
+                Role = (int)account.Role
             };
         }
     }
