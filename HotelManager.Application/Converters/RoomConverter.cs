@@ -68,7 +68,8 @@ namespace HotelManager.Application.Converters
                 // Các trường nội bộ dành riêng cho Admin
                 Category = room.Category,
                 RoomStatus = room.RoomStatus,
-                BookingCount = room.BookingCount
+                BookingCount = room.BookingCount,
+                Description = room.Description
             };
         }
     }

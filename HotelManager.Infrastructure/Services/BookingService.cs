@@ -53,5 +53,11 @@ namespace HotelManager.Infrastructure.Services
             var list = await _bookingRepository.GetBookingsByAccountId(accountId);
             return list.Select(b => _bookingConverter.EntityToDetailDto(b));
         }
+
+        public async Task<IEnumerable<BookingDetailAdminResponse>> GetListBookings()
+        {
+            var list = await _bookingRepository.GetAllBookings();
+            return list.Select(b => _bookingConverter.EntityToDetailAdminDto(b));
+        }
     }
 }

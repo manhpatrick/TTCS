@@ -3,7 +3,7 @@ using HotelManager.Domain.Entity.Bookings.Enum;
 
 namespace HotelManager.Application.DTO.Bookings
 {
-    public class BookingDetailResponse
+    public class BookingDetailAdminResponse
     {
         public int Id { get; set; }
         public string Note { get; set; } = String.Empty;
@@ -15,8 +15,11 @@ namespace HotelManager.Application.DTO.Bookings
         public BookingStatus BookingStatus { get; set; }
         public DateTime? ApprovedAt { get; set; }
         public string RoomName { get; set; }
+        public string CustomerName { get; set; }
+        public string? Email { get; set; }
+        public string? Phone { get; set; }
         public decimal TotalPrice { get; set; }
-        public RatingResponse? ratingResponse { get; set; } 
+        public RatingResponse? ratingResponse { get; set; }
         public List<ServiceListResponse> serviceLists { get; set; } = new List<ServiceListResponse>();
     }
 }

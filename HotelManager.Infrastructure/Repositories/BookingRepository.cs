@@ -3,6 +3,7 @@ using HotelManager.Domain.Entity.Bookings;
 using HotelManager.Domain.Entity.Bookings.Enum;
 using HotelManager.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 
 namespace HotelManager.Infrastructure.Repositories
 {
@@ -35,6 +36,18 @@ namespace HotelManager.Infrastructure.Repositories
         {
             return await _dbSet.Where(b => b.AccountId == accountId)
                 .Include(b => b.Room)
+                .Include(b => b.Account)
+                .Include(b => b.Rating)
+                .Include(b => b.ServiceUsages)
+                .ThenInclude(su => su.Service)
+                .OrderByDescending(b => b.CreatedAt).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Booking>> GetAllBookings()
+        {
+            return await _dbSet.Include(b => b.Room)
+                .Include(b => b.Account)
+                .ThenInclude(a => a.User)
                 .Include(b => b.Rating)
                 .Include(b => b.ServiceUsages)
                 .ThenInclude(su => su.Service)

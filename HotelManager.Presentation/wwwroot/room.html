@@ -195,9 +195,17 @@
         };
 
         function getCategoryLabel(category) {
-            if (!category) return 'UNKNOWN';
-            const key = String(category).toUpperCase();
-            return ROOM_CATEGORY[key] || 'UNKNOWN';
+            if (!category) return 'Chưa rõ';
+
+            const catStr = String(category);
+
+            // Nếu Backend trả về số (1, 2, 3), lấy tên từ từ điển ROOM_CATEGORY
+            if (ROOM_CATEGORY[catStr]) {
+                return ROOM_CATEGORY[catStr];
+            }
+
+            // Nếu Backend đã trả về sẵn chữ (Normal, Vip, Luxury), thì hiển thị thẳng chữ đó luôn
+            return catStr;
         }
 
         function getStatusInfo(status) {

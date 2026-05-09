@@ -277,7 +277,7 @@
             const price = Number(data?.pricePerNight ?? data?.totalPrice ?? data?.price ?? 0);
             const formattedPrice = new Intl.NumberFormat('vi-VN').format(price);
             const defaultImage = "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=400&auto=format&fit=crop";
-            const imageUrl = data?.roomThumbnail || data?.thumbnail || defaultImage;
+            const imageUrl = data?.thumbnailUrl || data?.roomThumbnail || data?.thumbnail || defaultImage;
             const roomName = data?.name || 'Phòng chưa xác định';
             const capacity = Number(data?.capacity ?? 0);
             roomDataContainer.innerHTML = `

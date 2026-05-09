@@ -1,5 +1,6 @@
 ﻿using HotelManager.Application.Converters;
 using HotelManager.Application.CustomException;
+using HotelManager.Application.DTO.Notifications;
 using HotelManager.Application.DTO.Ratings;
 using HotelManager.Application.IRepository;
 using HotelManager.Application.IService;
@@ -12,14 +13,17 @@ namespace HotelManager.Infrastructure.Services
         private readonly IBookingRepository _bookingRepository;
         private readonly IRoomRepository _roomRepository;
         private readonly RatingConverter _ratingConverter;
+        private readonly INotificationService _notificationService;
         public RatingService(IRatingRepository ratingRepository,
             IRoomRepository roomRepository,
             IBookingRepository bookingRepository,
+            INotificationService notificationService,
             RatingConverter ratingConverter)
         {
             _ratingRepository = ratingRepository;
             _bookingRepository = bookingRepository;
             _ratingConverter = ratingConverter;
+            _notificationService = notificationService;
             _roomRepository = roomRepository;
         }
         public async Task<IEnumerable<RatingResponse>> GetRoomRatings(int roomId)
@@ -40,6 +44,16 @@ namespace HotelManager.Infrastructure.Services
                 room.ChangeAverageStar(request.NumOfRating);
                 await _roomRepository.Update(room.Id, room);
             }
+            await _notificationService.AddNotification(new NotificationRequest
+            {
+                Title = $"Cảm ơn đánh giá của bạn cho đơn đặt phòng {booking.Room?.Name}",
+                Content = $"Cảm ơn bạn đã sử dụng và đánh giá dịch vụ của chúng tôi, chúng tôi sẽ ghi nhận và tiếp thu" +
+                        $"đánh giá của bạn",
+                listReceiver = new List<ReceiverRequest>
+                            {
+                                new ReceiverRequest { Id = booking.AccountId }
+                            }
+            });
         }
     }
 }

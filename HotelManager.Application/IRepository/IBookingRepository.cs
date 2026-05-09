@@ -9,5 +9,6 @@ namespace HotelManager.Application.IRepository
 
         Task<bool> IsRoomAvailable(int roomId, DateTime from, DateTime to);
         Task<IEnumerable<Booking>> GetBookingsByAccountId(int accountId);
+        Task<IEnumerable<Booking>> GetAllBookings();
     }
 }

@@ -4,7 +4,7 @@
     <script src="/js/auth-guard.js"></script>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Heritage Presidential Suite - The Editorial Concierge</title>
+    <title>Chi tiết phòng - The Editorial Concierge</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
@@ -71,9 +71,9 @@
                         "full": "9999px"
                     },
                     "fontFamily": {
-                        "headline": ["Noto Serif"],
-                        "body": ["Manrope"],
-                        "label": ["Manrope"]
+                        "headline": ["Noto Serif", "serif"],
+                        "body": ["Manrope", "sans-serif"],
+                        "label": ["Manrope", "sans-serif"]
                     }
                 },
             },
@@ -93,33 +93,32 @@
             font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
         }
 
-        .glass-nav {
-            background: rgba(250, 249, 248, 0.8);
-            backdrop-filter: blur(24px);
-        }
-
         .editorial-shadow {
             box-shadow: 0 32px 64px rgba(26, 28, 28, 0.06);
         }
+        /* Làm đẹp thanh cuộn cho thư viện ảnh */
+        #imageGalleryModal .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #imageGalleryModal .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #imageGalleryModal .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+        }
+
+        #imageGalleryModal .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.4);
+        }
     </style>
 </head>
-<body class="bg-surface text-on-surface font-body antialiased selection:bg-secondary-container
-selection:text-on-secondary-container">
-    <nav class="fixed top-0 w-full z-50 glass-nav transition-colors duration-300">
-        <div class="flex justify-between items-center px-12 py-6 mx-auto">
-            <div class="flex items-center gap-12">
-                <a class="text-2xl font-headline italic text-primary dark:text-white tracking-tight" href="/">The Editorial Concierge</a>
-                <div class="hidden md:flex items-center gap-8 font-headline text-lg tracking-tight">
-                    <a class="text-primary/70 hover:text-secondary transition-all duration-300 nav-link" href="/">Trang chủ</a>
-                    <a class="text-primary/70 hover:text-secondary transition-all duration-300 nav-link" href="/room.html">Phòng</a>
-                    <a class="text-primary/70 hover:text-secondary transition-all duration-300 nav-link" href="/service.html">Dịch vụ</a>
-                    <a class="text-primary/70 hover:text-secondary transition-all duration-300 nav-link" href="/booking.html">Đặt ngay</a>
-                </div>
-            </div>
-            <div class="flex items-center gap-6" id="authContainer">
-            </div>
-        </div>
-    </nav>
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-secondary-container selection:text-on-secondary-container">
+
+    <div id="header-placeholder"></div>
+
     <main class="pt-28 pb-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <section class="mb-12 lg:mb-16">
             <div id="roomImageContainer" class="grid grid-cols-1 lg:grid-cols-12 gap-4">
@@ -134,6 +133,7 @@ selection:text-on-secondary-container">
             </div>
         </div>
     </main>
+
     <section class="bg-surface-container-low py-16 lg:py-24 border-t border-surface-dim/30">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-2xl md:text-3xl font-headline font-bold text-primary mb-10">Các phòng tương tự khác</h2>
@@ -141,8 +141,9 @@ selection:text-on-secondary-container">
             </div>
         </div>
     </section>
+
     <div id="footer-placeholder"></div>
-    <script src="/js/footer.js"></script>
+
     <div class="fixed inset-0 z-[100] hidden" id="reviewModal">
         <div onclick="closeReviewModal()" class="absolute inset-0 bg-stone-900/70 backdrop-blur-md transition-opacity cursor-pointer"></div>
 
@@ -152,8 +153,8 @@ selection:text-on-secondary-container">
                     <h2 class="text-3xl font-headline font-bold text-primary mb-2">Tất cả đánh giá</h2>
                     <div class="flex items-center gap-2">
                         <span class="material-symbols-outlined text-secondary text-[24px]" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
-                        <span class="text-xl font-headline font-bold text-primary">4.9</span>
-                        <span class="text-on-surface-variant font-body font-medium mt-1 ml-1">• 124 đánh giá</span>
+                        <span class="text-xl font-headline font-bold text-primary">0.0</span>
+                        <span class="text-on-surface-variant font-body font-medium mt-1 ml-1">• 0 đánh giá</span>
                     </div>
                 </div>
 
@@ -166,130 +167,36 @@ selection:text-on-secondary-container">
             </div>
         </div>
     </div>
-</body>
-<script>
+    <div id="imageGalleryModal" class="fixed inset-0 z-[100] hidden bg-black/95 flex-col backdrop-blur-sm transition-opacity">
+        <div class="flex justify-between items-center p-6 shrink-0">
+            <div class="text-white/70 text-sm font-label"><span id="galleryImageCount">0</span> hình ảnh</div>
+            <button onclick="closeImageGallery()" class="text-white/70 hover:text-white p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors flex items-center justify-center">
+                <span class="material-symbols-outlined text-[24px]">close</span>
+            </button>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-4 md:p-10 flex flex-col items-center gap-8 custom-scrollbar pb-20" id="galleryContainer">
+        </div>
+    </div>
+
+    
+    <script src="/js/header.js"></script>
+    <script src="/js/footer.js"></script>
+
+    <script>
         const currentRoomId = new URLSearchParams(window.location.search).get('id');
-        let currentRoomData = null;   
+        let currentRoomData = null;
         let selectedCheckInDate = null;
         let selectedCheckOutDate = null;
         let calculatedTotal = 0;
         let selectedRoomCapacity = 0;
         let guestValue = 1;
 
-        function getAuthToken(){
-            const token = localStorage.getItem('userToken');
-            if (!token || token === 'undefined' || token === 'null') {
-                return null;
-            }
-            return token;
-        }
-
-        function checkLoginStatus(){
-            const token = getAuthToken();
-            const isLogin = Boolean(token);
-            const authContainer = document.getElementById('authContainer');
-            if(!authContainer) return;
-            if(!isLogin){
-                authContainer.innerHTML = `
-                    <a href="/user_auth.html#signin"
-                        class="text-primary/70 hover:text-primary font-medium transition-all duration-300"
-                    >
-                        Đăng nhập
-                    </a>
-                    <a href="/user_auth.html#signup"
-                        class="bg-gradient-to-r from-primary to-primary-container text-white px-6 py-2.5 rounded-lg font-medium shadow-lg active:scale-95 transition-all"
-                    >
-                        Đăng ký
-                    </a>
-                `;
-            } else {
-                authContainer.innerHTML = `
-                    <div class="flex items-center gap-6 relative">
-                        <div class="flex items-center gap-4">
-                            <button id="userMenuBtn" class="flex items-center gap-2 group focus:outline-none">
-                                <div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/10 group-hover:border-secondary transition-all">
-                                    <img alt="User Profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD34i7k1w4t-x06-tI0kZ8R7YF_8y_P2k9pYyYyYyYyYyYyYyYyYyYy"/>
-                                </div>
-                                <div class="flex flex-col items-start hidden sm:flex">
-                                    <span class="text-sm font-semibold text-primary font-body">${localStorage.getItem('demo_auth_user') || 'Người dùng'}</span>
-                                    <span class="text-[10px] text-on-surface-variant font-medium tracking-wider uppercase">Thành viên Gold</span>
-                                </div>
-                                <span class="material-symbols-outlined text-primary/60 group-hover:text-secondary transition-colors">expand_more</span>
-                            </button>
-                        </div>
-                        <div id="userDropdown" class="absolute top-full right-0 mt-3 w-64 bg-surface rounded-xl editorial-shadow border border-outline-variant/20 opacity-0 invisible translate-y-2 transition-all duration-300 z-50 overflow-hidden">
-                            <div class="p-2 space-y-1">
-                                <a href="/user_profile.html" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
-                                    <span class="material-symbols-outlined text-[20px]">person</span>
-                                    Hồ sơ cá nhân
-                                </a>
-                                <a href="/booking.html" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
-                                    <span class="material-symbols-outlined text-[20px]">book_online</span>
-                                    Quản lý đặt phòng
-                                </a>
-                                <a href="#" class="flex items-center gap-3 px-3 py-2.5 text-sm text-on-surface-variant hover:bg-surface-container hover:text-primary rounded-lg transition-colors">
-                                    <span class="material-symbols-outlined text-[20px]">loyalty</span>
-                                    Đặc quyền Gold
-                                </a>
-                            </div>
-                            <div class="border-t border-outline-variant/10 p-2 bg-surface-container-lowest">
-                                <button onclick="handleLogout()" class="w-full flex items-center gap-3 px-3 py-2.5 text-sm text-error hover:bg-error-container/30 rounded-lg transition-colors text-left font-medium" >
-                                    <span class="material-symbols-outlined text-[20px]">logout</span>
-                                    Đăng xuất
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                setTimeout(() => {
-                    const userMenuBtn = document.getElementById('userMenuBtn');
-                    const userDropdown = document.getElementById('userDropdown');
-                    if (userMenuBtn && userDropdown) {
-                        userMenuBtn.addEventListener('click', (e) => {
-                            e.stopPropagation();
-                            userDropdown.classList.toggle('opacity-0');
-                            userDropdown.classList.toggle('invisible');
-                            userDropdown.classList.toggle('translate-y-2');
-                        });
-
-                        document.addEventListener('click', () => {
-                            userDropdown.classList.add('opacity-0', 'invisible', 'translate-y-2');
-                        });
-                    }
-                }, 0);
-            }
-        }
-
-        function handleLogout(){
-            localStorage.removeItem('userToken');
-            window.location.href = '/';
-        }
-
-        function setActiveNavLink() {
-            const currentPath = window.location.pathname;
-            const navLinks = document.querySelectorAll('.nav-link');
-
-            navLinks.forEach(link => {
-                const href = link.getAttribute('href');
-                link.classList.remove('text-secondary', 'border-b-2', 'border-secondary', 'pb-1');
-                link.classList.add('text-primary/70', 'hover:text-secondary');
-
-                const isRoomDetail = currentPath.includes('/room_detail.html') && href === '/room.html';
-                const isMatch = (href === '/' && currentPath === '/') || (href !== '/' && currentPath.includes(href));
-
-                if (isRoomDetail || isMatch) {
-                    link.classList.remove('text-primary/70', 'hover:text-secondary');
-                    link.classList.add('text-secondary', 'border-b-2', 'border-secondary', 'pb-1');
-                }
-            });
-        }
-
         function openReviewModal() {
             const reviewModal = document.getElementById('reviewModal');
             if (reviewModal) {
                 reviewModal.classList.remove('hidden');
             }
-
             renderAllRoomReviews();
         }
 
@@ -300,24 +207,24 @@ selection:text-on-secondary-container">
             }
         }
 
-        function setGuestQuantity(nextValue){
+        function setGuestQuantity(nextValue) {
             guestValue = Math.max(1, nextValue);
             updateGuestQuantityUI();
         }
 
-        function changeGuestQuantity(delta){
+        function changeGuestQuantity(delta) {
             const nextValue = guestValue + delta;
             if (nextValue < 1 || nextValue > selectedRoomCapacity) {
-                return; 
+                return;
             }
             setGuestQuantity(nextValue);
         }
 
-        function updateGuestQuantityUI(){
+        function updateGuestQuantityUI() {
             const currentQtyValue = document.getElementById('guestQtyValue');
             const btnMinus = document.getElementById('guestQtyMinus');
             const btnPlus = document.getElementById('guestQtyPlus');
-            if(currentQtyValue){
+            if (currentQtyValue) {
                 currentQtyValue.textContent = guestValue;
             }
             if (btnMinus) {
@@ -328,26 +235,26 @@ selection:text-on-secondary-container">
             }
         }
 
-        async function fetchRoom(roomID){
-            try{
+        async function fetchRoom(roomID) {
+            try {
                 const response = await fetch('/api/room/' + roomID);
-                if(!response.ok){
+                if (!response.ok) {
                     throw new Error('Room not found');
                 }
                 const roomData = await response.json();
                 currentRoomData = roomData;
                 selectedRoomCapacity = roomData.capacity || 1;
                 return roomData;
-            } catch(error){
+            } catch (error) {
                 console.error('Error fetching room info:', error);
                 return null;
             }
         }
 
-        async function fetchRecommendRoom(){
-            try{
+        async function fetchRecommendRoom() {
+            try {
                 const response = await fetch('/api/room');
-                if(!response.ok){
+                if (!response.ok) {
                     throw new Error('Failed to fetch rooms');
                 }
                 const roomsData = await response.json();
@@ -355,7 +262,7 @@ selection:text-on-secondary-container">
                 recommendRooms.sort(() => 0.5 - Math.random());
                 recommendRooms = recommendRooms.slice(0, 3);
                 renderRecommendRooms(recommendRooms);
-            } catch(error){
+            } catch (error) {
                 console.error('Error fetching recommended rooms:', error);
                 renderRecommendRooms([]);
             }
@@ -367,21 +274,19 @@ selection:text-on-secondary-container">
                 if (!response.ok) {
                     throw new Error('Failed to fetch reviews');
                 }
-
                 return await response.json();
             } catch (error) {
                 console.error('Error fetching reviews:', error);
                 return [];
             }
         }
+
         function generateStarsHtml(rating) {
             let starsHtml = '';
             for (let i = 1; i <= 5; i++) {
                 if (i <= rating) {
-                    // Sao vàng (đã đánh giá)
                     starsHtml += `<span class="material-symbols-outlined text-[18px] text-secondary" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>`;
                 } else {
-                    // Sao xám (còn thiếu)
                     starsHtml += `<span class="material-symbols-outlined text-[18px] text-surface-dim" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>`;
                 }
             }
@@ -389,329 +294,294 @@ selection:text-on-secondary-container">
         }
 
         function renderRoomImage(data) {
-            const roomImageContainer = document.getElementById('roomImageContainer');  
-            const roomCategory = data.category.toLowerCase().replace(/\s+/g, '-');
+            const roomImageContainer = document.getElementById('roomImageContainer');
+            const roomCategory = data.category ? data.category.toLowerCase().replace(/\s+/g, '-') : 'hạng-phòng';
             const roomImages = data.listImageRoom || [];
             const count = roomImages.length;
+
             if (count === 0) {
                 roomImageContainer.innerHTML = `
-                        <span class="text-on-surface-variant">Tạm thời chưa có hình ảnh để hiển thị cho phòng</span>
-                `;
+                                <span class="text-on-surface-variant">Tạm thời chưa có hình ảnh để hiển thị cho phòng</span>
+                        `;
                 return;
-            } 
+            }
+
             let mainImg = roomImages.find(img => img.isThumbnail === true);
-            if(!mainImg){
+            if (!mainImg) {
                 mainImg = [...roomImages].sort((a, b) => a.sortOrder - b.sortOrder)[0];
             }
+
             const otherImages = roomImages
                 .filter(img => img.id !== mainImg.id)
                 .sort((a, b) => a.sortOrder - b.sortOrder);
+
             const finalUrls = [
                 mainImg.imageUrl,
                 ...otherImages.map(img => img.imageUrl)
             ];
+
             if (count === 1) {
                 roomImageContainer.innerHTML = `
-                    <div class="lg:col-span-8 rounded-2xl overflow-hidden relative group aspect-[4/3] lg:aspect-auto lg:h-[550px]">
-                        <img alt="Heritage Presidential Suite" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[0]}"/>
-                        <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex flex-wrap gap-2">
-                            <span class="bg-surface/90 backdrop-blur-md text-primary font-body text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">${roomCategory}</span>
-                            <span class="bg-secondary/95 text-on-secondary font-body text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider"></span>
-                        </div>
-                    </div>
-                `;
-            } 
+                            <div class="lg:col-span-8 rounded-2xl overflow-hidden relative group aspect-[4/3] lg:aspect-auto lg:h-[550px]">
+                                <img alt="${data.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[0]}"/>
+                                <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex flex-wrap gap-2">
+                                    <span class="bg-surface/90 backdrop-blur-md text-primary font-body text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">${roomCategory}</span>
+                                </div>
+                            </div>
+                        `;
+            }
             else if (count === 2) {
                 roomImageContainer.innerHTML = `
-                    <div class="lg:col-span-8 rounded-2xl overflow-hidden relative group aspect-[4/3] lg:aspect-auto lg:h-[550px]">
-                        <img alt="Heritage Presidential Suite" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[0]}"/>
-                        <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex flex-wrap gap-2">
-                            <span class="bg-surface/90 backdrop-blur-md text-primary font-body text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">${roomCategory}</span>
-                            <span class="bg-secondary/95 text-on-secondary font-body text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider"></span>
-                        </div>
-                    </div>
-                    <div class="hidden lg:flex lg:col-span-4 flex-col gap-4 h-[550px]">
-                        <div class="flex-1 rounded-2xl overflow-hidden group">
-                            <img alt="Suite Bathroom" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[1]}"/>
-                        </div>
-                    </div>
-                `;
-            } 
-            else if (count === 3) {
-                roomImageContainer.innerHTML = `
-                    <div class="lg:col-span-8 rounded-2xl overflow-hidden relative group aspect-[4/3] lg:aspect-auto lg:h-[550px]">
-                        <img alt="Heritage Presidential Suite" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[0]}"/>
-                        <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex flex-wrap gap-2">
-                            <span class="bg-surface/90 backdrop-blur-md text-primary font-body text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">${roomCategory}</span>
-                            <span class="bg-secondary/95 text-on-secondary font-body text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider"></span>
-                        </div>
-                    </div>
-                    <div class="hidden lg:flex lg:col-span-4 flex-col gap-4 h-[550px]">
-                        <div class="flex-1 rounded-2xl overflow-hidden group">
-                            <img alt="Suite Bathroom" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[1]}"/>
-                        </div>
-                        <div class="flex-1 rounded-2xl overflow-hidden relative group">
-                            <img alt="Suite Bedroom" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[2]}"/>
-                        </div>
-                    </div>
-                `;
-            } 
+                            <div class="lg:col-span-8 rounded-2xl overflow-hidden relative group aspect-[4/3] lg:aspect-auto lg:h-[550px]">
+                                <img alt="${data.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[0]}"/>
+                                <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex flex-wrap gap-2">
+                                    <span class="bg-surface/90 backdrop-blur-md text-primary font-body text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">${roomCategory}</span>
+                                </div>
+                            </div>
+                            <div class="hidden lg:flex lg:col-span-4 flex-col gap-4 h-[550px]">
+                                <div class="flex-1 rounded-2xl overflow-hidden group">
+                                    <img alt="Suite Image 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[1]}"/>
+                                </div>
+                            </div>
+                        `;
+            }
             else {
                 roomImageContainer.innerHTML = `
-                    <div class="lg:col-span-8 rounded-2xl overflow-hidden relative group aspect-[4/3] lg:aspect-auto lg:h-[550px]">
-                        <img alt="Heritage Presidential Suite" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[0]}"/>
-                        <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex flex-wrap gap-2">
-                            <span class="bg-surface/90 backdrop-blur-md text-primary font-body text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">${roomCategory}</span>
-                            <span class="bg-secondary/95 text-on-secondary font-body text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider"></span>
-                        </div>
-                    </div>
-                    <div class="hidden lg:flex lg:col-span-4 flex-col gap-4 h-[550px]">
-                        <div class="flex-1 rounded-2xl overflow-hidden group">
-                            <img alt="Suite Bathroom" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[1]}"/>
-                        </div>
-                        <div class="flex-1 rounded-2xl overflow-hidden relative group">
-                            <img alt="Suite Bedroom" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[2]}"/>
-                            <button class="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-on-primary font-body font-semibold rounded-2xl text-lg backdrop-blur-sm">
-                                Xem tất cả ${count} ảnh
-                            </button>
-                        </div>
-                    </div>
-                `;
+                            <div class="lg:col-span-8 rounded-2xl overflow-hidden relative group aspect-[4/3] lg:aspect-auto lg:h-[550px]">
+                                <img alt="${data.name}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[0]}"/>
+                                <div class="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 flex flex-wrap gap-2">
+                                    <span class="bg-surface/90 backdrop-blur-md text-primary font-body text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">${roomCategory}</span>
+                                </div>
+                            </div>
+                            <div class="hidden lg:flex lg:col-span-4 flex-col gap-4 h-[550px]">
+                                <div class="flex-1 rounded-2xl overflow-hidden group">
+                                    <img alt="Suite Image 2" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[1]}"/>
+                                </div>
+                                <div class="flex-1 rounded-2xl overflow-hidden relative group">
+                                    <img alt="Suite Image 3" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" src="${finalUrls[2]}"/>
+                                    ${count > 3 ? `
+                                    <button onclick="openImageGallery()" class="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-on-primary font-body font-semibold rounded-2xl text-lg backdrop-blur-sm cursor-pointer z-10">
+                                        Xem tất cả ${count} ảnh
+                                    </button>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
             }
         }
-    
-        function renderRoomInfo(data){
+
+        function renderRoomInfo(data) {
             const roomInfoContainer = document.getElementById('roomInfoContainer');
             roomInfoContainer.innerHTML = `
-                <div class="border-b border-surface-dim pb-6">
-                    <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-4">
-                        <div class="flex-1 min-w-0">
-                            <h1 class="text-3xl md:text-4xl lg:text-5xl font-headline font-bold text-primary mb-4 leading-snug break-words">${data.name} </h1>
-                            <div class="flex flex-wrap items-center text-on-surface-variant font-body text-sm gap-y-2">
-                                <span class="material-symbols-outlined text-secondary mr-1.5 text-[18px]">location_on</span>
-                                <span>Quận 1, TP. Hồ Chí Minh</span>
-                                <span class="mx-3 text-surface-dim hidden sm:inline">•</span>
+                        <div class="border-b border-surface-dim pb-6">
+                            <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-4">
+                                <div class="flex-1 min-w-0">
+                                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-headline font-bold text-primary mb-4 leading-snug break-words">${data.name} </h1>
+                                    <div class="flex flex-wrap items-center text-on-surface-variant font-body text-sm gap-y-2">
+                                        <span class="material-symbols-outlined text-secondary mr-1.5 text-[18px]">location_on</span>
+                                        <span>Quận 1, TP. Hồ Chí Minh</span>
+                                        <span class="mx-3 text-surface-dim hidden sm:inline">•</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="prose prose-stone max-w-none font-body text-on-surface-variant leading-relaxed text-[15px] sm:text-base">
-                    <h2 class="text-2xl font-headline font-semibold text-primary mb-4">Về phòng này</h2>
-                    <p class="mb-4">
-                        ${data.description || 'Mô tả chi tiết về phòng sẽ được cập nhật sớm nhất có thể. Vui lòng quay lại sau hoặc liên hệ với chúng tôi để biết thêm thông tin.'}
-                    </p>
-                </div>
-                <div id="roomReviewContainer" class="pt-8 border-t border-surface-dim">
-                </div>
-            `;
+                        <div class="prose prose-stone max-w-none font-body text-on-surface-variant leading-relaxed text-[15px] sm:text-base">
+                            <h2 class="text-2xl font-headline font-semibold text-primary mb-4">Về phòng này</h2>
+                            <p class="mb-4">
+                                ${data.description || 'Mô tả chi tiết về phòng sẽ được cập nhật sớm nhất có thể. Vui lòng quay lại sau hoặc liên hệ với chúng tôi để biết thêm thông tin.'}
+                            </p>
+                        </div>
+                        <div id="roomReviewContainer" class="pt-8 border-t border-surface-dim">
+                        </div>
+                    `;
         }
-    
-        function renderBookingModal(data){
+
+        function renderBookingModal(data) {
             const bookingModalContainer = document.getElementById('bookingModalContainer');
             const price = data.pricePerNight;
             const formattedPrice = price.toLocaleString('vi-VN');
             bookingModalContainer.innerHTML = `
-                <div class="sticky top-28 bg-surface-container-lowest rounded-3xl p-6 lg:p-8 shadow-[0_24px_60px_-15px_rgba(0,0,0,0.1)] border border-surface-dim/60 z-20">
-                    <div class="mb-6 pb-6 border-b border-surface-dim/50 flex flex-col">
-                        <span class="text-xs text-on-surface-variant uppercase tracking-widest font-bold mb-1">Giá mỗi đêm từ</span>
-                        <div class="flex items-baseline gap-1">
-                        <span class="text-3xl lg:text-4xl font-headline font-bold text-primary">${formattedPrice}đ</span>
-                        </div>
-                    </div>
-                    <div class="space-y-4 mb-6">
-                        <div id="dateSelectorWrapper" class="group relative bg-surface-container-low/50 hover:bg-surface-container-low rounded-xl p-4 border border-outline-variant/40 hover:border-primary/50 transition-all duration-300 cursor-pointer">
-                            <span id="displayDate">Chọn lịch đặt phòng</span>
-                        </div>
-                        <div class="group relative bg-surface-container-low/50 hover:bg-surface-container-low rounded-xl p-4 md:px-5 border border-outline-variant/40 hover:border-primary/50 transition-all duration-300 flex items-center justify-between">
-                            <div>
-                                <label class="block text-[10px] font-body text-on-surface-variant uppercase tracking-widest font-bold mb-1 group-hover:text-primary transition-colors">
-                                    Số lượng khách
-                                </label>
-                                <div class="text-sm text-stone-500 font-medium">
-                                    Tối đa <span class="font-bold text-primary">${data.capacity}</span> khách
+                        <div class="sticky top-28 bg-surface-container-lowest rounded-3xl p-6 lg:p-8 shadow-[0_24px_60px_-15px_rgba(0,0,0,0.1)] border border-surface-dim/60 z-20">
+                            <div class="mb-6 pb-6 border-b border-surface-dim/50 flex flex-col">
+                                <span class="text-xs text-on-surface-variant uppercase tracking-widest font-bold mb-1">Giá mỗi đêm từ</span>
+                                <div class="flex items-baseline gap-1">
+                                <span class="text-3xl lg:text-4xl font-headline font-bold text-primary">${formattedPrice}đ</span>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-2 bg-white border border-stone-200 rounded-xl p-1 shadow-sm shrink-0">
-                                <button id="guestQtyMinus" type="button" class="w-10 h-10 flex items-center justify-center rounded-lg text-stone-400 hover:text-primary hover:bg-stone-50 transition-colors active:scale-95 disabled:opacity-50 disabled:hover:bg-transparent disabled:cursor-not-allowed">
-                                    <span class="material-symbols-outlined text-[20px]">remove</span>
-                                </button>
-                                <span id="guestQtyValue" class="font-bold text-lg text-primary w-6 text-center select-none"></span>
-                                <button id="guestQtyPlus" type="button" class="w-10 h-10 flex items-center justify-center rounded-lg text-stone-400 hover:text-primary hover:bg-stone-50 transition-colors active:scale-95 disabled:opacity-50 disabled:hover:bg-transparent disabled:cursor-not-allowed">
-                                    <span class="material-symbols-outlined text-[20px]">add</span>
-                                </button>
+                            <div class="space-y-4 mb-6">
+                                <div id="dateSelectorWrapper" class="group relative bg-surface-container-low/50 hover:bg-surface-container-low rounded-xl p-4 border border-outline-variant/40 hover:border-primary/50 transition-all duration-300 cursor-pointer">
+                                    <span id="displayDate">Chọn lịch đặt phòng</span>
+                                </div>
+                                <div class="group relative bg-surface-container-low/50 hover:bg-surface-container-low rounded-xl p-4 md:px-5 border border-outline-variant/40 hover:border-primary/50 transition-all duration-300 flex items-center justify-between">
+                                    <div>
+                                        <label class="block text-[10px] font-body text-on-surface-variant uppercase tracking-widest font-bold mb-1 group-hover:text-primary transition-colors">
+                                            Số lượng khách
+                                        </label>
+                                        <div class="text-sm text-stone-500 font-medium">
+                                            Tối đa <span class="font-bold text-primary">${data.capacity}</span> khách
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2 bg-white border border-stone-200 rounded-xl p-1 shadow-sm shrink-0">
+                                        <button id="guestQtyMinus" type="button" class="w-10 h-10 flex items-center justify-center rounded-lg text-stone-400 hover:text-primary hover:bg-stone-50 transition-colors active:scale-95 disabled:opacity-50 disabled:hover:bg-transparent disabled:cursor-not-allowed">
+                                            <span class="material-symbols-outlined text-[20px]">remove</span>
+                                        </button>
+                                        <span id="guestQtyValue" class="font-bold text-lg text-primary w-6 text-center select-none"></span>
+                                        <button id="guestQtyPlus" type="button" class="w-10 h-10 flex items-center justify-center rounded-lg text-stone-400 hover:text-primary hover:bg-stone-50 transition-colors active:scale-95 disabled:opacity-50 disabled:hover:bg-transparent disabled:cursor-not-allowed">
+                                            <span class="material-symbols-outlined text-[20px]">add</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
+                            <div id="priceDetailsContainer" class="space-y-3 mb-8 text-sm font-body text-on-surface-variant">
+                            </div>
+                            <button id="bookBtn" class="w-full bg-[#004B63] text-on-primary font-body font-bold text-base lg:text-lg py-4 rounded-xl hover:bg-opacity-90 transition-all duration-300 flex justify-center items-center shadow-lg shadow-[#004B63]/20 group active:scale-[0.98]">
+                                Đặt phòng ngay
+                                <span class="material-symbols-outlined ml-2 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                            </button>
+                            <p class="text-center text-xs text-on-surface-variant mt-5 font-body flex items-center justify-center gap-1.5 opacity-80">
+                                <span class="material-symbols-outlined text-[16px]">lock</span>
+                                Thanh toán an toàn & bảo mật
+                            </p>
                         </div>
-                    </div>
-                    <div id="priceDetailsContainer" class="space-y-3 mb-8 text-sm font-body text-on-surface-variant">
-                    </div>
-                    <button id="bookBtn" class="w-full bg-[#004B63] text-on-primary font-body font-bold text-base lg:text-lg py-4 rounded-xl hover:bg-opacity-90 transition-all duration-300 flex justify-center items-center shadow-lg shadow-[#004B63]/20 group active:scale-[0.98]">
-                        Đặt phòng ngay
-                        <span class="material-symbols-outlined ml-2 group-hover:translate-x-1 transition-transform">arrow_forward</span>
-                    </button>
-                    <p class="text-center text-xs text-on-surface-variant mt-5 font-body flex items-center justify-center gap-1.5 opacity-80">
-                        <span class="material-symbols-outlined text-[16px]">lock</span>
-                        Thanh toán an toàn & bảo mật
-                    </p>
-                </div>
-            `;
+                    `;
             initDateAndPrice(price);
             updateGuestQuantityUI();
             document.getElementById('guestQtyMinus')?.addEventListener('click', () => changeGuestQuantity(-1));
             document.getElementById('guestQtyPlus')?.addEventListener('click', () => changeGuestQuantity(1));
         }
-        
-        function generateStarsHtml(rating) {
-            let starsHtml = '';
-            for (let i = 1; i <= 5; i++) {
-                if (i <= rating) {
-                    // Sao vàng (đã đánh giá)
-                    starsHtml += `<span class="material-symbols-outlined text-[18px] text-secondary" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>`;
-                } else {
-                    // Sao xám (còn thiếu)
-                    starsHtml += `<span class="material-symbols-outlined text-[18px] text-surface-dim" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>`;
-                }
-            }
-            return starsHtml;
-        }
+
         async function renderRoomReviews(data) {
             const roomReviewContainer = document.getElementById('roomReviewContainer');
             if (data.totalReviews === 0 || !data.totalReviews) {
                 roomReviewContainer.innerHTML = `
-                        <div class="col-span-1 md:col-span-2 rounded-2xl overflow-hidden flex items-center justify-center bg-surface-container py-8">
-                            <span class="text-on-surface-variant">Chưa có đánh giá nào cho phòng này.</span>
-                        </div>
-                    `;
+                                <div class="col-span-1 md:col-span-2 rounded-2xl overflow-hidden flex items-center justify-center bg-surface-container py-8">
+                                    <span class="text-on-surface-variant">Chưa có đánh giá nào cho phòng này.</span>
+                                </div>
+                            `;
                 return;
             }
 
-            // Lấy list reviews từ backend
             const allReviews = await fetchAllReviews(currentRoomId);
-
-            // Chỉ lấy tối đa 2 review mới nhất/đầu tiên để hiển thị ở ngoài
             const topReviews = allReviews.slice(0, 2);
 
             let topReviewsHtml = topReviews.map(review => {
                 const reviewDate = new Date(review.createdAt);
                 const formattedDate = reviewDate.toLocaleString('vi-VN', { month: 'long', year: 'numeric' });
 
-                // Lấy tên người dùng (nếu backend chưa trả về UserName thì để tạm là Khách hàng)
                 const userName = review.userName || 'Khách hàng';
                 const initial = userName.charAt(0).toUpperCase();
 
                 return `
-                        <div class="bg-surface-container-low p-6 rounded-2xl border border-surface-dim/30 flex flex-col">
-                            <div class="flex items-center mb-4">
-                                <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold font-body mr-3">
-                                    ${initial}
+                                <div class="bg-surface-container-low p-6 rounded-2xl border border-surface-dim/30 flex flex-col">
+                                    <div class="flex items-center mb-4">
+                                        <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold font-body mr-3">
+                                            ${initial}
+                                        </div>
+                                        <div>
+                                            <h4 class="font-body font-bold text-on-surface text-sm">${userName}</h4>
+                                            <p class="text-xs text-on-surface-variant mt-0.5">${formattedDate}</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex mb-3">
+                                        ${generateStarsHtml(review.numOfRating)}
+                                    </div>
+                                    <p class="text-on-surface-variant font-body text-sm leading-relaxed flex-1">
+                                        "${review.review || ''}"
+                                    </p>
                                 </div>
-                                <div>
-                                    <h4 class="font-body font-bold text-on-surface text-sm">${userName}</h4>
-                                    <p class="text-xs text-on-surface-variant mt-0.5">${formattedDate}</p>
-                                </div>
-                            </div>
-                            <div class="flex mb-3">
-                                ${generateStarsHtml(review.numOfRating)}
-                            </div>
-                            <p class="text-on-surface-variant font-body text-sm leading-relaxed flex-1">
-                                "${review.review || ''}"
-                            </p>
-                        </div>
-                    `;
+                            `;
             }).join('');
 
-            // Xử lý lỗi logic khi AverageStar có thể null/undefined
             const avgStar = data.averageStar ? data.averageStar.toFixed(1) : "0.0";
 
             roomReviewContainer.innerHTML = `
-                    <div class="flex justify-between items-end mb-8">
-                        <h2 class="text-2xl font-headline font-semibold text-primary flex items-center">
-                            <span class="material-symbols-outlined text-secondary mr-2 text-[28px]" style="font-variation-settings: 'FILL' 1;">star</span>
-                            ${avgStar} 
-                            <span class="text-on-surface-variant text-base font-body font-normal ml-2 mt-1">( ${data.totalReviews} đánh giá )</span>
-                        </h2>
-                    </div>
-                    <div id="detailedReview" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        ${topReviewsHtml}
-                    </div>
-                    <button onclick="openReviewModal()" class="bg-transparent border-2 border-outline-variant text-primary font-body font-bold py-3 px-6 rounded-xl hover:bg-surface-container-high transition-colors">
-                        Xem tất cả ${data.totalReviews} đánh giá
-                    </button>
-                `;
+                            <div class="flex justify-between items-end mb-8">
+                                <h2 class="text-2xl font-headline font-semibold text-primary flex items-center">
+                                    <span class="material-symbols-outlined text-secondary mr-2 text-[28px]" style="font-variation-settings: 'FILL' 1;">star</span>
+                                    ${avgStar}
+                                    <span class="text-on-surface-variant text-base font-body font-normal ml-2 mt-1">( ${data.totalReviews} đánh giá )</span>
+                                </h2>
+                            </div>
+                            <div id="detailedReview" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                ${topReviewsHtml}
+                            </div>
+                            <button onclick="openReviewModal()" class="bg-transparent border-2 border-outline-variant text-primary font-body font-bold py-3 px-6 rounded-xl hover:bg-surface-container-high transition-colors">
+                                Xem tất cả ${data.totalReviews} đánh giá
+                            </button>
+                        `;
         }
+
         async function renderAllRoomReviews() {
-            // Chỉ target vào khung chứa nội dung review bên trong modal, tránh ghi đè nút "Close"
             const modalContentContainer = document.querySelector('#reviewModal .overflow-y-auto');
             if (!modalContentContainer) return;
 
             const allReviews = await fetchAllReviews(currentRoomId);
             const room = await fetchRoom(currentRoomId);
 
-            // Cập nhật lại header của modal (Số sao và tổng review)
             const modalHeaderInfo = document.querySelector('#reviewModal .flex.items-center.justify-between.p-6 div');
             if (modalHeaderInfo) {
                 modalHeaderInfo.innerHTML = `
-                <h2 class="text-3xl font-headline font-bold text-primary mb-2">Tất cả đánh giá</h2>
-                <div class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-secondary text-[24px]" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
-                    <span class="text-xl font-headline font-bold text-primary">${room.averageStar.toFixed(1)}</span>
-                    <span class="text-on-surface-variant font-body font-medium mt-1 ml-1">• ${room.totalReviews} đánh giá</span>
-                </div>
-            `;
+                        <h2 class="text-3xl font-headline font-bold text-primary mb-2">Tất cả đánh giá</h2>
+                        <div class="flex items-center gap-2">
+                            <span class="material-symbols-outlined text-secondary text-[24px]" data-icon="star" data-weight="fill" style="font-variation-settings: 'FILL' 1;">star</span>
+                            <span class="text-xl font-headline font-bold text-primary">${room.averageStar ? room.averageStar.toFixed(1) : '0.0'}</span>
+                            <span class="text-on-surface-variant font-body font-medium mt-1 ml-1">• ${room.totalReviews || 0} đánh giá</span>
+                        </div>
+                    `;
             }
 
             if (!Array.isArray(allReviews) || allReviews.length === 0) {
                 modalContentContainer.innerHTML = `
-                <div class="rounded-2xl overflow-hidden flex items-center justify-center py-8">
-                    <span class="text-on-surface-variant">Chưa có đánh giá nào cho phòng này.</span>
-                </div>
-            `;
+                        <div class="rounded-2xl overflow-hidden flex items-center justify-center py-8">
+                            <span class="text-on-surface-variant">Chưa có đánh giá nào cho phòng này.</span>
+                        </div>
+                    `;
                 return;
             }
 
             const colors = ['bg-primary-container text-on-primary-container', 'bg-secondary-container text-on-secondary-container', 'bg-tertiary-container text-on-tertiary-container'];
 
-            // Render danh sách review
             modalContentContainer.innerHTML = allReviews.map((review, index) => {
                 const reviewDate = new Date(review.createdAt);
                 const formattedDate = reviewDate.toLocaleString('vi-VN', { month: 'long', year: 'numeric' });
 
                 const userName = review.userName || 'Khách hàng';
                 const initial = userName.charAt(0).toUpperCase();
-                const randomColor = colors[index % colors.length]; // Xoay vòng màu sắc ngẫu nhiên cho đẹp
+                const randomColor = colors[index % colors.length];
 
                 return `
-                <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-dim/50 shadow-sm">
-                    <div class="flex items-center mb-4">
-                        <div class="w-12 h-12 rounded-full ${randomColor} flex items-center justify-center font-bold font-body text-lg mr-4 shadow-sm">
-                            ${initial}
+                        <div class="bg-surface-container-lowest p-6 rounded-2xl border border-surface-dim/50 shadow-sm">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-full ${randomColor} flex items-center justify-center font-bold font-body text-lg mr-4 shadow-sm">
+                                    ${initial}
+                                </div>
+                                <div>
+                                    <h4 class="font-body font-semibold text-on-surface text-lg">${userName}</h4>
+                                    <p class="text-sm text-on-surface-variant font-medium">${formattedDate}</p>
+                                </div>
+                            </div>
+                            <div class="flex mb-3">
+                                ${generateStarsHtml(review.numOfRating)}
+                            </div>
+                            <p class="text-on-surface-variant font-body leading-relaxed text-base">
+                                "${review.review || ''}"
+                            </p>
                         </div>
-                        <div>
-                            <h4 class="font-body font-semibold text-on-surface text-lg">${userName}</h4>
-                            <p class="text-sm text-on-surface-variant font-medium">${formattedDate}</p>
-                        </div>
-                    </div>
-                    <div class="flex mb-3">
-                        ${generateStarsHtml(review.numOfRating)}
-                    </div>
-                    <p class="text-on-surface-variant font-body leading-relaxed text-base">
-                        "${review.review || ''}"
-                    </p>
-                </div>
-            `;
+                    `;
             }).join('');
         }
 
-        function renderRecommendRooms(rooms = []){
+        function renderRecommendRooms(rooms = []) {
             const recommendRoomContainer = document.getElementById('recommendRoomContainer');
             if (!Array.isArray(rooms)) {
                 rooms = [];
             }
-            if(rooms.length === 0){
+            if (rooms.length === 0) {
                 recommendRoomContainer.innerHTML = `
-                    <div class="col-span-1 md:col-span-2 rounded-2xl overflow-hidden flex items-center justify-center bg-surface-container">
-                        <span class="text-on-surface-variant">Không có phòng nào được đề xuất vào lúc này.</span>
-                    </div>
-                `;
+                            <div class="col-span-1 md:col-span-2 rounded-2xl overflow-hidden flex items-center justify-center bg-surface-container py-8">
+                                <span class="text-on-surface-variant">Không có phòng nào được đề xuất vào lúc này.</span>
+                            </div>
+                        `;
                 return;
             }
             recommendRoomContainer.innerHTML = rooms.map(room => {
@@ -720,43 +590,41 @@ selection:text-on-secondary-container">
                 const roomId = room.id ?? room._id;
                 const priceFormatted = new Intl.NumberFormat('vi-VN').format(roomPrice) + 'đ';
                 return `
-                    <a href="/room_detail.html?id=${roomId}" class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 group flex flex-col h-full cursor-pointer border border-surface-dim/20 block">
-                        <div class="h-56 overflow-hidden relative">
-                            <img alt="${room.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="${roomImage}"/>
-                        </div>    
-                        <div class="p-6 flex flex-col flex-grow">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-lg font-headline font-bold text-primary group-hover:text-secondary transition-colors">${room.name}</h3>
-                                <div class="flex items-center text-sm font-semibold">
-                                    <span class="material-symbols-outlined text-secondary text-[18px] mr-1" style="font-variation-settings: 'FILL' 1;">star</span> ${room.averageStar || '0.0'}
+                            <a href="/room_detail.html?id=${roomId}" class="bg-surface-container-lowest rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 group flex flex-col h-full cursor-pointer border border-surface-dim/20 block">
+                                <div class="h-56 overflow-hidden relative">
+                                    <img alt="${room.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="${roomImage}"/>
                                 </div>
-                            </div> 
-                            <p class="text-sm text-on-surface-variant font-body mb-6 flex-grow line-clamp-2">
-                                ${room.description || 'Trải nghiệm không gian nghỉ dưỡng tuyệt vời.'}
-                            </p>
-                            
-                            <div class="flex justify-between items-center mt-auto pt-5 border-t border-surface-dim/50">
-                                <div class="font-body">
-                                    <span class="font-bold text-primary text-lg">${priceFormatted}</span><span class="text-xs text-on-surface-variant ml-1">/đêm</span>
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h3 class="text-lg font-headline font-bold text-primary group-hover:text-secondary transition-colors">${room.name}</h3>
+                                        <div class="flex items-center text-sm font-semibold">
+                                            <span class="material-symbols-outlined text-secondary text-[18px] mr-1" style="font-variation-settings: 'FILL' 1;">star</span> ${room.averageStar ? room.averageStar.toFixed(1) : '0.0'}
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-on-surface-variant font-body mb-6 flex-grow line-clamp-2">
+                                        ${room.description || 'Trải nghiệm không gian nghỉ dưỡng tuyệt vời.'}
+                                    </p>
+
+                                    <div class="flex justify-between items-center mt-auto pt-5 border-t border-surface-dim/50">
+                                        <div class="font-body">
+                                            <span class="font-bold text-primary text-lg">${priceFormatted}</span><span class="text-xs text-on-surface-variant ml-1">/đêm</span>
+                                        </div>
+                                        <span class="text-secondary font-bold text-sm group-hover:underline underline-offset-2">Xem chi tiết</span>
+                                    </div>
                                 </div>
-                                <span class="text-secondary font-bold text-sm group-hover:underline underline-offset-2">Xem chi tiết</span>
-                            </div>
-                        </div>
-                    </a>
-                `;
+                            </a>
+                        `;
             }).join('');
         }
 
-        function initDateAndPrice(price) { // 1. Bỏ từ khóa async ở đây
+        function initDateAndPrice(price) {
             const dateSelectorWrapper = document.getElementById('dateSelectorWrapper');
             const displayDate = document.getElementById('displayDate');
             const priceDetailsContainer = document.getElementById('priceDetailsContainer');
 
-            // 2. Khởi tạo flatpickr ngay lập tức và gán vào biến fpInstance
             const fpInstance = flatpickr(dateSelectorWrapper, {
                 mode: "range",
                 minDate: "today",
-                // Tạm thời chưa truyền thuộc tính disable vào đây
                 dateFormat: "d M",
                 onChange: function (selectedDates, dateStr, instance) {
                     if (selectedDates.length === 2) {
@@ -773,15 +641,15 @@ selection:text-on-secondary-container">
 
                         priceDetailsContainer.classList.remove('hidden');
                         priceDetailsContainer.innerHTML = `
-                    <div class="flex justify-between">
-                        <span class="underline decoration-dotted underline-offset-4">${price.toLocaleString('vi-VN')}đ x ${days} đêm</span>
-                        <span class="font-semibold text-on-surface">${calculatedTotal.toLocaleString('vi-VN')}đ</span>
-                    </div>
-                    <div class="pt-4 mt-2 border-t border-surface-dim/50 flex justify-between items-center text-primary">
-                        <span class="font-bold text-base">Tổng cộng</span>
-                        <span class="font-bold text-xl">${calculatedTotal.toLocaleString('vi-VN')}đ</span>
-                    </div>
-                `;
+                            <div class="flex justify-between">
+                                <span class="underline decoration-dotted underline-offset-4">${price.toLocaleString('vi-VN')}đ x ${days} đêm</span>
+                                <span class="font-semibold text-on-surface">${calculatedTotal.toLocaleString('vi-VN')}đ</span>
+                            </div>
+                            <div class="pt-4 mt-2 border-t border-surface-dim/50 flex justify-between items-center text-primary">
+                                <span class="font-bold text-base">Tổng cộng</span>
+                                <span class="font-bold text-xl">${calculatedTotal.toLocaleString('vi-VN')}đ</span>
+                            </div>
+                        `;
                     } else {
                         selectedCheckInDate = null;
                         selectedCheckOutDate = null;
@@ -792,22 +660,21 @@ selection:text-on-secondary-container">
                 }
             });
 
-        // 3. Chạy API ngầm ở background, khi có dữ liệu thì cập nhật vào lịch
-        fetchUnavailableDates(currentRoomId).then(unavailableDates => {
-            if (unavailableDates && unavailableDates.length > 0) {
-                fpInstance.set('disable', unavailableDates);
-            }
-        });
-    }
+            fetchUnavailableDates(currentRoomId).then(unavailableDates => {
+                if (unavailableDates && unavailableDates.length > 0) {
+                    fpInstance.set('disable', unavailableDates);
+                }
+            });
+        }
 
-        async function loadRoomDetail(){
-            if(!currentRoomId){
+        async function loadRoomDetail() {
+            if (!currentRoomId) {
                 alert('Không tìm thấy thông tin phòng. Vui lòng quay lại trang danh sách phòng.');
                 window.location.href = '/room.html';
                 return;
             }
             const roomData = await fetchRoom(currentRoomId);
-            if(!roomData){
+            if (!roomData) {
                 alert('Không tìm thấy thông tin phòng. Vui lòng quay lại trang danh sách phòng.');
                 window.location.href = '/room.html';
                 return;
@@ -816,66 +683,57 @@ selection:text-on-secondary-container">
             renderRoomInfo(roomData);
             renderBookingModal(roomData);
             renderRoomReviews(roomData);
-    }
+        }
 
-    async function fetchUnavailableDates(roomId) {
-        const today = new Date();
-        // Dùng en-CA để ép format về yyyy-mm-dd chuẩn xác
-        const fromStr = today.toLocaleDateString('en-CA');
+        async function fetchUnavailableDates(roomId) {
+            const today = new Date();
+            const fromStr = today.toLocaleDateString('en-CA');
 
-        const futureDate = new Date(today);
-        futureDate.setMonth(today.getMonth() + 12);
-        const toStr = futureDate.toLocaleDateString('en-CA');
+            const futureDate = new Date(today);
+            futureDate.setMonth(today.getMonth() + 12);
+            const toStr = futureDate.toLocaleDateString('en-CA');
 
-        try {
-            const response = await fetch(`/api/room/${roomId}/available-times?from=${fromStr}&to=${toStr}`);
-            if (!response.ok) {
-                console.error('API lỗi:', response.status);
+            try {
+                const response = await fetch(`/api/room/${roomId}/available-times?from=${fromStr}&to=${toStr}`);
+                if (!response.ok) {
+                    return [];
+                }
+
+                const data = await response.json();
+                const disabledDates = data
+                    .filter(item => item.isAvailable === false)
+                    .map(item => new Date(item.date));
+
+                return disabledDates;
+            } catch (error) {
+                console.error('Lỗi lấy ngày khóa:', error);
                 return [];
             }
-
-            const data = await response.json();
-            console.log("1. Dữ liệu gốc từ API trả về:", data); // <-- XEM LOG NÀY
-
-            // Lọc các ngày KHÔNG khả dụng và chuyển đổi thành đối tượng Date của Javascript
-            const disabledDates = data
-                .filter(item => item.isAvailable === false)
-                .map(item => {
-                    // Đảm bảo flatpickr nhận đúng đối tượng ngày (an toàn hơn chuỗi string)
-                    return new Date(item.date);
-                });
-
-            console.log("2. Các ngày sẽ bị khóa trên lịch:", disabledDates); // <-- XEM LOG NÀY
-
-            return disabledDates;
-        } catch (error) {
-            console.error('Lỗi lấy ngày khóa:', error);
-            return [];
         }
-    }
 
-        document.addEventListener('click', function(event){
-            if(event.target.id === 'bookBtn'){
-                const userToken = localStorage.getItem('userToken');
-                if(!userToken){
+        document.addEventListener('click', function (event) {
+            if (event.target.id === 'bookBtn' || event.target.closest('#bookBtn')) {
+                // Đồng bộ dùng getHeaderAuthToken từ header.js
+                const userToken = typeof getHeaderAuthToken === 'function' ? getHeaderAuthToken() : localStorage.getItem('userToken');
+                if (!userToken) {
                     alert('Vui lòng đăng nhập để đặt phòng.');
                     window.location.href = '/user_auth.html#signin';
                     return;
                 }
-                if(!selectedCheckInDate || !selectedCheckOutDate){
+                if (!selectedCheckInDate || !selectedCheckOutDate) {
                     alert('Vui lòng chọn ngày check-in và check-out trước khi đặt phòng.');
                     return;
-                } 
+                }
                 const bookingData = {
-                    roomId: currentRoomData.id ?? currentRoomData._id,     
-                    roomName: currentRoomData.name, 
+                    roomId: currentRoomData.id ?? currentRoomData._id,
+                    roomName: currentRoomData.name,
                     roomDesc: currentRoomData.description,
                     roomThumbnail: currentRoomData.thumbnailUrl || currentRoomData.imageUrl || "",
-                    amountOfPeople: guestValue,  
+                    amountOfPeople: guestValue,
                     checkIn: selectedCheckInDate,
                     checkOut: selectedCheckOutDate,
                     numberOfNights: Math.ceil((new Date(selectedCheckOutDate).getTime() - new Date(selectedCheckInDate).getTime()) / (1000 * 3600 * 24)),
-                    totalPrice: calculatedTotal 
+                    totalPrice: calculatedTotal
                 };
                 sessionStorage.setItem('roomBookingData', JSON.stringify(bookingData));
                 window.location.href = '/booking.html';
@@ -883,10 +741,48 @@ selection:text-on-secondary-container">
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            checkLoginStatus();
-            setActiveNavLink();
             loadRoomDetail();
             fetchRecommendRoom();
         });
-</script>
+        // ==========================================
+        // LOGIC MỞ/ĐÓNG GALLERY ẢNH (LIGHTBOX)
+        // ==========================================
+        function openImageGallery() {
+            const modal = document.getElementById('imageGalleryModal');
+            const container = document.getElementById('galleryContainer');
+            const countSpan = document.getElementById('galleryImageCount');
+
+            // Kiểm tra xem có dữ liệu ảnh không
+            if (!currentRoomData || !currentRoomData.listImageRoom) return;
+
+            // Sắp xếp lại ảnh theo SortOrder cho đúng thứ tự
+            const images = [...currentRoomData.listImageRoom].sort((a, b) => a.sortOrder - b.sortOrder);
+            countSpan.textContent = images.length;
+
+            // Đổ toàn bộ ảnh vào trong modal
+            container.innerHTML = images.map(img => `
+                <img src="${img.imageUrl || img.url}" 
+                     class="max-w-5xl w-full h-auto object-contain rounded-lg shadow-2xl" 
+                     loading="lazy" alt="Room photo">
+            `).join('');
+
+            // Hiển thị modal và khóa thanh cuộn của trang web
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageGallery() {
+            const modal = document.getElementById('imageGalleryModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = ''; // Mở lại thanh cuộn
+        }
+
+        // Bấm phím ESC trên bàn phím để đóng Gallery
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeImageGallery();
+        });
+    </script>
+</body>
 </html>

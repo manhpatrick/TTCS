@@ -156,7 +156,7 @@ namespace HotelManager.Domain.Entity.Rooms
         }
         public void ChangeAverageStar(int newStar)
         {
-            decimal total = AverageStar * BookingCount + newStar;
+            decimal total = AverageStar * TotalRatingCount + newStar;
             TotalRatingCount += 1;
             AverageStar = Math.Round(total / TotalRatingCount, 1);
         }

@@ -84,7 +84,7 @@ function checkAuthStatus() {
     } else {
         authContainer.innerHTML = `
             <a href="/user_auth.html" class="bg-white text-primary px-6 py-2.5 rounded-full text-sm font-bold transition-all hover:bg-gray-100 active:scale-95 shadow-md">
-                Đăng nhập
+                Đăng nhập/Đăng ký
             </a>
         `;
     }

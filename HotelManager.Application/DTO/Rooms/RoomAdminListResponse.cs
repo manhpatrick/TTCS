@@ -16,5 +16,6 @@ namespace HotelManager.Application.DTO.Rooms
         public CategoryRoom Category { get; set; }
         public RoomStatus RoomStatus { get; set; }
         public int BookingCount { get; set; }
+        public string Description { get; set; }
     }
 }

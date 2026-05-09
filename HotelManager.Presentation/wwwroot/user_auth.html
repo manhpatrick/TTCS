@@ -110,19 +110,7 @@
 </head>
 
 <body class="bg-background text-on-background min-h-screen flex flex-col">
-    <nav class="fixed top-0 w-full z-50 glass-nav transition-colors duration-300">
-        <div class="flex justify-between items-center px-12 py-6 mx-auto">
-            <div class="flex items-center gap-12">
-                <a class="text-2xl font-headline italic text-primary tracking-tight" href="/">The Editorial Concierge</a>
-                <div class="hidden md:flex items-center gap-8 font-headline text-lg tracking-tight">
-                    <a class="text-primary/70 hover:text-secondary transition-all duration-300" href="/">Trang chủ</a>
-                    <a class="text-primary/70 hover:text-secondary transition-all duration-300" href="/room.html">Phòng</a>
-                    <a class="text-primary/70 hover:text-secondary transition-all duration-300" href="/service.html">Dịch vụ</a>
-                    <a class="text-primary/70 hover:text-secondary transition-all duration-300" href="/booking.html">Đặt ngay</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <div id="header-placeholder"></div>
 
     <main class="flex-grow pt-24 flex items-stretch justify-center relative overflow-hidden">
         <div class="absolute inset-0 z-0 flex flex-row">
@@ -254,6 +242,8 @@
     </main>
 
     <div id="footer-placeholder"></div>
+
+    <script src="/js/header.js"></script>
     <script src="/js/footer.js"></script>
 
     <script>
@@ -272,16 +262,15 @@
         function handleHashChange() {
             const hash = window.location.hash;
 
-            // Ẩn tất cả form
             signinForm.classList.add('hidden');
             signupForm.classList.add('hidden');
             forgotForm.classList.add('hidden');
 
             if (hash === '#forgot') {
                 forgotForm.classList.remove('hidden');
-                authTabs.classList.add('hidden'); // Ẩn tab Đăng nhập/Đăng ký
-                authHeader.classList.add('hidden'); // Ẩn tiêu đề "Tham gia hành trình"
-                forgotHeader.classList.remove('hidden'); // Hiện tiêu đề "Khôi phục mật khẩu"
+                authTabs.classList.add('hidden');
+                authHeader.classList.add('hidden');
+                forgotHeader.classList.remove('hidden');
             } else {
                 authTabs.classList.remove('hidden');
                 authHeader.classList.remove('hidden');
@@ -294,7 +283,6 @@
                     signinTab.classList.remove(...activeTabClasses);
                     signinTab.classList.add(...inactiveTabClasses);
                 } else {
-                    // Mặc định là signin
                     signinForm.classList.remove('hidden');
                     signinTab.classList.remove(...inactiveTabClasses);
                     signinTab.classList.add(...activeTabClasses);
@@ -308,7 +296,6 @@
         if (!window.location.hash) window.location.hash = '#signin';
         handleHashChange();
 
-        // Xử lý gửi OTP
         async function handleSendOtp() {
             const emailInput = document.getElementById('forgotEmailInput').value.trim();
             const btn = document.getElementById('btnSendOtp');
@@ -323,7 +310,6 @@
             btn.disabled = true;
 
             try {
-                //Tích hợp API thực tế tại đây:
                 const response = await fetch('/api/auth/forgot-password/send-otp', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -332,12 +318,10 @@
                 const data = await response.json();
                 if (!response.ok) throw new Error(data.message || 'Không thể gửi mã. Vui lòng thử lại.');
 
-                // Giả lập delay mạng
                 await new Promise(r => setTimeout(r, 1500));
 
                 showAuthMessage('forgotMessages', 'Mã OTP đã được gửi đến email của bạn!', 'success');
 
-                // Chuyển UI sang bước nhập OTP
                 document.getElementById('displaySentEmail').innerText = emailInput;
                 document.getElementById('forgotStep1').classList.add('hidden');
                 document.getElementById('forgotStep2').classList.remove('hidden');
@@ -350,7 +334,6 @@
             }
         }
 
-        // Reset lại form quên mật khẩu về bước 1
         function resetForgotForm() {
             document.getElementById('forgotStep2').classList.add('hidden');
             document.getElementById('forgotStep1').classList.remove('hidden');
@@ -359,7 +342,6 @@
             document.getElementById('forgotMessages').style.display = 'none';
         }
 
-        // Xử lý Submit Form chung (Signin, Signup, Forgot OTP)
         document.addEventListener('submit', async function (event) {
             const form = event.target;
             event.preventDefault();
@@ -452,7 +434,6 @@
                 }
 
                 try {
-                    //Tích hợp API xác nhận OTP thực tế tại đây:
                     const response = await fetch('/api/auth/forgot-password/verify-otp', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -461,7 +442,6 @@
                     const data = await response.json();
                     if (!response.ok) throw new Error(data.message || 'Xác nhận thất bại');
 
-                    // Giả lập network delay
                     await new Promise(r => setTimeout(r, 1000));
 
                     showAuthMessage('forgotMessages', 'Đổi mật khẩu thành công! Chuyển hướng...', 'success');

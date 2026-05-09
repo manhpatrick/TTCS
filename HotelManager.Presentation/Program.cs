@@ -69,6 +69,8 @@ namespace HotelManager.Presentation
 
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure();
+            builder.Services.AddMemoryCache();
+            builder.Services.AddSignalR();
             builder.Services.AddCors(option =>
             {
                 option.AddPolicy("AllowReactApp",
