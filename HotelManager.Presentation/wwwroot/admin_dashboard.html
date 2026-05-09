@@ -14,7 +14,8 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Noto+Serif:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -92,6 +93,7 @@
         .animate-fade-in {
             animation: fadeIn 0.2s ease-out forwards;
         }
+
         #adminReviewModal {
             transition: opacity 0.3s ease;
         }
@@ -112,7 +114,7 @@
             <p class="text-sm font-label text-on-surface-variant mt-1">Admin Portal</p>
         </div>
         <div class="px-4 py-2">
-            <button class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-primary to-primary-container text-white font-body text-sm font-semibold hover:opacity-90 transition-opacity">
+            <button onclick="openAdminBookingModal()" class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-primary to-primary-container text-white font-body text-sm font-semibold hover:opacity-90 transition-opacity shadow-md active:scale-95">
                 <span class="material-symbols-outlined text-sm">add</span>
                 Đặt phòng mới
             </button>
@@ -879,6 +881,75 @@
             </form>
         </div>
     </div>
+    <div id="adminBookingModal" class="fixed inset-0 z-[110] hidden">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" onclick="closeAdminBookingModal()"></div>
+        <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl bg-surface rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="p-6 border-b border-outline-variant/20 flex justify-between items-center bg-white sticky top-0 z-10">
+                <h3 class="text-xl font-headline font-bold text-primary">Đặt phòng trực tiếp (Walk-in)</h3>
+                <button onclick="closeAdminBookingModal()" class="p-2 hover:bg-surface-container rounded-full transition-colors text-on-surface-variant">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <form id="adminBookingForm" class="p-6 md:p-8 overflow-y-auto space-y-6 bg-surface custom-scrollbar">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-secondary border-b border-outline-variant/20 pb-2">Thông tin khách hàng</h4>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Họ và tên *</label>
+                            <input type="text" id="walkInName" required class="w-full rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-3 outline-none" placeholder="VD: Nguyễn Văn A">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Số điện thoại *</label>
+                            <input type="tel" id="walkInPhone" required class="w-full rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-3 outline-none" placeholder="VD: 0987654321">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Email (Không bắt buộc)</label>
+                            <input type="email" id="walkInEmail" class="w-full rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-3 outline-none" placeholder="VD: khachhang@gmail.com">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Số lượng khách *</label>
+                            <input type="number" id="walkInNumOfPeople" min="1" required class="w-full rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-3 outline-none" placeholder="VD: 2">
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="text-sm font-bold uppercase tracking-widest text-secondary border-b border-outline-variant/20 pb-2">Lịch trình</h4>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Chọn phòng *</label>
+                            <select id="walkInRoomSelect" required class="w-full rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-3 outline-none font-bold text-primary">
+                                <option value="">-- Đang tải danh sách --</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-1">
+                            <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Chọn thời gian (Check-in - Out) *</label>
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">calendar_month</span>
+                                <input type="text" id="walkInDateRange" required class="w-full rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-0 pl-10 pr-4 py-3 outline-none font-bold text-primary" placeholder="Chọn ngày...">
+                            </div>
+                            <p id="calendarStatus" class="text-[10px] text-error mt-1 italic hidden">Vui lòng chọn phòng trước để xem lịch trống.</p>
+                        </div>
+
+                        <input type="hidden" id="walkInCheckIn">
+                        <input type="hidden" id="walkInCheckOut">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2">Ghi chú</label>
+                            <textarea id="walkInNote" rows="2" class="w-full rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-3 outline-none resize-none" placeholder="Yêu cầu thêm..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 pt-6 border-t border-outline-variant/20">
+                    <button type="button" onclick="closeAdminBookingModal()" class="px-6 py-2.5 rounded-xl font-bold text-on-surface-variant hover:bg-surface-container-high transition-colors">Hủy</button>
+                    <button type="submit" class="px-8 py-2.5 bg-primary text-white rounded-xl font-bold hover:bg-primary-container shadow-md transition-all active:scale-95 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[20px]">check_circle</span> Xác nhận Đặt
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
     <script>
         // =====================================
         // KIỂM TRA QUYỀN TRUY CẬP
@@ -1030,20 +1101,28 @@
 
             // Render các cột
             monthlyData.forEach((data, index) => {
-                const heightPercent = (data.total / maxRevenue) * 100;
+                // Đảm bảo cột có chiều cao tối thiểu là 1% để hover được ngay cả khi doanh thu = 0
+                let heightPercent = (data.total / maxRevenue) * 100;
+                if (heightPercent < 1) heightPercent = 1;
+
                 // Đổi màu cột cuối cùng (tháng hiện tại) cho nổi bật
                 const isCurrentMonth = index === monthlyData.length - 1;
                 const barColor = isCurrentMonth ? 'bg-primary' : 'bg-surface-container-highest hover:bg-primary/40';
 
                 container.innerHTML += `
-            <div class="flex flex-col items-center gap-2 group w-[10%] h-full justify-end">
-                <div class="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 bg-surface-on text-white text-[10px] px-2 py-1 rounded font-bold shadow-md whitespace-nowrap z-20" style="left: 50%; transform: translateX(-50%);">
-                    ${data.total.toLocaleString('vi-VN')}đ
+                <div class="flex flex-col items-center gap-2 group w-[10%] h-full justify-end relative cursor-pointer">
+
+                    <div class="opacity-0 group-hover:opacity-100 transition-all duration-200 absolute -top-10 bg-on-surface text-surface-container-lowest text-[11px] px-3 py-1.5 rounded-lg font-bold shadow-xl whitespace-nowrap z-50 pointer-events-none transform -translate-y-2 group-hover:translate-y-0" style="left: 50%; transform: translateX(-50%);">
+                        ${data.total.toLocaleString('vi-VN')}đ
+
+                        <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 border-4 border-transparent border-t-on-surface"></div>
+                    </div>
+
+                    <div class="w-full ${barColor} rounded-t-sm transition-all duration-500 shadow-sm" style="height: ${heightPercent}%;"></div>
+
+                    <span class="text-xs font-bold text-on-surface-variant absolute -bottom-6">${data.label}</span>
                 </div>
-                <div class="w-full ${barColor} rounded-t-sm transition-all duration-500 shadow-sm relative" style="height: ${heightPercent}%;"></div>
-                <span class="text-xs font-bold text-on-surface-variant absolute -bottom-6">${data.label}</span>
-            </div>
-        `;
+            `;
             });
         }
 
@@ -1069,23 +1148,23 @@
                 let timeStr = diffHours < 1 ? "Gần đây" : diffHours < 24 ? `${diffHours} giờ trước` : `${diffDays} ngày trước`;
 
                 return `
-            <div class="flex gap-4 items-start border-b border-outline-variant/10 pb-3 last:border-0">
-                <div class="bg-primary/10 p-2 rounded-full mt-1">
-                    <span class="material-symbols-outlined text-primary text-[18px]">luggage</span>
-                </div>
-                <div>
-                    <p class="font-body text-sm text-on-surface leading-tight">
-                        <span class="font-bold text-primary">${customerName}</span> vừa đặt 
-                        <span class="font-bold">${bk.roomName || 'phòng'}</span>
-                    </p>
-                    <div class="flex gap-2 items-center mt-1">
-                        <p class="text-[11px] font-bold text-secondary">#${bk.id}</p>
-                        <span class="w-1 h-1 bg-outline-variant rounded-full"></span>
-                        <p class="text-[11px] text-on-surface-variant">${timeStr}</p>
+                <div class="flex gap-4 items-start border-b border-outline-variant/10 pb-3 last:border-0">
+                    <div class="bg-primary/10 p-2 rounded-full mt-1">
+                        <span class="material-symbols-outlined text-primary text-[18px]">luggage</span>
+                    </div>
+                    <div>
+                        <p class="font-body text-sm text-on-surface leading-tight">
+                            <span class="font-bold text-primary">${customerName}</span> vừa đặt
+                            <span class="font-bold">${bk.roomName || 'phòng'}</span>
+                        </p>
+                        <div class="flex gap-2 items-center mt-1">
+                            <p class="text-[11px] font-bold text-secondary">#${bk.id}</p>
+                            <span class="w-1 h-1 bg-outline-variant rounded-full"></span>
+                            <p class="text-[11px] text-on-surface-variant">${timeStr}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `;
+            `;
             }).join('');
         }
 
@@ -1189,16 +1268,16 @@
             div.className = 'flex items-center gap-2 animate-fade-in mt-2';
 
             div.innerHTML = `
-                                    <span class="material-symbols-outlined text-outline-variant">image</span>
-                                    <input type="url" id="${inputId}" value="${value}" class="flex-1 rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-2 outline-none text-sm image-url-input" placeholder="https://domain.com/anh-phu.jpg">
-                                    <label class="cursor-pointer bg-secondary text-white px-3 py-2 rounded-xl hover:bg-secondary/90 transition-colors flex items-center justify-center font-bold text-xs whitespace-nowrap">
-                                        Tải ảnh
-                                        <input type="file" accept="image/*" class="hidden" onchange="uploadToImgBB(this, '${inputId}')">
-                                    </label>
-                                    <button type="button" onclick="this.parentElement.remove()" class="p-2 text-error hover:bg-error/10 rounded-lg transition-colors" title="Xóa ảnh này">
-                                        <span class="material-symbols-outlined text-[20px]">delete</span>
-                                    </button>
-                                `;
+                                        <span class="material-symbols-outlined text-outline-variant">image</span>
+                                        <input type="url" id="${inputId}" value="${value}" class="flex-1 rounded-xl border border-outline-variant/30 focus:border-primary focus:ring-0 px-4 py-2 outline-none text-sm image-url-input" placeholder="https://domain.com/anh-phu.jpg">
+                                        <label class="cursor-pointer bg-secondary text-white px-3 py-2 rounded-xl hover:bg-secondary/90 transition-colors flex items-center justify-center font-bold text-xs whitespace-nowrap">
+                                            Tải ảnh
+                                            <input type="file" accept="image/*" class="hidden" onchange="uploadToImgBB(this, '${inputId}')">
+                                        </label>
+                                        <button type="button" onclick="this.parentElement.remove()" class="p-2 text-error hover:bg-error/10 rounded-lg transition-colors" title="Xóa ảnh này">
+                                            <span class="material-symbols-outlined text-[20px]">delete</span>
+                                        </button>
+                                    `;
             container.appendChild(div);
         }
 
@@ -1337,39 +1416,39 @@
                 const avgStar = room.averageStar ? room.averageStar.toFixed(1) : '0.0';
 
                 return `
-                                <tr class="hover:bg-surface/50 transition-colors">
-                                    <td class="p-4">
-                                        <img src="${imageUrl}" onerror="this.src='https://placehold.co/80x50?text=No+Image'" class="w-16 h-10 object-cover rounded-lg border border-outline-variant/20 shadow-sm">
-                                    </td>
-                                    <td class="p-4">
-                                        <p class="font-bold text-primary text-base">${room.name}</p>
-                                        <div class="flex items-center gap-3 mt-1.5 text-xs text-on-surface-variant">
-                                            <div class="flex items-center gap-1 bg-surface-container-high px-2 py-0.5 rounded-md">
-                                                <span class="material-symbols-outlined text-[14px]">book_online</span> ${bookingCount} lượt đặt
+                                    <tr class="hover:bg-surface/50 transition-colors">
+                                        <td class="p-4">
+                                            <img src="${imageUrl}" onerror="this.src='https://placehold.co/80x50?text=No+Image'" class="w-16 h-10 object-cover rounded-lg border border-outline-variant/20 shadow-sm">
+                                        </td>
+                                        <td class="p-4">
+                                            <p class="font-bold text-primary text-base">${room.name}</p>
+                                            <div class="flex items-center gap-3 mt-1.5 text-xs text-on-surface-variant">
+                                                <div class="flex items-center gap-1 bg-surface-container-high px-2 py-0.5 rounded-md">
+                                                    <span class="material-symbols-outlined text-[14px]">book_online</span> ${bookingCount} lượt đặt
+                                                </div>
+                                                <div onclick="openAdminReviewModal(${roomId}, '${room.name.replace(/'/g, "\\'")}', ${avgStar}, ${reviewCount})"
+                                                     class="flex items-center gap-1 bg-secondary/10 text-secondary px-2 py-0.5 rounded-md cursor-pointer hover:bg-secondary/20 transition-colors"
+                                                     title="Bấm để xem các đánh giá">
+                                                    <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> ${avgStar} (${reviewCount})
+                                                </div>
                                             </div>
-                                            <div onclick="openAdminReviewModal(${roomId}, '${room.name.replace(/'/g, "\\'")}', ${avgStar}, ${reviewCount})"
-                                                 class="flex items-center gap-1 bg-secondary/10 text-secondary px-2 py-0.5 rounded-md cursor-pointer hover:bg-secondary/20 transition-colors"
-                                                 title="Bấm để xem các đánh giá">
-                                                <span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">star</span> ${avgStar} (${reviewCount})
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="p-4"><span class="bg-surface-container-high px-2.5 py-1 rounded text-xs font-semibold text-on-surface-variant">${categoryName}</span></td>
-                                    <td class="p-4 text-on-surface-variant text-center">${room.capacity} người</td>
-                                    <td class="p-4 font-bold text-secondary text-base">${formattedPrice}</td>
-                                    <td class="p-4 text-center">
-                                        ${statusHtml}
-                                    </td>
-                                    <td class="p-4 text-center whitespace-nowrap">
-                                        <button onclick='editRoom(${JSON.stringify(room).replace(/'/g, "&apos;")})' class="p-1.5 text-primary hover:bg-surface-container rounded-lg transition-colors" title="Sửa">
-                                            <span class="material-symbols-outlined text-[20px]">edit</span>
-                                        </button>
-                                        <button onclick="deleteRoom(${roomId})" class="p-1.5 text-error hover:bg-error/10 rounded-lg transition-colors ml-1" title="Xóa">
-                                            <span class="material-symbols-outlined text-[20px]">delete</span>
-                                        </button>
-                                    </td>
-                                </tr>
-                            `;
+                                        </td>
+                                        <td class="p-4"><span class="bg-surface-container-high px-2.5 py-1 rounded text-xs font-semibold text-on-surface-variant">${categoryName}</span></td>
+                                        <td class="p-4 text-on-surface-variant text-center">${room.capacity} người</td>
+                                        <td class="p-4 font-bold text-secondary text-base">${formattedPrice}</td>
+                                        <td class="p-4 text-center">
+                                            ${statusHtml}
+                                        </td>
+                                        <td class="p-4 text-center whitespace-nowrap">
+                                            <button onclick='editRoom(${JSON.stringify(room).replace(/'/g, "&apos;")})' class="p-1.5 text-primary hover:bg-surface-container rounded-lg transition-colors" title="Sửa">
+                                                <span class="material-symbols-outlined text-[20px]">edit</span>
+                                            </button>
+                                            <button onclick="deleteRoom(${roomId})" class="p-1.5 text-error hover:bg-error/10 rounded-lg transition-colors ml-1" title="Xóa">
+                                                <span class="material-symbols-outlined text-[20px]">delete</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `;
             }).join('');
         }
 
@@ -1428,20 +1507,20 @@
                     }
 
                     return `
-                                    <div class="review-box p-5 rounded-r-xl border border-outline-variant/10 shadow-sm flex flex-col gap-3">
-                                        <div class="flex justify-between items-start">
-                                            <div>
-                                                <p class="font-bold text-primary text-sm">${userName}</p>
-                                                <p class="text-[11px] text-on-surface-variant mt-0.5">${reviewDate}</p>
+                                        <div class="review-box p-5 rounded-r-xl border border-outline-variant/10 shadow-sm flex flex-col gap-3">
+                                            <div class="flex justify-between items-start">
+                                                <div>
+                                                    <p class="font-bold text-primary text-sm">${userName}</p>
+                                                    <p class="text-[11px] text-on-surface-variant mt-0.5">${reviewDate}</p>
+                                                </div>
+                                                <div class="flex">${starsHtml}</div>
                                             </div>
-                                            <div class="flex">${starsHtml}</div>
+                                            <p class="text-sm text-on-surface leading-relaxed">"${review.review || 'Không để lại bình luận.'}"</p>
+                                            <div class="text-right">
+                                                <span class="text-[10px] text-on-surface-variant uppercase tracking-widest font-semibold bg-white px-2 py-1 rounded border border-outline-variant/20">Mã Đơn: #${review.bookingId || 'N/A'}</span>
+                                            </div>
                                         </div>
-                                        <p class="text-sm text-on-surface leading-relaxed">"${review.review || 'Không để lại bình luận.'}"</p>
-                                        <div class="text-right">
-                                            <span class="text-[10px] text-on-surface-variant uppercase tracking-widest font-semibold bg-white px-2 py-1 rounded border border-outline-variant/20">Mã Đơn: #${review.bookingId || 'N/A'}</span>
-                                        </div>
-                                    </div>
-                                `;
+                                    `;
                 }).join('');
 
             } catch (error) {
@@ -1703,26 +1782,26 @@
                 const imageUrl = srv.imageUrl || srv.thumbnailUrl || 'https://placehold.co/80x80?text=No+Image';
 
                 return `
-                            <tr class="hover:bg-surface/50 transition-colors group">
-                                <td class="p-4">
-                                    <img src="${imageUrl}" onerror="this.src='https://placehold.co/80x80?text=No+Image'" class="w-12 h-12 object-cover rounded-xl border border-outline-variant/20 shadow-sm">
-                                </td>
-                                <td class="p-4">
-                                    <p class="font-bold text-primary text-base">${srv.name}</p>
-                                    <p class="text-xs text-on-surface-variant mt-1 line-clamp-1 max-w-xs">${srv.description || 'Không có mô tả'}</p>
-                                </td>
-                                <td class="p-4 font-bold text-secondary text-base">${formattedPrice}</td>
-                                <td class="p-4 text-center">${statusHtml}</td>
-                                <td class="p-4 text-center whitespace-nowrap">
-                                    <button onclick='editService(${JSON.stringify(srv).replace(/'/g, "&apos;")})' class="p-1.5 text-primary hover:bg-surface-container rounded-lg transition-colors" title="Sửa">
-                                        <span class="material-symbols-outlined text-[20px]">edit</span>
-                                    </button>
-                                    <button onclick="deleteService(${srvId})" class="p-1.5 text-error hover:bg-error/10 rounded-lg transition-colors ml-1" title="Xóa">
-                                        <span class="material-symbols-outlined text-[20px]">delete</span>
-                                    </button>
-                                </td>
-                            </tr>
-                        `;
+                                <tr class="hover:bg-surface/50 transition-colors group">
+                                    <td class="p-4">
+                                        <img src="${imageUrl}" onerror="this.src='https://placehold.co/80x80?text=No+Image'" class="w-12 h-12 object-cover rounded-xl border border-outline-variant/20 shadow-sm">
+                                    </td>
+                                    <td class="p-4">
+                                        <p class="font-bold text-primary text-base">${srv.name}</p>
+                                        <p class="text-xs text-on-surface-variant mt-1 line-clamp-1 max-w-xs">${srv.description || 'Không có mô tả'}</p>
+                                    </td>
+                                    <td class="p-4 font-bold text-secondary text-base">${formattedPrice}</td>
+                                    <td class="p-4 text-center">${statusHtml}</td>
+                                    <td class="p-4 text-center whitespace-nowrap">
+                                        <button onclick='editService(${JSON.stringify(srv).replace(/'/g, "&apos;")})' class="p-1.5 text-primary hover:bg-surface-container rounded-lg transition-colors" title="Sửa">
+                                            <span class="material-symbols-outlined text-[20px]">edit</span>
+                                        </button>
+                                        <button onclick="deleteService(${srvId})" class="p-1.5 text-error hover:bg-error/10 rounded-lg transition-colors ml-1" title="Xóa">
+                                            <span class="material-symbols-outlined text-[20px]">delete</span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            `;
             }).join('');
         }
 
@@ -1934,29 +2013,29 @@
                 const checkOut = formatDateDisplay(bk.endTime);
 
                 return `
-                <tr class="hover:bg-surface/50 transition-colors group">
-                    <td class="p-4 font-bold text-primary">#${bkId}</td>
-                    <td class="p-4">
-                        <p class="font-bold text-on-surface text-sm">${customerName}</p>
-                        <p class="text-[11px] text-on-surface-variant mt-0.5">${bk.phone || ''}</p>
-                    </td>
-                    <td class="p-4 font-bold text-primary text-sm">${roomName}</td>
-                    <td class="p-4 text-xs text-on-surface-variant">
-                        <div class="flex flex-col gap-1">
-                            <span><strong class="text-primary">In:</strong> ${checkIn}</span>
-                            <span><strong class="text-primary">Out:</strong> ${checkOut}</span>
-                        </div>
-                    </td>
-                    <td class="p-4 font-bold text-secondary text-base text-right">${totalPrice}</td>
-                    <td class="p-4 text-center">${statusHtml}</td>
-                    <td class="p-4 text-center whitespace-nowrap">
-                        <button onclick='viewBookingDetail(${JSON.stringify(bk).replace(/'/g, "&apos;")})'
-                                class="p-1.5 text-primary hover:bg-surface-container rounded-lg transition-colors border border-outline-variant/30 hover:border-primary flex items-center justify-center mx-auto" title="Xem chi tiết">
-                            <span class="material-symbols-outlined text-[20px]">visibility</span>
-                        </button>
-                    </td>
-                </tr>
-            `;
+                    <tr class="hover:bg-surface/50 transition-colors group">
+                        <td class="p-4 font-bold text-primary">#${bkId}</td>
+                        <td class="p-4">
+                            <p class="font-bold text-on-surface text-sm">${customerName}</p>
+                            <p class="text-[11px] text-on-surface-variant mt-0.5">${bk.phone || ''}</p>
+                        </td>
+                        <td class="p-4 font-bold text-primary text-sm">${roomName}</td>
+                        <td class="p-4 text-xs text-on-surface-variant">
+                            <div class="flex flex-col gap-1">
+                                <span><strong class="text-primary">In:</strong> ${checkIn}</span>
+                                <span><strong class="text-primary">Out:</strong> ${checkOut}</span>
+                            </div>
+                        </td>
+                        <td class="p-4 font-bold text-secondary text-base text-right">${totalPrice}</td>
+                        <td class="p-4 text-center">${statusHtml}</td>
+                        <td class="p-4 text-center whitespace-nowrap">
+                            <button onclick='viewBookingDetail(${JSON.stringify(bk).replace(/'/g, "&apos;")})'
+                                    class="p-1.5 text-primary hover:bg-surface-container rounded-lg transition-colors border border-outline-variant/30 hover:border-primary flex items-center justify-center mx-auto" title="Xem chi tiết">
+                                <span class="material-symbols-outlined text-[20px]">visibility</span>
+                            </button>
+                        </td>
+                    </tr>
+                `;
             }).join('');
         }
 
@@ -2004,11 +2083,11 @@
                 const services = bk.serviceLists || [];
                 if (services.length > 0) {
                     servicesListContainer.innerHTML = services.map(s => `
-                            <li class="flex justify-between items-center border-b border-outline-variant/10 pb-2 mb-2 last:border-0 last:pb-0 last:mb-0">
-                                <span>• ${s.name || s.serviceName} <span class="text-xs text-on-surface-variant font-bold">(x${s.quantity || 1})</span></span>
-                                <span class="font-bold text-secondary">${((s.price || 0) * (s.quantity || 1)).toLocaleString('vi-VN')}đ</span>
-                            </li>
-                        `).join('');
+                                <li class="flex justify-between items-center border-b border-outline-variant/10 pb-2 mb-2 last:border-0 last:pb-0 last:mb-0">
+                                    <span>• ${s.name || s.serviceName} <span class="text-xs text-on-surface-variant font-bold">(x${s.quantity || 1})</span></span>
+                                    <span class="font-bold text-secondary">${((s.price || 0) * (s.quantity || 1)).toLocaleString('vi-VN')}đ</span>
+                                </li>
+                            `).join('');
                 } else {
                     servicesListContainer.innerHTML = `<li class="text-sm text-on-surface-variant italic">Không có dịch vụ đi kèm.</li>`;
                 }
@@ -2029,9 +2108,9 @@
                         }
                     }
                     reviewText.innerHTML = `
-                            <div class="flex">${starsHtml}</div>
-                            <p class="text-sm text-on-surface mt-1 italic leading-relaxed">"${bk.ratingResponse.review || 'Không có bình luận.'}"</p>
-                        `;
+                                <div class="flex">${starsHtml}</div>
+                                <p class="text-sm text-on-surface mt-1 italic leading-relaxed">"${bk.ratingResponse.review || 'Không có bình luận.'}"</p>
+                            `;
                 }
             } else {
                 reviewContainer?.classList.add('hidden');
@@ -2167,16 +2246,16 @@
                 const statusHtml = `<span class="bg-success-container text-success px-3 py-1 rounded-full text-[10px] font-bold uppercase">Thành công</span>`;
 
                 return `
-                        <tr class="hover:bg-surface/50 transition-colors group">
-                            <td class="p-4 font-bold text-primary">#${pmId}</td>
-                            <td class="p-4 text-on-surface-variant font-semibold">#${bookingId}</td>
-                            <td class="p-4 font-bold text-on-surface">${customerName}</td>
-                            <td class="p-4 text-sm text-on-surface-variant">${dateStr}</td>
-                            <td class="p-4 font-bold text-success text-base text-right">+${amount}</td>
-                            <td class="p-4 text-center">${methodHtml}</td>
-                            <td class="p-4 text-center">${statusHtml}</td>
-                        </tr>
-                    `;
+                            <tr class="hover:bg-surface/50 transition-colors group">
+                                <td class="p-4 font-bold text-primary">#${pmId}</td>
+                                <td class="p-4 text-on-surface-variant font-semibold">#${bookingId}</td>
+                                <td class="p-4 font-bold text-on-surface">${customerName}</td>
+                                <td class="p-4 text-sm text-on-surface-variant">${dateStr}</td>
+                                <td class="p-4 font-bold text-success text-base text-right">+${amount}</td>
+                                <td class="p-4 text-center">${methodHtml}</td>
+                                <td class="p-4 text-center">${statusHtml}</td>
+                            </tr>
+                        `;
             }).join('');
         }
         // =====================================
@@ -2266,22 +2345,22 @@
                 // Nút Khóa / Mở Khóa dựa trên isActive
                 const actionBtn = isActive
                     ? `<button onclick="toggleAccountStatus(${accId}, false)" class="p-1.5 text-error hover:bg-error/10 rounded-lg transition-colors flex items-center justify-center mx-auto" title="Khóa tài khoản này">
-                               <span class="material-symbols-outlined text-[20px]">lock</span>
-                           </button>`
+                                   <span class="material-symbols-outlined text-[20px]">lock</span>
+                               </button>`
                     : `<button onclick="toggleAccountStatus(${accId}, true)" class="p-1.5 text-success hover:bg-success/10 rounded-lg transition-colors flex items-center justify-center mx-auto" title="Mở khóa tài khoản">
-                               <span class="material-symbols-outlined text-[20px]">lock_open</span>
-                           </button>`;
+                                   <span class="material-symbols-outlined text-[20px]">lock_open</span>
+                               </button>`;
 
                 return `
-                        <tr class="hover:bg-surface/50 transition-colors group">
-                            <td class="p-4 font-bold text-primary">#${accId}</td>
-                            <td class="p-4 font-bold text-on-surface">${username}</td>
-                            <td class="p-4 text-on-surface-variant text-sm">${email}</td>
-                            <td class="p-4 text-center">${roleHtml}</td>
-                            <td class="p-4 text-center">${statusHtml}</td>
-                            <td class="p-4 text-center">${actionBtn}</td>
-                        </tr>
-                    `;
+                            <tr class="hover:bg-surface/50 transition-colors group">
+                                <td class="p-4 font-bold text-primary">#${accId}</td>
+                                <td class="p-4 font-bold text-on-surface">${username}</td>
+                                <td class="p-4 text-on-surface-variant text-sm">${email}</td>
+                                <td class="p-4 text-center">${roleHtml}</td>
+                                <td class="p-4 text-center">${statusHtml}</td>
+                                <td class="p-4 text-center">${actionBtn}</td>
+                            </tr>
+                        `;
             }).join('');
         }
 
@@ -2370,26 +2449,26 @@
                 const receiverCount = (n.listReceiver && n.listReceiver.length > 0) ? `${n.listReceiver.length} người` : 'Toàn hệ thống';
 
                 return `
-                        <tr class="hover:bg-surface/50 transition-colors group">
-                            <td class="p-4 font-bold text-primary">#${n.id}</td>
-                            <td class="p-4 font-bold text-on-surface">${n.title}</td>
-                            <td class="p-4 text-on-surface-variant text-sm">
-                                <div class="line-clamp-2" title="${n.content}">${n.content}</div>
-                            </td>
-                            <td class="p-4 text-center">
-                                <span class="bg-surface-container px-2 py-1 rounded text-xs font-semibold text-on-surface-variant">${receiverCount}</span>
-                            </td>
-                            <td class="p-4 text-sm text-on-surface-variant">${dateStr}</td>
-                            <td class="p-4 text-center whitespace-nowrap">
-                                <button onclick='editNotification(${JSON.stringify(n).replace(/'/g, "&apos;")})' class="p-1.5 text-primary hover:bg-surface-container rounded-lg transition-colors" title="Sửa">
-                                    <span class="material-symbols-outlined text-[20px]">edit</span>
-                                </button>
-                                <button onclick="deleteNotification(${n.id})" class="p-1.5 text-error hover:bg-error/10 rounded-lg transition-colors ml-1" title="Xóa">
-                                    <span class="material-symbols-outlined text-[20px]">delete</span>
-                                </button>
-                            </td>
-                        </tr>
-                    `;
+                            <tr class="hover:bg-surface/50 transition-colors group">
+                                <td class="p-4 font-bold text-primary">#${n.id}</td>
+                                <td class="p-4 font-bold text-on-surface">${n.title}</td>
+                                <td class="p-4 text-on-surface-variant text-sm">
+                                    <div class="line-clamp-2" title="${n.content}">${n.content}</div>
+                                </td>
+                                <td class="p-4 text-center">
+                                    <span class="bg-surface-container px-2 py-1 rounded text-xs font-semibold text-on-surface-variant">${receiverCount}</span>
+                                </td>
+                                <td class="p-4 text-sm text-on-surface-variant">${dateStr}</td>
+                                <td class="p-4 text-center whitespace-nowrap">
+                                    <button onclick='editNotification(${JSON.stringify(n).replace(/'/g, "&apos;")})' class="p-1.5 text-primary hover:bg-surface-container rounded-lg transition-colors" title="Sửa">
+                                        <span class="material-symbols-outlined text-[20px]">edit</span>
+                                    </button>
+                                    <button onclick="deleteNotification(${n.id})" class="p-1.5 text-error hover:bg-error/10 rounded-lg transition-colors ml-1" title="Xóa">
+                                        <span class="material-symbols-outlined text-[20px]">delete</span>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
             }).join('');
         }
 
@@ -2465,14 +2544,14 @@
             const activeCustomers = allAdminAccounts.filter(a => (a.role == 2 || a.role === 'Customer') && a.isActive);
 
             container.innerHTML = activeCustomers.map(u => `
-                    <label class="flex items-center gap-3 p-1.5 hover:bg-surface-container rounded-lg cursor-pointer transition-colors">
-                        <input type="checkbox" value="${u.id || u.accountId}" class="user-select-cb w-4 h-4 text-primary rounded border-outline-variant/50 focus:ring-primary">
-                        <span class="text-sm text-on-surface">
-                            <span class="font-bold">${u.username || u.userName}</span>
-                            <span class="text-xs text-on-surface-variant ml-1">(${u.email || 'N/A'})</span>
-                        </span>
-                    </label>
-                `).join('');
+                        <label class="flex items-center gap-3 p-1.5 hover:bg-surface-container rounded-lg cursor-pointer transition-colors">
+                            <input type="checkbox" value="${u.id || u.accountId}" class="user-select-cb w-4 h-4 text-primary rounded border-outline-variant/50 focus:ring-primary">
+                            <span class="text-sm text-on-surface">
+                                <span class="font-bold">${u.username || u.userName}</span>
+                                <span class="text-xs text-on-surface-variant ml-1">(${u.email || 'N/A'})</span>
+                            </span>
+                        </label>
+                    `).join('');
         }
 
         // Bật / Tắt trạng thái chọn từng user
@@ -2635,33 +2714,33 @@
                 const content = fb.content || fb.Content || fb.message || '';
 
                 return `
-                        <div class="p-4 rounded-xl ${isReadStr} transition-colors hover:bg-surface-container mb-1 group">
-                            <div class="flex justify-between items-start mb-2">
-                                <div>
-                                    <h4 class="font-bold text-primary text-sm flex items-center gap-1.5">
-                                        ${!fb.isRead ? '<span class="w-2 h-2 rounded-full bg-error inline-block"></span>' : ''}
-                                        ${name}
-                                    </h4>
-                                    <p class="text-[11px] text-on-surface-variant">${email}</p>
+                            <div class="p-4 rounded-xl ${isReadStr} transition-colors hover:bg-surface-container mb-1 group">
+                                <div class="flex justify-between items-start mb-2">
+                                    <div>
+                                        <h4 class="font-bold text-primary text-sm flex items-center gap-1.5">
+                                            ${!fb.isRead ? '<span class="w-2 h-2 rounded-full bg-error inline-block"></span>' : ''}
+                                            ${name}
+                                        </h4>
+                                        <p class="text-[11px] text-on-surface-variant">${email}</p>
+                                    </div>
+                                    <span class="text-[10px] text-on-surface-variant">${dateStr}</span>
                                 </div>
-                                <span class="text-[10px] text-on-surface-variant">${dateStr}</span>
-                            </div>
-                            <p class="text-xs text-on-surface leading-relaxed mb-3 italic">"${content}"</p>
+                                <p class="text-xs text-on-surface leading-relaxed mb-3 italic">"${content}"</p>
 
-                            <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                ${!fb.isRead ? `
-                                    <button onclick="markFeedbackAsRead(${fb.id})" class="text-[11px] font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-lg hover:bg-primary hover:text-white transition-colors">
-                                        Đánh dấu đã đọc
+                                <div class="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    ${!fb.isRead ? `
+                                        <button onclick="markFeedbackAsRead(${fb.id})" class="text-[11px] font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-lg hover:bg-primary hover:text-white transition-colors">
+                                            Đánh dấu đã đọc
+                                        </button>
+                                    ` : `<span class="text-[11px] text-on-surface-variant font-medium flex items-center gap-1 mr-auto"><span class="material-symbols-outlined text-[14px]">done_all</span> Đã đọc</span>`}
+
+                                    <button onclick="openReplyFeedbackModal(${fb.accountId || fb.userId || 0}, '${name.replace(/'/g, "\\'")}')"
+                                            class="text-[11px] font-bold text-secondary bg-secondary/10 px-3 py-1.5 rounded-lg hover:bg-secondary hover:text-white transition-colors flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[14px]">reply</span> Phản hồi qua thông báo
                                     </button>
-                                ` : `<span class="text-[11px] text-on-surface-variant font-medium flex items-center gap-1 mr-auto"><span class="material-symbols-outlined text-[14px]">done_all</span> Đã đọc</span>`}
-
-                                <button onclick="openReplyFeedbackModal(${fb.accountId || fb.userId || 0}, '${name.replace(/'/g, "\\'")}')" 
-                                        class="text-[11px] font-bold text-secondary bg-secondary/10 px-3 py-1.5 rounded-lg hover:bg-secondary hover:text-white transition-colors flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-[14px]">reply</span> Phản hồi qua thông báo
-                                </button>
+                                </div>
                             </div>
-                        </div>
-                    `;
+                        `;
             }).join('');
         }
 
@@ -2764,6 +2843,199 @@
             } catch (error) {
                 console.error(error);
                 alert("Không thể kết nối đến máy chủ.");
+            }
+        });
+        // =====================================
+        // ĐẶT PHÒNG CHO KHÁCH VÃNG LAI (WALK-IN)
+        // =====================================
+        let walkInFlatpickr = null;
+
+        function closeAdminBookingModal() {
+            document.getElementById('adminBookingModal').classList.add('hidden');
+        }
+
+        async function openAdminBookingModal() {
+            document.getElementById('adminBookingModal').classList.remove('hidden');
+            document.getElementById('adminBookingForm').reset();
+
+            const select = document.getElementById('walkInRoomSelect');
+            select.innerHTML = '<option value="">-- Đang tải phòng... --</option>';
+
+            try {
+                const res = await fetch('/api/admin/room', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!res.ok) throw new Error("Lỗi mạng");
+
+                const rooms = await res.json();
+                allAdminRooms = rooms;
+
+                // Lọc các phòng đang sẵn sàng
+                const availableRooms = rooms.filter(r => {
+                    const st = r.roomStatus || r.status;
+                    return st == 1 || String(st).toLowerCase() === 'available';
+                });
+
+                if (availableRooms.length === 0) {
+                    select.innerHTML = '<option value="">Không có phòng trống lúc này</option>';
+                } else {
+                    select.innerHTML = '<option value="">-- Chọn phòng --</option>';
+                    availableRooms.forEach(room => {
+                        const price = (room.pricePerNight || room.price || 0).toLocaleString('vi-VN');
+                        select.innerHTML += `<option value="${room.id || room._id}">${room.name} - ${price}đ/đêm</option>`;
+                    });
+                }
+
+                // Khởi tạo lịch trạng thái đóng (chưa chọn phòng)
+                initWalkInCalendar([], false);
+                document.getElementById('calendarStatus').classList.remove('hidden');
+
+            } catch (err) {
+                console.error("Lỗi khi load phòng walk-in:", err);
+                select.innerHTML = '<option value="">Lỗi tải danh sách phòng</option>';
+            }
+        }
+
+        document.getElementById('walkInRoomSelect').addEventListener('change', async function () {
+            const roomId = this.value;
+            const calendarInfo = document.getElementById('calendarStatus');
+
+            if (!roomId) {
+                initWalkInCalendar([], false);
+                calendarInfo.classList.add('hidden');
+                return;
+            }
+
+            calendarInfo.innerText = "⏳ Đang kiểm tra lịch trống...";
+            calendarInfo.classList.remove('hidden', 'text-error', 'text-success');
+            calendarInfo.classList.add('text-primary');
+
+            try {
+                const today = new Date();
+                const fromDateStr = today.toISOString().split('T')[0];
+
+                const nextYear = new Date();
+                nextYear.setFullYear(today.getFullYear() + 1);
+                const toDateStr = nextYear.toISOString().split('T')[0];
+
+                const response = await fetch(`/api/room/${roomId}/available-times?from=${fromDateStr}&to=${toDateStr}`, {
+                    headers: { 'Authorization': `Bearer ${token}` } // Thêm token nếu API này bảo mật
+                });
+
+                if (!response.ok) throw new Error("Không lấy được lịch");
+
+                const availableTimes = await response.json();
+
+                // ĐÃ SỬA Ở ĐÂY: Đảo ngược định dạng "YYYY-MM-DD" thành "DD/MM/YYYY" để Flatpickr đọc được
+                const disableDates = availableTimes
+                    .filter(item => item.isAvailable === false || String(item.isAvailable).toLowerCase() === 'false')
+                    .map(item => {
+                        const dateStr = item.date.split('T')[0]; // Cắt lấy "YYYY-MM-DD"
+                        const parts = dateStr.split('-');        // Tách thành ["YYYY", "MM", "DD"]
+                        return `${parts[2]}/${parts[1]}/${parts[0]}`; // Ráp lại thành "DD/MM/YYYY"
+                    });
+
+                console.log("Danh sách ngày bị khóa (Đã format):", disableDates);
+
+                // Truyền mảng bị khóa vào hàm khởi tạo lịch
+                initWalkInCalendar(disableDates, true);
+
+                calendarInfo.innerText = "✅ Đã tải lịch rảnh. Vui lòng chọn ngày.";
+                calendarInfo.classList.replace('text-primary', 'text-success');
+            } catch (error) {
+                console.error("Lỗi lấy lịch phòng:", error);
+                calendarInfo.innerText = "❌ Lỗi: Không thể lấy được lịch rảnh.";
+                calendarInfo.classList.replace('text-primary', 'text-error');
+                initWalkInCalendar([], false);
+            }
+        });
+
+        function initWalkInCalendar(disableDatesArr, isReady = false) {
+            if (walkInFlatpickr) walkInFlatpickr.destroy();
+
+            const flatpickrConfig = {
+                mode: "range",
+                minDate: "today",
+                dateFormat: "d/m/Y",
+                locale: {
+                    rangeSeparator: ' - '
+                },
+                onClose: function (selectedDates) {
+                    if (selectedDates.length === 2) {
+                        // ĐÃ SỬA: Ép cứng chuẩn YYYY-MM-DD để gửi xuống C# (DateOnly) không bị lỗi timezone
+                        const formatYMD = (d) => {
+                            const year = d.getFullYear();
+                            const month = String(d.getMonth() + 1).padStart(2, '0');
+                            const day = String(d.getDate()).padStart(2, '0');
+                            return `${year}-${month}-${day}`;
+                        };
+
+                        document.getElementById('walkInCheckIn').value = formatYMD(selectedDates[0]);
+                        document.getElementById('walkInCheckOut').value = formatYMD(selectedDates[1]);
+                    }
+                }
+            };
+
+            // NẾU PHÒNG ĐÃ SẴN SÀNG -> DÙNG LỆNH DISABLE ĐỂ KHÓA NHỮNG NGÀY ĐÃ BỊ ĐẶT
+            if (isReady) {
+                flatpickrConfig.disable = disableDatesArr;
+            } else {
+                flatpickrConfig.disable = [function () { return true; }]; // Khóa toàn bộ
+            }
+
+            walkInFlatpickr = flatpickr("#walkInDateRange", flatpickrConfig);
+        }
+
+        document.getElementById('adminBookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const checkIn = document.getElementById('walkInCheckIn').value;
+            const checkOut = document.getElementById('walkInCheckOut').value;
+
+            if (!checkIn || !checkOut) {
+                alert("Vui lòng chọn khoảng ngày trên lịch!");
+                return;
+            }
+
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+
+            const roomId = parseInt(document.getElementById('walkInRoomSelect').value);
+            const selectedRoom = allAdminRooms.find(r => (r.id || r._id) == roomId);
+            const roomPrice = selectedRoom ? (selectedRoom.pricePerNight || selectedRoom.price || 0) : 0;
+
+            const dto = {
+                RoomId: roomId,
+                CustomerName: document.getElementById('walkInName').value.trim(),
+                Phone: document.getElementById('walkInPhone').value.trim(),
+                Email: document.getElementById('walkInEmail').value.trim(),
+                NumOfPeople: parseInt(document.getElementById('walkInNumOfPeople').value),
+                StartTime: checkIn,
+                EndTime: checkOut,
+                Note: document.getElementById('walkInNote').value.trim(),
+                RoomPriceAtBooking: roomPrice
+            };
+
+            try {
+                const response = await fetch('/api/admin/booking', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                    body: JSON.stringify(dto)
+                });
+
+                if (response.ok) {
+                    alert('Đặt phòng thành công!');
+                    closeAdminBookingModal();
+                    fetchBookings();
+                    loadDashboardData();
+                } else {
+                    const err = await response.json();
+                    alert("Lỗi: " + JSON.stringify(err.message || err.errors || "Không thể đặt phòng vào thời gian này."));
+                }
+            } catch (err) {
+                alert("Lỗi kết nối server.");
+            } finally {
+                submitBtn.disabled = false;
             }
         });
     </script>
