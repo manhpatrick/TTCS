@@ -18,8 +18,8 @@ namespace HotelManager.Presentation.Controllers.Customer
         public async Task<IActionResult> AddBooking([FromBody] BookingRequest request)
         {
             var accountId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
-            await _bookingService.AddBooking(accountId, request);
-            return Ok();
+            var newBooking = await _bookingService.AddBooking(accountId, request);
+            return Ok(new { id = newBooking.Id, message = "Thành công" });
         }
         [HttpGet("me")]
         public async Task<ActionResult<BookingDetailResponse>> GetBookingsByAccountId()

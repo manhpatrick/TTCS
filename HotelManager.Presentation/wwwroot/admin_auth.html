@@ -10,7 +10,18 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script>
+      // 1. Nếu đã có adminToken -> Vào thẳng Dashboard
+      if (localStorage.getItem('adminToken')) {
+          window.location.replace('/admin_dashboard.html');
+      }
 
+      // 2. Nếu đang có userToken (Tài khoản khách hàng) -> Không cho vào trang login Admin
+      if (localStorage.getItem('userToken')) {
+          alert('Bạn đang đăng nhập với tư cách Khách hàng. Vui lòng đăng xuất tài khoản khách trước khi truy cập trang Quản trị.');
+          window.location.replace('/');
+      }
+  </script>
   <!-- Tailwind Config -->
   <script id="tailwind-config">
     tailwind.config = {
@@ -137,16 +148,21 @@
                 try {
                     const response = await fetch('/api/auth/login', {
                         method: "POST",
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ Username: email,Password: password })
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ Username: email, Password: password })
                     });
                     const data = await response.json();
+
                     if (!response.ok || data.success === false) {
                         throw new Error(data.error || data.message || 'Đăng nhập thất bại');
                     }
+
+                    // --- QUAN TRỌNG: LƯU TOKEN VÀO LOCALSTORAGE ---
+                    // Lưu ý: data.accessToken là tên trường trả về từ LoginResponse.cs
+                    localStorage.setItem('adminToken', data.accessToken);
+
                     showAuthMessage('signinMessages', 'Đăng nhập thành công', 'success');
+
                     setTimeout(() => {
                         window.location.href = '/admin_dashboard.html';
                     }, 500);

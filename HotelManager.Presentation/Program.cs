@@ -1,4 +1,5 @@
-using HotelManager.Application.DTO.AppConfig;
+﻿using HotelManager.Application.DTO.AppConfig;
+using HotelManager.Application.DTO;
 using HotelManager.Infrastructure.Data;
 using HotelManager.Presentation.Middleware;
 using HotelManager.Presentation.Hubs;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using HotelManager.Application.AddLayer;
+using HotelManager.Infrastructure.Services;
 
 namespace HotelManager.Presentation
 {
@@ -62,13 +64,11 @@ namespace HotelManager.Presentation
                     };
                 }
             );
+            // Đăng ký MailSettings
+             builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure();
-            
-            // Thêm SignalR
-            builder.Services.AddSignalR();
-            
             builder.Services.AddCors(option =>
             {
                 option.AddPolicy("AllowReactApp",

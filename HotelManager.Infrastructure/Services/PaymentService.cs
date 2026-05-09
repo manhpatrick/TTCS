@@ -88,6 +88,7 @@ namespace HotelManager.Infrastructure.Services
                     else
                     {
                         payment.MarkAsFailed(response.VnPayResponseCode);
+                        payment.SetOrderInfo("");
                     }
                     // Giả sử collections là dữ liệu VNPAY trả về
                     var vnp_OrderInfo = collections["vnp_OrderInfo"];

@@ -7,10 +7,10 @@ namespace HotelManager.Application.Converters
     {
         public RatingResponse EntityToRatingResponse(Rating rating)
         {
-            if (rating == null) return null;
 
             return new RatingResponse
             {
+                UserName = rating.Booking.Account.Username,
                 BookingId = rating.BookingId,
                 NumOfRating = rating.NumOfRating,
                 Review = rating.Review,

@@ -51,6 +51,10 @@ namespace HotelManager.Domain.Entity.Bookings
         {
             Note = newNote;
         }
+        public void ChangeBookingStatus(BookingStatus bookingStatus)
+        {
+            BookingStatus = bookingStatus;
+        }
         public void ChangeRoomId(int roomId)
         {
             RoomId = roomId;

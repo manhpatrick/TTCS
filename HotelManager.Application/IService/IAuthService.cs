@@ -6,5 +6,7 @@ namespace HotelManager.Application.IService
     {
         Task<RegisterResponse> Register(RegisterRequest registerDTO);
         Task<LoginResponse> Login(LoginRequest loginDTO);
+        Task<bool> SendOtpAsync(string email);
+        Task<bool> ResetPasswordWithOtpAsync(VerifyOtpRequest request);
     }
 }
