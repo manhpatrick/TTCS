@@ -81,6 +81,7 @@ function checkAuthStatus() {
         setupDropdowns();
         injectModalsHTML();
         fetchNotifications();
+        startSignalRConnection();
     } else {
         authContainer.innerHTML = `
             <a href="/user_auth.html" class="bg-white text-primary px-6 py-2.5 rounded-full text-sm font-bold transition-all hover:bg-gray-100 active:scale-95 shadow-md">
@@ -396,4 +397,53 @@ function logout() {
     localStorage.removeItem('userToken');
     localStorage.removeItem('demo_auth_token');
     window.location.href = '/';
+}
+
+let signalRConnection = null;
+
+async function startSignalRConnection() {
+    // 1. QUAN TRỌNG: Kiểm tra nếu đã kết nối rồi thì bỏ qua, tránh bị đăng ký sự kiện 2 lần
+    if (signalRConnection !== null) {
+        return;
+    }
+
+    const token = getHeaderAuthToken();
+    if (!token) return;
+
+    // Khởi tạo kết nối
+    signalRConnection = new signalR.HubConnectionBuilder()
+        .withUrl("/hubs/notification", {
+            accessTokenFactory: () => token
+        })
+        .withAutomaticReconnect()
+        .build();
+
+    // 2. Lắng nghe thông báo chung
+    signalRConnection.on("ReceiveNotification", (notification) => {
+        console.log("Có thông báo mới (All):", notification);
+        // Chỉ cần gọi hàm này để tải lại list thông báo và tự update số lượng ở cái chuông
+        fetchNotifications();
+    });
+
+    // 3. Lắng nghe thông báo cá nhân
+    signalRConnection.on("ReceiveUserNotification", (notification) => {
+        console.log("Có thông báo cá nhân mới:", notification);
+        // Tương tự, chỉ cần tải lại dữ liệu, không dùng alert nữa
+        fetchNotifications();
+    });
+
+    try {
+        await signalRConnection.start();
+        console.log("Đã kết nối SignalR Real-time!");
+    } catch (err) {
+        console.error("Lỗi kết nối SignalR:", err);
+        // Nếu lỗi, reset lại biến để có thể thử kết nối lại sau
+        signalRConnection = null;
+    }
+}
+
+// (Tùy chọn) Hàm hiển thị thông báo popup nhỏ trên màn hình
+function showToastAlert(title, message) {
+    // Bạn có thể dùng thư viện Toastr hoặc tự tạo div hiển thị góc màn hình
+    alert(`Thông báo mới: ${title}\n${message}`);
 }

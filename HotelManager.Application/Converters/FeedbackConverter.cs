@@ -9,6 +9,7 @@ namespace HotelManager.Application.Converters
         {
             return new FeedbackAdminResponse
             {
+                Id = feedback.Id,
                 Title = feedback.Title,
                 Content = feedback.Content,
                 CreatedAt = feedback.CreatedAt,

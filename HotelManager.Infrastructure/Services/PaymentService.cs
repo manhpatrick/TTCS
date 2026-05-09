@@ -6,6 +6,7 @@ using HotelManager.Application.DTO.Payments;
 using HotelManager.Application.CustomException;
 using HotelManager.Application.DTO.Notifications;
 using HotelManager.Application.Converters;
+using HotelManager.Domain.Entity.Bookings;
 
 namespace HotelManager.Infrastructure.Services
 {
@@ -30,7 +31,7 @@ namespace HotelManager.Infrastructure.Services
         public async Task<string> CreateVnPayUrlAsync(int bookingId, HttpContext context)
         {
             // 1. Lấy đơn phòng
-            var booking = await _bookingRepository.GetById(bookingId);
+            var booking = await _bookingRepository.GetBookingById(bookingId);
             if (booking == null) throw new NotExistsException("Không tìm thấy đơn đặt phòng.");
             booking.VerifyCanPaid();
             // 2. Tạo giao dịch Payment mới (Trạng thái Pending)
@@ -69,7 +70,7 @@ namespace HotelManager.Infrastructure.Services
                     {
                         payment.ConfirmSuccess(response.TransactionId, response.VnPayResponseCode);
 
-                        var booking = await _bookingRepository.GetById(payment.BookingId);
+                        var booking = await _bookingRepository.GetBookingById(payment.BookingId);
                         booking.MarkAsPaid();
                         await _bookingRepository.Update(booking.Id, booking);
 

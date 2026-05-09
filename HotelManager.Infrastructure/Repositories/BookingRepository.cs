@@ -15,6 +15,10 @@ namespace HotelManager.Infrastructure.Repositories
             var result = await _dbSet.Where(b => b.RoomId == roomId).ToListAsync();
             return result;
         }
+        public async Task<Booking> GetBookingById(int id)
+        {
+            return await _dbSet.Include(b => b.Room).FirstOrDefaultAsync(b => b.Id == id);
+        }
         public async Task<IEnumerable<Booking>> GetBookingsInRange(int roomId, DateOnly from, DateOnly to)
         {
             var fromDateTime = from.ToDateTime(TimeOnly.MinValue); // 00:00

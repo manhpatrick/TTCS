@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using HotelManager.Application.AddLayer;
 using HotelManager.Infrastructure.Services;
+using Microsoft.AspNetCore.SignalR;
 
 namespace HotelManager.Presentation
 {
@@ -53,6 +54,18 @@ namespace HotelManager.Presentation
                     };
                     option.Events = new JwtBearerEvents
                     {
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+                            // Nếu request dến hub notification
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs/notification"))
+                            {
+                                // Gán token từ query string vào context
+                                context.Token = accessToken;
+                            }
+                            return Task.CompletedTask;
+                        },
                         OnAuthenticationFailed = context =>
                         {
                             if (context.Exception.GetType() == typeof(SecurityTokenExpiredException))
@@ -71,6 +84,7 @@ namespace HotelManager.Presentation
             builder.Services.AddInfrastructure();
             builder.Services.AddMemoryCache();
             builder.Services.AddSignalR();
+            builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             builder.Services.AddCors(option =>
             {
                 option.AddPolicy("AllowReactApp",

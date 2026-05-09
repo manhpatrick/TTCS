@@ -3,6 +3,7 @@ using HotelManager.Application.CustomException;
 using HotelManager.Application.DTO.Notifications;
 using HotelManager.Application.IRepository;
 using HotelManager.Application.IService;
+using HotelManager.Domain.Entity.Accounts;
 
 namespace HotelManager.Infrastructure.Services
 {
@@ -10,15 +11,27 @@ namespace HotelManager.Infrastructure.Services
     {
         private readonly INotificationRepository _notificationRepository;
         private readonly NotificationConverter _notificationConverter;
+        private readonly IAccountRepository _accountRepository;
 
-        public NotificationService(INotificationRepository notificationRepository, NotificationConverter notificationConverter)
+        public NotificationService(INotificationRepository notificationRepository, NotificationConverter notificationConverter,
+            IAccountRepository accountRepository)
         {
             _notificationRepository = notificationRepository;
             _notificationConverter = notificationConverter;
+            _accountRepository = accountRepository;
         }
 
         public async Task AddNotification(NotificationRequest request)
         {
+            if (request.listReceiver.Count() == 0 || request.listReceiver == null)
+            {
+                var lists = await _accountRepository.GetAllCustomerAccounts();
+                foreach(Account a in lists)
+                {
+                    request.listReceiver.Add(new ReceiverRequest { Id = a.Id});
+                }
+
+            }
             await _notificationRepository.Add(_notificationConverter.DtoToEntity(request));
         }
 

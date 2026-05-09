@@ -363,6 +363,7 @@
     </div>
 
     <script src="/js/header.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
 
     <script>
         let globalBookingsList = [];
@@ -441,40 +442,40 @@
 
             if (profileContainer) {
                 profileContainer.innerHTML = `
-                                  <div class="space-y-1">
-                                    <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Họ và Tên</label>
-                                    <input name="name" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Nhập họ và tên của bạn" value="${displayFullName}" />        </div>
-                                  <div class="space-y-1">
-                                    <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Số điện thoại</label>
-                                    <input name="phone" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Số điện thoại của bạn" value="${profile.phone || ''}" />
-                                  </div>
-                                  <div class="space-y-1">
-                                    <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Ngày sinh</label>
-                                    <input name="birthDay" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="date" value="${formatDateForInput(profile.birthDay)}" />
-                                  </div>
-                                  <div class="space-y-1">
-                                    <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Giới tính</label>
-                                    <select name="gender" class="profile-input w-full bg-surface-container-low border-transparent rounded-lg focus:ring-0 text-on-surface font-medium transition-all appearance-none pointer-events-none" disabled>
-                                      <option value="" disabled ${!profile.gender ? 'selected' : ''} class="text-on-surface-variant">Chọn giới tính</option>
-                                      <option value="1" ${isMale ? 'selected' : ''}>Nam</option>
-                                      <option value="2" ${isFemale ? 'selected' : ''}>Nữ</option>
-                                      <option value="3" ${!isMale && !isFemale && profile.gender ? 'selected' : ''}>Khác</option>
-                                    </select>
-                                  </div>
-                                  <div class="md:col-span-2 space-y-1">
-                                    <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Địa chỉ</label>
-                                    <input name="address" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Hãy cập nhật địa chỉ" value="${profile.address || ''}" />
-                                  </div>
+                                      <div class="space-y-1">
+                                        <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Họ và Tên</label>
+                                        <input name="name" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Nhập họ và tên của bạn" value="${displayFullName}" />        </div>
+                                      <div class="space-y-1">
+                                        <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Số điện thoại</label>
+                                        <input name="phone" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Số điện thoại của bạn" value="${profile.phone || ''}" />
+                                      </div>
+                                      <div class="space-y-1">
+                                        <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Ngày sinh</label>
+                                        <input name="birthDay" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="date" value="${formatDateForInput(profile.birthDay)}" />
+                                      </div>
+                                      <div class="space-y-1">
+                                        <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Giới tính</label>
+                                        <select name="gender" class="profile-input w-full bg-surface-container-low border-transparent rounded-lg focus:ring-0 text-on-surface font-medium transition-all appearance-none pointer-events-none" disabled>
+                                          <option value="" disabled ${!profile.gender ? 'selected' : ''} class="text-on-surface-variant">Chọn giới tính</option>
+                                          <option value="1" ${isMale ? 'selected' : ''}>Nam</option>
+                                          <option value="2" ${isFemale ? 'selected' : ''}>Nữ</option>
+                                          <option value="3" ${!isMale && !isFemale && profile.gender ? 'selected' : ''}>Khác</option>
+                                        </select>
+                                      </div>
+                                      <div class="md:col-span-2 space-y-1">
+                                        <label class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Địa chỉ</label>
+                                        <input name="address" class="w-full bg-surface-container-low border-none rounded-lg focus:ring-0 text-on-surface font-medium" readonly type="text" placeholder="Hãy cập nhật địa chỉ" value="${profile.address || ''}" />
+                                      </div>
 
-                                  <div id="actionButtons" class="md:col-span-2 flex justify-end gap-3 mt-4 hidden">
-                                    <button type="button" onclick="toggleEditMode(false)" class="px-5 py-2 rounded-lg font-medium text-on-surface-variant hover:bg-surface-container transition-colors">
-                                      Hủy
-                                    </button>
-                                    <button type="submit" class="px-5 py-2 rounded-lg font-medium bg-primary text-white hover:bg-primary/90 shadow-md transition-colors">
-                                      Lưu thay đổi
-                                    </button>
-                                  </div>
-                                `;
+                                      <div id="actionButtons" class="md:col-span-2 flex justify-end gap-3 mt-4 hidden">
+                                        <button type="button" onclick="toggleEditMode(false)" class="px-5 py-2 rounded-lg font-medium text-on-surface-variant hover:bg-surface-container transition-colors">
+                                          Hủy
+                                        </button>
+                                        <button type="submit" class="px-5 py-2 rounded-lg font-medium bg-primary text-white hover:bg-primary/90 shadow-md transition-colors">
+                                          Lưu thay đổi
+                                        </button>
+                                      </div>
+                                    `;
             }
         }
 
@@ -678,35 +679,35 @@
                 }
 
                 html += `
-                              <div class="group flex flex-col md:flex-row bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all mb-6">
-                                <div class="w-full md:w-64 h-48 md:h-auto overflow-hidden relative">
-                                  <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="${image}" alt="Room Image" />
-                                  <div class="absolute top-4 left-4">
-                                    <span class="bg-primary text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">${statusName}</span>
-                                  </div>
-                                </div>
-                                <div class="p-8 flex-1 flex flex-col justify-between">
-                                  <div>
-                                    <div class="flex justify-between items-start mb-2">
-                                      <h3 class="text-xl font-headline text-primary">${roomName}</h3>
-                                      <p class="text-secondary font-bold font-body">${priceStr}</p>
-                                    </div>
-                                    <div class="flex gap-4 text-sm text-on-surface-variant mb-6 font-body">
-                                      <div class="flex items-center gap-1">
-                                        <span class="material-symbols-outlined text-sm">calendar_today</span> ${checkIn} — ${checkOut}
-                                      </div>
-                                      <div class="flex items-center gap-1">
-                                        <span class="material-symbols-outlined text-sm">fact_check</span> ${statusName}
+                                  <div class="group flex flex-col md:flex-row bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all mb-6">
+                                    <div class="w-full md:w-64 h-48 md:h-auto overflow-hidden relative">
+                                      <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="${image}" alt="Room Image" />
+                                      <div class="absolute top-4 left-4">
+                                        <span class="bg-primary text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">${statusName}</span>
                                       </div>
                                     </div>
+                                    <div class="p-8 flex-1 flex flex-col justify-between">
+                                      <div>
+                                        <div class="flex justify-between items-start mb-2">
+                                          <h3 class="text-xl font-headline text-primary">${roomName}</h3>
+                                          <p class="text-secondary font-bold font-body">${priceStr}</p>
+                                        </div>
+                                        <div class="flex gap-4 text-sm text-on-surface-variant mb-6 font-body">
+                                          <div class="flex items-center gap-1">
+                                            <span class="material-symbols-outlined text-sm">calendar_today</span> ${checkIn} — ${checkOut}
+                                          </div>
+                                          <div class="flex items-center gap-1">
+                                            <span class="material-symbols-outlined text-sm">fact_check</span> ${statusName}
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="flex gap-4">
+                                        <button type="button" onclick="openDetailModal(${bookingId})" class="flex-1 bg-gradient-to-r from-primary to-primary-container text-white py-3 rounded-lg text-sm font-bold tracking-wide hover:shadow-lg transition-all">Chi tiết</button>
+                                        ${dynamicButtonHtml}
+                                      </div>
+                                    </div>
                                   </div>
-                                  <div class="flex gap-4">
-                                    <button type="button" onclick="openDetailModal(${bookingId})" class="flex-1 bg-gradient-to-r from-primary to-primary-container text-white py-3 rounded-lg text-sm font-bold tracking-wide hover:shadow-lg transition-all">Chi tiết</button>
-                                    ${dynamicButtonHtml}
-                                  </div>
-                                </div>
-                              </div>
-                            `;
+                                `;
             });
 
             bookingsContainer.innerHTML = html;
@@ -785,10 +786,10 @@
 
             if (!payments || payments.length === 0) {
                 container.innerHTML = `
-                <div class="text-center py-12 bg-surface-container-low rounded-xl border border-dashed border-outline-variant/50">
-                    <span class="material-symbols-outlined text-4xl text-outline-variant mb-2">payments</span>
-                    <p class="text-on-surface-variant text-sm">Bạn chưa thực hiện giao dịch nào.</p>
-                </div>`;
+                    <div class="text-center py-12 bg-surface-container-low rounded-xl border border-dashed border-outline-variant/50">
+                        <span class="material-symbols-outlined text-4xl text-outline-variant mb-2">payments</span>
+                        <p class="text-on-surface-variant text-sm">Bạn chưa thực hiện giao dịch nào.</p>
+                    </div>`;
                 return;
             }
 
@@ -807,29 +808,29 @@
 
                 // Trả về HTML dạng có thể click mở rộng
                 return `
-                <div class="bg-surface-container-low rounded-xl border border-outline-variant/10 overflow-hidden transition-colors hover:bg-surface-container mb-3">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 cursor-pointer select-none" onclick="togglePaymentDetail('${pay.id}')">
-                        <div class="space-y-1 mb-2 sm:mb-0">
-                            <div class="flex items-center gap-2">
-                                <p class="text-sm font-bold text-primary">Mã: ${pay.orderCode || pay.id}</p>
-                                ${statusBadge}
+                    <div class="bg-surface-container-low rounded-xl border border-outline-variant/10 overflow-hidden transition-colors hover:bg-surface-container mb-3">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 cursor-pointer select-none" onclick="togglePaymentDetail('${pay.id}')">
+                            <div class="space-y-1 mb-2 sm:mb-0">
+                                <div class="flex items-center gap-2">
+                                    <p class="text-sm font-bold text-primary">Mã: ${pay.orderCode || pay.id}</p>
+                                    ${statusBadge}
+                                </div>
+                                <p class="text-xs text-on-surface-variant font-medium">
+                                    Ngày thanh toán: ${formatDateTime(pay.createdAt || pay.paymentDate)}
+                                </p>
                             </div>
-                            <p class="text-xs text-on-surface-variant font-medium">
-                                Ngày thanh toán: ${formatDateTime(pay.createdAt || pay.paymentDate)}
-                            </p>
+                            <div class="text-right w-full sm:w-auto border-t sm:border-0 pt-2 sm:pt-0 flex items-center justify-between sm:justify-end gap-4">
+                                <p class="text-lg font-display font-bold text-secondary">${pay.amount.toLocaleString('vi-VN')}đ</p>
+                                <span id="payment-icon-${pay.id}" class="material-symbols-outlined text-outline-variant transition-transform duration-300">expand_more</span>
+                            </div>
                         </div>
-                        <div class="text-right w-full sm:w-auto border-t sm:border-0 pt-2 sm:pt-0 flex items-center justify-between sm:justify-end gap-4">
-                            <p class="text-lg font-display font-bold text-secondary">${pay.amount.toLocaleString('vi-VN')}đ</p>
-                            <span id="payment-icon-${pay.id}" class="material-symbols-outlined text-outline-variant transition-transform duration-300">expand_more</span>
-                        </div>
-                    </div>
 
-                    <div id="payment-detail-${pay.id}" class="hidden px-4 pb-4 pt-2 border-t border-outline-variant/10 bg-surface-container-lowest">
-                        <p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-1">Nội dung chuyển khoản</p>
-                        <p class="text-sm text-on-surface font-medium bg-surface p-3 rounded-lg border border-outline-variant/20 italic">${transferContent}</p>
+                        <div id="payment-detail-${pay.id}" class="hidden px-4 pb-4 pt-2 border-t border-outline-variant/10 bg-surface-container-lowest">
+                            <p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold mb-1">Nội dung chuyển khoản</p>
+                            <p class="text-sm text-on-surface font-medium bg-surface p-3 rounded-lg border border-outline-variant/20 italic">${transferContent}</p>
+                        </div>
                     </div>
-                </div>
-            `;
+                `;
             }).join('');
         }
         function togglePaymentDetail(id) {
@@ -893,9 +894,9 @@
                     const price = s.price || s.Price || 0;
 
                     return `<li class="flex justify-between items-center border-b border-outline-variant/10 pb-1 last:border-0">
-                                  <span>• ${name} <span class="text-xs text-on-surface-variant">(x${quantity})</span></span>
-                                  <span class="font-bold">${(price * quantity).toLocaleString('vi-VN')}đ</span>
-                                </li>`;
+                                      <span>• ${name} <span class="text-xs text-on-surface-variant">(x${quantity})</span></span>
+                                      <span class="font-bold">${(price * quantity).toLocaleString('vi-VN')}đ</span>
+                                    </li>`;
                 }).join('');
             } else {
                 servicesContainer.classList.add('hidden');
@@ -921,12 +922,12 @@
 
                 // Render lại giao diện Review cho xịn hơn
                 reviewElement.innerHTML = `
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="text-sm">${starsHtml}</span>
-                        <span class="text-xs text-on-surface-variant">${dateStr}</span>
-                    </div>
-                    <div class="text-on-surface font-medium leading-relaxed">"${reviewText}"</div>
-                `;
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-sm">${starsHtml}</span>
+                            <span class="text-xs text-on-surface-variant">${dateStr}</span>
+                        </div>
+                        <div class="text-on-surface font-medium leading-relaxed">"${reviewText}"</div>
+                    `;
                 reviewElement.className = "text-sm p-4 bg-surface-container-low border border-outline-variant/20 rounded-lg";
             } else {
                 reviewContainer.classList.add('hidden');

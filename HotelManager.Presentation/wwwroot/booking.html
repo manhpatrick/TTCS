@@ -132,7 +132,7 @@
     <div id="footer-placeholder"></div>
     <script src="/js/footer.js"></script>
     <script src="/js/header.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
     <script>
         let serviceData = JSON.parse(sessionStorage.getItem('serviceBookingData') || '[]');
         let currentRoomData = null;
@@ -281,28 +281,28 @@
             const roomName = data?.name || 'Phòng chưa xác định';
             const capacity = Number(data?.capacity ?? 0);
             roomDataContainer.innerHTML = `
-                <h2 class="text-3xl font-display text-primary mb-6">Phòng của bạn</h2>
-                <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/20 shadow-[0_4px_24px_rgba(0,51,69,0.04)] overflow-hidden">
-                  <div class="flex flex-col md:flex-row gap-6 p-7">
-                    <img alt="${roomName}" class="w-full md:w-56 md:h-40 object-cover rounded-xl shadow-sm flex-shrink-0" src="${imageUrl}" />
-                    <div class="flex-1 flex flex-col justify-between py-2">
-                      <div>
-                        <h3 class="text-xl font-headline font-semibold text-primary mb-1">${roomName}</h3>
-                        <p class="text-sm text-on-surface-variant line-clamp-2 leading-relaxed">${data?.description || "Chưa có mô tả"}</p>
-                      </div>
-                      <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
-                        <div class="inline-flex items-center gap-1.5 bg-surface-container-low px-3 py-1.5 rounded-lg border border-outline-variant/10 text-sm font-label text-on-surface-variant">
-                          <span class="material-symbols-outlined text-secondary" style="font-size: 18px;">group</span>
-                          Phòng cho ${capacity} Người
-                        </div>
-                        <div class="text-xl font-semibold text-primary">
-                          ${formattedPrice}đ<span class="text-xs text-on-surface-variant font-normal tracking-wide"> / đêm</span>
+                    <h2 class="text-3xl font-display text-primary mb-6">Phòng của bạn</h2>
+                    <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant/20 shadow-[0_4px_24px_rgba(0,51,69,0.04)] overflow-hidden">
+                      <div class="flex flex-col md:flex-row gap-6 p-7">
+                        <img alt="${roomName}" class="w-full md:w-56 md:h-40 object-cover rounded-xl shadow-sm flex-shrink-0" src="${imageUrl}" />
+                        <div class="flex-1 flex flex-col justify-between py-2">
+                          <div>
+                            <h3 class="text-xl font-headline font-semibold text-primary mb-1">${roomName}</h3>
+                            <p class="text-sm text-on-surface-variant line-clamp-2 leading-relaxed">${data?.description || "Chưa có mô tả"}</p>
+                          </div>
+                          <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
+                            <div class="inline-flex items-center gap-1.5 bg-surface-container-low px-3 py-1.5 rounded-lg border border-outline-variant/10 text-sm font-label text-on-surface-variant">
+                              <span class="material-symbols-outlined text-secondary" style="font-size: 18px;">group</span>
+                              Phòng cho ${capacity} Người
+                            </div>
+                            <div class="text-xl font-semibold text-primary">
+                              ${formattedPrice}đ<span class="text-xs text-on-surface-variant font-normal tracking-wide"> / đêm</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              `;
+                  `;
         }
 
         async function fetchUnavailableDates(roomId) {
@@ -332,37 +332,37 @@
             currentBookingData = { ...data, amountOfPeople: bookingPeopleCount };
 
             bookingDataContainer.innerHTML = `
-                <h2 class="text-3xl font-display text-primary mb-8">Chi tiết lưu trú</h2>
+                    <h2 class="text-3xl font-display text-primary mb-8">Chi tiết lưu trú</h2>
 
-                <div id="bookingDateSelector" class="grid grid-cols-1 md:grid-cols-2 gap-8 cursor-pointer relative">
-                  <div class="bg-surface-container-low p-5 rounded-xl flex items-center justify-between border border-transparent hover:border-primary/30 transition-colors">
-                    <div class="w-full">
-                      <div class="text-xs text-on-surface-variant uppercase tracking-widest font-label mb-1">Nhận phòng</div>
-                      <div id="checkInDisplay" class="text-lg font-medium text-primary font-body">${displayCheckIn}</div>
+                    <div id="bookingDateSelector" class="grid grid-cols-1 md:grid-cols-2 gap-8 cursor-pointer relative">
+                      <div class="bg-surface-container-low p-5 rounded-xl flex items-center justify-between border border-transparent hover:border-primary/30 transition-colors">
+                        <div class="w-full">
+                          <div class="text-xs text-on-surface-variant uppercase tracking-widest font-label mb-1">Nhận phòng</div>
+                          <div id="checkInDisplay" class="text-lg font-medium text-primary font-body">${displayCheckIn}</div>
+                        </div>
+                        <span class="material-symbols-outlined text-outline-variant text-3xl">calendar_month</span>
+                      </div>
+                      <div class="bg-surface-container-low p-5 rounded-xl flex items-center justify-between border border-transparent hover:border-primary/30 transition-colors">
+                        <div class="w-full">
+                          <div class="text-xs text-on-surface-variant uppercase tracking-widest font-label mb-1">Trả phòng</div>
+                          <div id="checkOutDisplay" class="text-lg font-medium text-primary font-body">${displayCheckOut}</div>
+                        </div>
+                        <span class="material-symbols-outlined text-outline-variant text-3xl">calendar_month</span>
+                      </div>
                     </div>
-                    <span class="material-symbols-outlined text-outline-variant text-3xl">calendar_month</span>
-                  </div>
-                  <div class="bg-surface-container-low p-5 rounded-xl flex items-center justify-between border border-transparent hover:border-primary/30 transition-colors">
-                    <div class="w-full">
-                      <div class="text-xs text-on-surface-variant uppercase tracking-widest font-label mb-1">Trả phòng</div>
-                      <div id="checkOutDisplay" class="text-lg font-medium text-primary font-body">${displayCheckOut}</div>
-                    </div>
-                    <span class="material-symbols-outlined text-outline-variant text-3xl">calendar_month</span>
-                  </div>
-                </div>
 
-                <div class="mt-8 bg-surface-container-low p-6 rounded-xl flex items-center justify-between">
-                  <div id="peopleOverviewQty" class="flex items-center gap-1.5 text-on-surface-variant mt-1">
-                    <span class="material-symbols-outlined" style="font-size: 16px;">person</span>
-                    <span>${bookingPeopleCount} Người lớn</span>
-                  </div>
-                  <div class="flex items-center gap-4">
-                    <button id="minusPeopleBtn" class="w-8 h-8 rounded-full border border-outline flex items-center justify-center text-on-surface hover:bg-surface-container-highest transition-all disabled:opacity-40 disabled:cursor-not-allowed"><span class="material-symbols-outlined" style="font-size: 16px;">remove</span></button>
-                    <span id="peopleBookingNumber" class="font-medium w-4 text-center">${bookingPeopleCount}</span>
-                    <button id="plusPeopleBtn" class="w-8 h-8 rounded-full border border-outline flex items-center justify-center text-on-surface hover:bg-surface-container-highest transition-all disabled:opacity-40 disabled:cursor-not-allowed"><span class="material-symbols-outlined" style="font-size: 16px;">add</span></button>
-                  </div>
-                </div>
-              `;
+                    <div class="mt-8 bg-surface-container-low p-6 rounded-xl flex items-center justify-between">
+                      <div id="peopleOverviewQty" class="flex items-center gap-1.5 text-on-surface-variant mt-1">
+                        <span class="material-symbols-outlined" style="font-size: 16px;">person</span>
+                        <span>${bookingPeopleCount} Người lớn</span>
+                      </div>
+                      <div class="flex items-center gap-4">
+                        <button id="minusPeopleBtn" class="w-8 h-8 rounded-full border border-outline flex items-center justify-center text-on-surface hover:bg-surface-container-highest transition-all disabled:opacity-40 disabled:cursor-not-allowed"><span class="material-symbols-outlined" style="font-size: 16px;">remove</span></button>
+                        <span id="peopleBookingNumber" class="font-medium w-4 text-center">${bookingPeopleCount}</span>
+                        <button id="plusPeopleBtn" class="w-8 h-8 rounded-full border border-outline flex items-center justify-center text-on-surface hover:bg-surface-container-highest transition-all disabled:opacity-40 disabled:cursor-not-allowed"><span class="material-symbols-outlined" style="font-size: 16px;">add</span></button>
+                      </div>
+                    </div>
+                  `;
             syncPeopleButtonsState();
 
             // Cài đặt Flatpickr
@@ -420,33 +420,33 @@
                 const formattedPrice = new Intl.NumberFormat('vi-VN').format(service.price);
                 const catUI = getCategoryBadge(service.category);
                 return `
-                  <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/20 shadow-[0_4px_20px_rgba(0,51,69,0.03)] flex flex-col md:flex-row md:items-center justify-between gap-6">
-                    <div class="flex items-start gap-4 flex-1">
-                      <input checked type="checkbox" onchange="handleToggleService(${index}, this)" class="service-checkbox mt-1.5 w-5 h-5 rounded border-outline text-primary focus:ring-primary flex-shrink-0 cursor-pointer transition-colors" />
-                      <div class="flex-1">
-                        <div class="inline-flex items-center gap-1.5 px-2 py-1 mb-2 rounded-md border ${catUI.colorClass} text-[11px] font-bold uppercase tracking-wider font-label">
-                          <span class="material-symbols-outlined text-[14px]">${catUI.icon}</span>
-                          ${catUI.label}
+                      <div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/20 shadow-[0_4px_20px_rgba(0,51,69,0.03)] flex flex-col md:flex-row md:items-center justify-between gap-6">
+                        <div class="flex items-start gap-4 flex-1">
+                          <input checked type="checkbox" onchange="handleToggleService(${index}, this)" class="service-checkbox mt-1.5 w-5 h-5 rounded border-outline text-primary focus:ring-primary flex-shrink-0 cursor-pointer transition-colors" />
+                          <div class="flex-1">
+                            <div class="inline-flex items-center gap-1.5 px-2 py-1 mb-2 rounded-md border ${catUI.colorClass} text-[11px] font-bold uppercase tracking-wider font-label">
+                              <span class="material-symbols-outlined text-[14px]">${catUI.icon}</span>
+                              ${catUI.label}
+                            </div>
+                            <h4 class="text-lg font-headline font-semibold text-primary">${service.name}</h4>
+                            <p class="text-sm text-on-surface-variant mt-2 leading-relaxed pr-4">${service.description}</p>
+                            <div class="mt-4 inline-flex items-center gap-1.5 bg-surface-container-low px-3 py-1.5 rounded-lg border border-outline-variant/10">
+                              <span class="text-sm font-semibold text-secondary">${formattedPrice}đ</span>
+                              <span class="text-xs text-on-surface-variant">/ ${service.unit}</span>
+                            </div>
+                          </div>
                         </div>
-                        <h4 class="text-lg font-headline font-semibold text-primary">${service.name}</h4>
-                        <p class="text-sm text-on-surface-variant mt-2 leading-relaxed pr-4">${service.description}</p>
-                        <div class="mt-4 inline-flex items-center gap-1.5 bg-surface-container-low px-3 py-1.5 rounded-lg border border-outline-variant/10">
-                          <span class="text-sm font-semibold text-secondary">${formattedPrice}đ</span>
-                          <span class="text-xs text-on-surface-variant">/ ${service.unit}</span>
+                        <div class="flex items-center gap-2 bg-surface-container p-1.5 rounded-full border border-outline-variant/20 flex-shrink-0 self-start md:self-auto">
+                          <button onclick="updateServiceQuantity(${index}, -1)" class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:text-primary hover:shadow-sm transition-all">
+                            <span class="material-symbols-outlined" style="font-size: 16px;">remove</span>
+                          </button>
+                          <span data-index="${index}" class="qty-value font-medium text-sm w-6 text-center text-primary">${quantity}</span>
+                          <button onclick="updateServiceQuantity(${index}, 1)" class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:text-primary hover:shadow-sm transition-all">
+                            <span class="material-symbols-outlined" style="font-size: 16px;">add</span>
+                          </button>
                         </div>
                       </div>
-                    </div>
-                    <div class="flex items-center gap-2 bg-surface-container p-1.5 rounded-full border border-outline-variant/20 flex-shrink-0 self-start md:self-auto">
-                      <button onclick="updateServiceQuantity(${index}, -1)" class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:text-primary hover:shadow-sm transition-all">
-                        <span class="material-symbols-outlined" style="font-size: 16px;">remove</span>
-                      </button>
-                      <span data-index="${index}" class="qty-value font-medium text-sm w-6 text-center text-primary">${quantity}</span>
-                      <button onclick="updateServiceQuantity(${index}, 1)" class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:text-primary hover:shadow-sm transition-all">
-                        <span class="material-symbols-outlined" style="font-size: 16px;">add</span>
-                      </button>
-                    </div>
-                  </div>
-                `;
+                    `;
             }).join('');
         }
 
@@ -483,50 +483,50 @@
             const formattedTotalPrice = new Intl.NumberFormat('vi-VN').format(finalTotal);
 
             bookingOverviewModal.innerHTML = `
-                <h3 class="text-2xl font-display text-primary mb-6 border-b border-surface-container pb-4">Chi tiết Đặt phòng</h3>
-                <div class="mb-8 pb-6 border-b border-outline-variant/20">
-                  <div class="flex justify-between items-start gap-4">
-                    <div class="flex-1">
-                      <div class="flex items-center gap-3 mb-4">
-                        <span class="material-symbols-outlined text-primary" style="font-size: 30px;">door_front</span>
-                        <div class="text-3xl leading-tight font-headline font-bold text-primary">${currentBookingData.roomName}</div>
-                      </div>
-                      <div class="space-y-3 text-base">
-                        <div class="flex items-center gap-2.5 text-on-surface font-medium">
-                          <span class="material-symbols-outlined text-primary" style="font-size: 19px;">calendar_month</span>
-                          ${displayCheckIn} - ${displayCheckOut}
-                          <div class=" text-sm text-on-surface-variant font-medium">(${nights} đêm)</div>
+                    <h3 class="text-2xl font-display text-primary mb-6 border-b border-surface-container pb-4">Chi tiết Đặt phòng</h3>
+                    <div class="mb-8 pb-6 border-b border-outline-variant/20">
+                      <div class="flex justify-between items-start gap-4">
+                        <div class="flex-1">
+                          <div class="flex items-center gap-3 mb-4">
+                            <span class="material-symbols-outlined text-primary" style="font-size: 30px;">door_front</span>
+                            <div class="text-3xl leading-tight font-headline font-bold text-primary">${currentBookingData.roomName}</div>
+                          </div>
+                          <div class="space-y-3 text-base">
+                            <div class="flex items-center gap-2.5 text-on-surface font-medium">
+                              <span class="material-symbols-outlined text-primary" style="font-size: 19px;">calendar_month</span>
+                              ${displayCheckIn} - ${displayCheckOut}
+                              <div class=" text-sm text-on-surface-variant font-medium">(${nights} đêm)</div>
+                            </div>
+                            <div class="flex items-center gap-2.5 text-on-surface font-medium mt-1">
+                              <span class="material-symbols-outlined text-primary" style="font-size: 19px;">group</span>
+                              <span id="peopleBookingQty">${bookingPeopleCount} Người lớn</span>
+                            </div>
+                          </div>
                         </div>
-                        <div class="flex items-center gap-2.5 text-on-surface font-medium mt-1">
-                          <span class="material-symbols-outlined text-primary" style="font-size: 19px;">group</span>
-                          <span id="peopleBookingQty">${bookingPeopleCount} Người lớn</span>
+                        <div class="text-right bg-surface-container px-4 py-3 rounded-xl border border-outline-variant/20 min-w-[130px]">
+                          <div class="text-2xl font-bold text-primary leading-none">${formattedPrice}đ</div>
+                          <div class="text-xs text-on-surface-variant tracking-widest uppercase mt-1">/ đêm</div>
                         </div>
                       </div>
                     </div>
-                    <div class="text-right bg-surface-container px-4 py-3 rounded-xl border border-outline-variant/20 min-w-[130px]">
-                      <div class="text-2xl font-bold text-primary leading-none">${formattedPrice}đ</div>
-                      <div class="text-xs text-on-surface-variant tracking-widest uppercase mt-1">/ đêm</div>
+
+                    <div class="mb-6">
+                      <h4 class="text-sm font-label font-bold uppercase tracking-widest text-secondary mb-4">Danh sách dịch vụ</h4>
+                      <div id="serviceBookingContainer" class="flex flex-col gap-3">
+                      </div>
                     </div>
-                  </div>
-                </div>
 
-                <div class="mb-6">
-                  <h4 class="text-sm font-label font-bold uppercase tracking-widest text-secondary mb-4">Danh sách dịch vụ</h4>
-                  <div id="serviceBookingContainer" class="flex flex-col gap-3">
-                  </div>
-                </div>
-
-                <div class="mt-8 pt-6 border-t border-surface-container">
-                  <div class="flex justify-between items-end mb-8">
-                    <div class="text-sm font-medium text-on-surface-variant uppercase tracking-widest font-label">Tổng cộng</div>
-                    <div class="text-3xl font-display text-primary">${formattedTotalPrice}đ</div>
-                  </div>
-                  <button id="confirmBookingBtn" onclick="handleConfirmBooking()" class="w-full gradient-cta text-on-primary py-4 px-6 rounded-xl font-medium text-lg hover:opacity-90 transition-opacity flex justify-center items-center gap-2">
-                    Xác nhận đặt phòng
-                    <span class="material-symbols-outlined text-secondary-container" style="font-size: 20px;">arrow_forward</span>
-                  </button>
-                </div>
-              `;
+                    <div class="mt-8 pt-6 border-t border-surface-container">
+                      <div class="flex justify-between items-end mb-8">
+                        <div class="text-sm font-medium text-on-surface-variant uppercase tracking-widest font-label">Tổng cộng</div>
+                        <div class="text-3xl font-display text-primary">${formattedTotalPrice}đ</div>
+                      </div>
+                      <button id="confirmBookingBtn" onclick="handleConfirmBooking()" class="w-full gradient-cta text-on-primary py-4 px-6 rounded-xl font-medium text-lg hover:opacity-90 transition-opacity flex justify-center items-center gap-2">
+                        Xác nhận đặt phòng
+                        <span class="material-symbols-outlined text-secondary-container" style="font-size: 20px;">arrow_forward</span>
+                      </button>
+                    </div>
+                  `;
         }
 
         function renderServiceList() {
@@ -540,16 +540,16 @@
                 const total = Number(service.price) * (service.quantity || 1);
                 const formattedPrice = new Intl.NumberFormat('vi-VN').format(total) + 'đ';
                 return `
-                    <div class="flex justify-between items-center w-full p-3 bg-surface-container-low rounded-lg border border-outline-variant/10">
-                        <div>
-                          <div class="text-sm font-medium text-on-surface">${service.name}</div>
-                          <div class="text-xs text-on-surface-variant mt-1">x ${service.quantity}</div>
+                        <div class="flex justify-between items-center w-full p-3 bg-surface-container-low rounded-lg border border-outline-variant/10">
+                            <div>
+                              <div class="text-sm font-medium text-on-surface">${service.name}</div>
+                              <div class="text-xs text-on-surface-variant mt-1">x ${service.quantity}</div>
+                            </div>
+                            <div class="text-right">
+                              <div class="text-base font-semibold text-primary">${formattedPrice}</div>
+                            </div>
                         </div>
-                        <div class="text-right">
-                          <div class="text-base font-semibold text-primary">${formattedPrice}</div>
-                        </div>
-                    </div>
-                  `;
+                      `;
             }).join('');
             serviceBookingContainer.innerHTML = serviceList;
         }
