@@ -75,8 +75,8 @@ export const useNotifications = () => {
         setIsConnected(false);
       });
 
-    // Lắng nghe thông báo mới
-    newConnection.on("ReceiveNotification", (notification) => {
+    // Lắng nghe thông báo mới (Đã fix type)
+    newConnection.on("ReceiveNotification", (notification: { title?: string; message: string; timestamp: string | number; type?: string }) => {
       const newNotification: Notification = {
         id: Date.now().toString(),
         title: notification.title || "Thông báo mới",
@@ -101,8 +101,8 @@ export const useNotifications = () => {
       }
     });
 
-    // Lắng nghe cập nhật booking
-    newConnection.on("NewBooking", (booking) => {
+    // Lắng nghe cập nhật booking (Đã fix type)
+    newConnection.on("NewBooking", (booking: { message: string; timestamp: string | number }) => {
       const newNotification: Notification = {
         id: Date.now().toString(),
         title: "📅 Booking mới",
@@ -117,8 +117,8 @@ export const useNotifications = () => {
       playNotificationSound();
     });
 
-    // Lắng nghe cập nhật thanh toán
-    newConnection.on("PaymentCompleted", (payment) => {
+    // Lắng nghe cập nhật thanh toán (Đã fix type)
+    newConnection.on("PaymentCompleted", (payment: { message: string; timestamp: string | number }) => {
       const newNotification: Notification = {
         id: Date.now().toString(),
         title: "💳 Thanh toán thành công",
@@ -133,8 +133,8 @@ export const useNotifications = () => {
       playNotificationSound();
     });
 
-    // Lắng nghe cập nhật badge
-    newConnection.on("UpdateNotificationBadge", (data) => {
+    // Lắng nghe cập nhật badge (Đã fix type)
+    newConnection.on("UpdateNotificationBadge", (data: { unreadCount: number }) => {
       setUnreadCount(data.unreadCount);
     });
 
